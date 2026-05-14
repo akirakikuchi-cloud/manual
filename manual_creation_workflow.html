@@ -544,6 +544,77 @@ em { font-style: normal; background: linear-gradient(180deg, transparent 65%, va
   max-width: 90vw;
   text-align: center;
 }
+
+/* ============ SHORTCUT LIST (FAQ) ============ */
+.shortcut-steps {
+  margin: 8px 0 4px;
+  padding-left: 22px;
+  font-size: 13px;
+  color: var(--ink);
+}
+.shortcut-steps li { padding: 3px 0; }
+.shortcut-section-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  margin: 14px 0 6px;
+}
+.shortcut-list {
+  list-style: none;
+  margin: 6px 0 4px;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.shortcut-list li {
+  background: linear-gradient(90deg, #F0F4FF 0%, #F7F9FF 100%);
+  border: 1px solid #C5D2F5;
+  border-left: 3px solid var(--accent-blue);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.shortcut-list li:hover {
+  transform: translateX(2px);
+  box-shadow: 0 3px 10px rgba(59,91,219,0.15);
+}
+.shortcut-list .sc-label { color: var(--ink); font-weight: 600; flex: 1; min-width: 200px; }
+.shortcut-list .sc-label .sc-tag {
+  display: inline-block;
+  background: rgba(59,91,219,0.12);
+  color: var(--accent-blue);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 3px;
+  margin-right: 6px;
+  letter-spacing: 0.05em;
+}
+.shortcut-list .sc-link {
+  background: var(--accent-blue);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+}
+.shortcut-list .sc-link:hover { background: #2A4AC0; transform: scale(1.05); }
 </style>
 </head>
 <body>
@@ -729,8 +800,8 @@ flowchart TD
             <span class="accordion-chevron">▼</span>
           </summary>
           <div class="accordion-body">
-            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_logistics_picking.png','物流｜出荷ピッキング 1カット撮影ガイド')">
-              <img src="./image/guide_logistics_picking.png" alt="物流｜出荷ピッキング 1カット撮影ガイド" loading="lazy">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_logistics_picking.png','物流｜出荷ピッキング 1カット撮影ガイド')">
+              <img src="./images/guide_logistics_picking.png" alt="物流｜出荷ピッキング 1カット撮影ガイド" loading="lazy">
             </div>
             <ul class="scene-mini">
               <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>装備見せ＆指示確認</strong> 軍手・安全靴を見せ、ハンディを読む</li>
@@ -753,8 +824,8 @@ flowchart TD
             <span class="accordion-chevron">▼</span>
           </summary>
           <div class="accordion-body">
-            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_retail_stocking.png','小売｜品出し 1カット撮影ガイド')">
-              <img src="./image/guide_retail_stocking.png" alt="小売｜品出し 1カット撮影ガイド" loading="lazy">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_retail_stocking.png','小売｜品出し 1カット撮影ガイド')">
+              <img src="./images/guide_retail_stocking.png" alt="小売｜品出し 1カット撮影ガイド" loading="lazy">
             </div>
             <ul class="scene-mini">
               <li><span class="num-mini">1</span><span class="ts">0:00-0:25</span><strong>開封</strong> カッターを手前→奥へ滑らせる</li>
@@ -777,8 +848,8 @@ flowchart TD
             <span class="accordion-chevron">▼</span>
           </summary>
           <div class="accordion-body">
-            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_restaurant_order.png','飲食｜お客さま案内〜オーダー取り 1カット撮影ガイド')">
-              <img src="./image/guide_restaurant_order.png" alt="飲食｜お客さま案内〜オーダー取り 1カット撮影ガイド" loading="lazy">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_restaurant_order.png','飲食｜お客さま案内〜オーダー取り 1カット撮影ガイド')">
+              <img src="./images/guide_restaurant_order.png" alt="飲食｜お客さま案内〜オーダー取り 1カット撮影ガイド" loading="lazy">
             </div>
             <ul class="scene-mini">
               <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>出迎え</strong> 笑顔で頭を下げる</li>
@@ -801,8 +872,8 @@ flowchart TD
             <span class="accordion-chevron">▼</span>
           </summary>
           <div class="accordion-body">
-            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_care_transfer.png','介護｜移乗介助 1カット撮影ガイド')">
-              <img src="./image/guide_care_transfer.png" alt="介護｜移乗介助 1カット撮影ガイド" loading="lazy">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_care_transfer.png','介護｜移乗介助 1カット撮影ガイド')">
+              <img src="./images/guide_care_transfer.png" alt="介護｜移乗介助 1カット撮影ガイド" loading="lazy">
             </div>
             <ul class="scene-mini">
               <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>事前説明</strong> 正面に立ち目線を合わせる</li>
@@ -826,8 +897,8 @@ flowchart TD
             <span class="accordion-chevron">▼</span>
           </summary>
           <div class="accordion-body">
-            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_care_meal.png','介護｜食事介助 1カット撮影ガイド')">
-              <img src="./image/guide_care_meal.png" alt="介護｜食事介助 1カット撮影ガイド" loading="lazy">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_care_meal.png','介護｜食事介助 1カット撮影ガイド')">
+              <img src="./images/guide_care_meal.png" alt="介護｜食事介助 1カット撮影ガイド" loading="lazy">
             </div>
             <ul class="scene-mini">
               <li><span class="num-mini">1</span><span class="ts">0:00-0:10</span><strong>挨拶</strong> 食札を見せる</li>
@@ -851,8 +922,8 @@ flowchart TD
             <span class="accordion-chevron">▼</span>
           </summary>
           <div class="accordion-body">
-            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_mfg_label.png','製造｜ラベル貼り 1カット撮影ガイド')">
-              <img src="./image/guide_mfg_label.png" alt="製造｜ラベル貼り 1カット撮影ガイド" loading="lazy">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_mfg_label.png','製造｜ラベル貼り 1カット撮影ガイド')">
+              <img src="./images/guide_mfg_label.png" alt="製造｜ラベル貼り 1カット撮影ガイド" loading="lazy">
             </div>
             <ul class="scene-mini">
               <li><span class="num-mini">1</span><span class="ts">0:00-0:10</span><strong>ラベル準備</strong> ラベル台紙から1枚剥がす</li>
@@ -876,8 +947,8 @@ flowchart TD
             <span class="accordion-chevron">▼</span>
           </summary>
           <div class="accordion-body">
-            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_mfg_packaging.png','製造｜製品の個包装 1カット撮影ガイド')">
-              <img src="./image/guide_mfg_packaging.png" alt="製造｜製品の個包装 1カット撮影ガイド" loading="lazy">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_mfg_packaging.png','製造｜製品の個包装 1カット撮影ガイド')">
+              <img src="./images/guide_mfg_packaging.png" alt="製造｜製品の個包装 1カット撮影ガイド" loading="lazy">
             </div>
             <ul class="scene-mini">
               <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>包装紙を準備</strong> 1枚取り、台の上に広げる</li>
@@ -1040,7 +1111,7 @@ flowchart TD
               <span class="design-tag use-web">📱 Web</span>
             </div>
           </div>
-          <div class="design-preview-wrap"><img src="./image/design_a_yellow_illust.png" alt="デザインA：黄色背景×イラスト"></div>
+          <div class="design-preview-wrap"><img src="./images/design_a_yellow_illust.png" alt="デザインA：黄色背景×イラスト"></div>
           <div class="design-meta">
             <p class="feature">Timeeブランドカラーの黄色背景＋親しみやすい<strong>イラスト</strong>。初日でも緊張しない柔らかさ。</p>
             <span class="recommend">📌 飲食／小売／初心者ワーカー多めの現場</span>
@@ -1091,7 +1162,7 @@ flowchart TD
               <span class="design-tag use-print">🖨 印刷</span>
             </div>
           </div>
-          <div class="design-preview-wrap"><img src="./image/design_b_white_illust.png" alt="デザインB：白背景×イラスト"></div>
+          <div class="design-preview-wrap"><img src="./images/design_b_white_illust.png" alt="デザインB：白背景×イラスト"></div>
           <div class="design-meta">
             <p class="feature">清潔感のある<strong>白背景</strong>＋イラスト。情報量が多くても読みやすい。印刷時に最適。</p>
             <span class="recommend">📌 製造／物流／工程が多い現場</span>
@@ -1143,7 +1214,7 @@ flowchart TD
               <span class="design-tag">標準</span>
             </div>
           </div>
-          <div class="design-preview-wrap"><img src="./image/design_c_yellow_photo.png" alt="デザインC：黄色背景×実写"></div>
+          <div class="design-preview-wrap"><img src="./images/design_c_yellow_photo.png" alt="デザインC：黄色背景×実写"></div>
           <div class="design-meta">
             <p class="feature">黄色＋<strong>実写人物</strong>でTimeeらしさ最強。信頼感＋ブランド一貫性。</p>
             <span class="recommend">📌 標準採用パターン。迷ったらこれ</span>
@@ -1198,7 +1269,7 @@ flowchart TD
               <span class="design-tag use-print">🖨 印刷</span>
             </div>
           </div>
-          <div class="design-preview-wrap"><img src="./image/design_d_white_photo.png" alt="デザインD：白背景×実写"></div>
+          <div class="design-preview-wrap"><img src="./images/design_d_white_photo.png" alt="デザインD：白背景×実写"></div>
           <div class="design-meta">
             <p class="feature">白背景＋実写でプロフェッショナル感。落ち着いた印象。印刷時に最適。</p>
             <span class="recommend">📌 介護／医療系／フォーマルな現場</span>
@@ -1326,6 +1397,48 @@ flowchart TD
     <div class="faq-item">
       <div class="faq-q">デザインバリエーション、どれを選べばいい？</div>
       <div class="faq-a">用途で先に絞る：<strong>印刷が必要なら白背景（B / D）、Web中心なら黄色（A / C）</strong>。さらに迷ったら <strong>C（黄色背景×実写）</strong> が標準。介護・医療など落ち着いた印象が必要なら D（白背景×実写）。初心者ワーカーが多い飲食・小売は A（黄色×イラスト）が好相性。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">プロンプトをクリップボードへ素早く呼び出したい</div>
+      <div class="faq-a">
+        Mac の「ショートカット」アプリ + Spotlight で、各プロンプトを<strong>2ステップでクリップボードにコピー</strong>できます。
+
+        <span class="shortcut-section-label">📥 初回セットアップ</span>
+        下記リンクから、使いたいショートカットを追加（リンク先で「ショートカットを追加」をクリック）。一度追加すれば次回以降は不要です。
+
+        <span class="shortcut-section-label">🚀 使い方</span>
+        <ol class="shortcut-steps">
+          <li><span class="kbd">⌘ + Space</span> で Spotlight を開く</li>
+          <li>ショートカット名（例：「マニュアルA」）を入力して選択 → 自動でクリップボードへコピー</li>
+          <li>NotebookLM 等で <span class="kbd">⌘ + V</span> で貼り付け</li>
+        </ol>
+
+        <span class="shortcut-section-label">🔗 ショートカット一覧</span>
+        <ul class="shortcut-list">
+          <li>
+            <span class="sc-label"><span class="sc-tag">PROMPT</span>マニュアルプロンプト（STEP 4でチャットに入れる）</span>
+            <a class="sc-link" href="https://www.icloud.com/shortcuts/06b3dec49fe74ac8800a1cb279123001" target="_blank" rel="noopener">＋ 追加</a>
+          </li>
+          <li>
+            <span class="sc-label"><span class="sc-tag">DESIGN A</span>マニュアルA（黄色背景・イラスト）</span>
+            <a class="sc-link" href="https://www.icloud.com/shortcuts/6b02a0ee0be64a0994156189bdbd4c5a" target="_blank" rel="noopener">＋ 追加</a>
+          </li>
+          <li>
+            <span class="sc-label"><span class="sc-tag">DESIGN B</span>マニュアルB（白背景・イラスト）</span>
+            <a class="sc-link" href="https://www.icloud.com/shortcuts/5eaeeae0cd8b4085a5376cc86c24b8ee" target="_blank" rel="noopener">＋ 追加</a>
+          </li>
+          <li>
+            <span class="sc-label"><span class="sc-tag">DESIGN C</span>マニュアルC（黄色背景・実写）</span>
+            <a class="sc-link" href="https://www.icloud.com/shortcuts/b638add610e3406dad0ac123b1750f3b" target="_blank" rel="noopener">＋ 追加</a>
+          </li>
+          <li>
+            <span class="sc-label"><span class="sc-tag">DESIGN D</span>マニュアルD（白背景・実写）</span>
+            <a class="sc-link" href="https://www.icloud.com/shortcuts/971b23f63d0a4fb3a1bf6304d29aea34" target="_blank" rel="noopener">＋ 追加</a>
+          </li>
+        </ul>
+        <p style="margin-top:10px; font-size:11.5px; color:var(--ink-mute);">※ Mac の「ショートカット」アプリが必要です（iCloud Shortcuts）。iPhone でも追加可能。</p>
+      </div>
     </div>
   </section>
 
