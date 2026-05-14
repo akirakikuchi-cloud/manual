@@ -295,6 +295,42 @@ p { margin-bottom: 14px; }
 .design-meta .feature strong { color: var(--primary-dark); }
 .design-meta .recommend { font-size: 11.5px; color: var(--ink-soft); background: var(--bg-soft); padding: 6px 10px; border-radius: 6px; margin-top: 8px; display: inline-block; }
 
+.design-preview-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 14px 22px 0;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, var(--accent-blue) 0%, #5571E0 100%);
+  color: #fff !important;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+  border: 0;
+  position: relative;
+  overflow: hidden;
+}
+.design-preview-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(59,91,219,0.4);
+  background: linear-gradient(135deg, #2A4AC0 0%, #4060D0 100%);
+}
+.design-preview-btn::before {
+  content: '📄';
+  font-size: 16px;
+}
+.design-preview-btn::after {
+  content: '↗';
+  margin-left: 4px;
+  opacity: 0.8;
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .prompt-block {
   margin: 14px 22px 22px;
   background: #2A2520;
@@ -1116,6 +1152,7 @@ flowchart TD
             <p class="feature">Timeeブランドカラーの黄色背景＋親しみやすい<strong>イラスト</strong>。初日でも緊張しない柔らかさ。</p>
             <span class="recommend">📌 飲食／小売／初心者ワーカー多めの現場</span>
           </div>
+          <a class="design-preview-btn" href="https://canva.link/dx3mij1ivg5i5ks" target="_blank" rel="noopener">完成サンプルPDFを見る（Canva）</a>
           <div class="prompt-block">
             <div class="prompt-header">
               <span>🎨 DESIGN PROMPT — A</span>
@@ -1167,6 +1204,7 @@ flowchart TD
             <p class="feature">清潔感のある<strong>白背景</strong>＋イラスト。情報量が多くても読みやすい。印刷時に最適。</p>
             <span class="recommend">📌 製造／物流／工程が多い現場</span>
           </div>
+          <a class="design-preview-btn" href="https://canva.link/4zqzn86865nqvgx" target="_blank" rel="noopener">完成サンプルPDFを見る（Canva）</a>
           <div class="prompt-block">
             <div class="prompt-header">
               <span>🎨 DESIGN PROMPT — B</span>
@@ -1219,6 +1257,7 @@ flowchart TD
             <p class="feature">黄色＋<strong>実写人物</strong>でTimeeらしさ最強。信頼感＋ブランド一貫性。</p>
             <span class="recommend">📌 標準採用パターン。迷ったらこれ</span>
           </div>
+          <a class="design-preview-btn" href="https://canva.link/p7uxisybhuezhdu" target="_blank" rel="noopener">完成サンプルPDFを見る（Canva）</a>
           <div class="prompt-block">
             <div class="prompt-header">
               <span>🎨 DESIGN PROMPT — C</span>
@@ -1274,6 +1313,7 @@ flowchart TD
             <p class="feature">白背景＋実写でプロフェッショナル感。落ち着いた印象。印刷時に最適。</p>
             <span class="recommend">📌 介護／医療系／フォーマルな現場</span>
           </div>
+          <a class="design-preview-btn" href="https://canva.link/n5zte1m1h9p0gtk" target="_blank" rel="noopener">完成サンプルPDFを見る（Canva）</a>
           <div class="prompt-block">
             <div class="prompt-header">
               <span>🎨 DESIGN PROMPT — D</span>
@@ -1392,7 +1432,7 @@ flowchart TD
     </div>
     <div class="faq-item">
       <div class="faq-q">クライアントから撮影NGと言われた</div>
-      <div class="faq-a">撮影ができない場合、作業内容をヒヤリングしDocとしてNotebookLMのソースに読み込めばマニュアルは作成可能です。撮影した実写真もデザインプロンプトをイラスト指示にすれば実写真はイラスト化されます。作業ヒヤリングがわからない時は<a href="https://gemini.google.com/gem/1aDT6fvVj25AB5EgPUbhAGBlUG5IYeI-z?usp=sharing">作業マニュアルGem</a></li>を活用してください。</div>
+      <div class="faq-a">撮影ができない場合、作業内容をヒヤリングしDocとしてNotebookLMのソースに読み込めばマニュアルは作成可能です。撮影した実写真もデザインプロンプトをイラスト指示にすれば実写真はイラスト化されます。作業ヒヤリングがわからない時は<a href="https://gemini.google.com/gem/1aDT6fvVj25AB5EgPUbhAGBlUG5IYeI-z?usp=sharing" target="_blank">作業マニュアルGem</a>を活用してください。</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">デザインバリエーション、どれを選べばいい？</div>
