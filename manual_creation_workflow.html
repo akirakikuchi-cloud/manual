@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マニュアル作成手順書｜タイミー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --bg: #FAF5EC;
+  --bg-card: #FFFFFF;
+  --bg-soft: #FFF4E6;
+  --bg-warm: #FFE8DC;
+  --ink: #2A2520;
+  --ink-soft: #6B6258;
+  --ink-mute: #9C9489;
+  --primary: #FF6F3C;
+  --primary-dark: #E55A28;
+  --primary-soft: #FFD9C4;
+  --accent-blue: #3B5BDB;
+  --accent-warn: #D9480F;
+  --rule: #E8DFD2;
+  --serif: 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  --sans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+  --mono: 'JetBrains Mono', 'Menlo', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans); background: var(--bg);
+  color: var(--ink); line-height: 1.75;
+  font-size: 15px; -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: radial-gradient(circle at 25% 30%, rgba(255,111,60,0.04) 0%, transparent 50%),
+                    radial-gradient(circle at 75% 70%, rgba(59,91,219,0.03) 0%, transparent 50%);
+  pointer-events: none; z-index: 0;
+}
+.container { max-width: 920px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+/* HERO */
+.hero { padding: 80px 0 60px; border-bottom: 1px solid var(--rule); margin-bottom: 60px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; background: var(--primary); color: #fff;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+  border-radius: 999px; margin-bottom: 24px;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; background: #fff; border-radius: 50%; }
+h1.hero-title {
+  font-family: var(--serif); font-size: clamp(40px, 6vw, 64px);
+  font-weight: 800; letter-spacing: -0.02em;
+  line-height: 1.15; margin-bottom: 20px;
+}
+h1.hero-title .accent { color: var(--primary); }
+.hero-sub { font-size: 17px; color: var(--ink-soft); max-width: 640px; line-height: 1.8; }
+.hero-sub strong { color: var(--ink); font-weight: 700; }
+.hero-meta { display: flex; gap: 32px; margin-top: 36px; flex-wrap: wrap; }
+.hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
+.hero-meta-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); font-weight: 700; }
+.hero-meta-value { font-family: var(--serif); font-size: 18px; font-weight: 700; }
+
+section { margin-bottom: 64px; }
+
+h2.section-title {
+  font-family: var(--serif); font-size: 30px; font-weight: 700;
+  margin-bottom: 24px; display: flex; align-items: baseline; gap: 16px;
+  letter-spacing: -0.01em;
+}
+h2.section-title .icon { font-size: 28px; }
+h2.section-title .num {
+  font-family: var(--mono); font-size: 14px; font-weight: 500;
+  color: var(--primary); letter-spacing: 0.05em;
+}
+h3.sub-title { font-size: 17px; font-weight: 700; margin: 28px 0 12px; display: flex; align-items: center; gap: 8px; }
+h4.minor-title { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: var(--ink-soft); letter-spacing: 0.02em; }
+p { margin-bottom: 14px; }
+
+/* Callout */
+.callout { padding: 18px 22px; border-radius: 8px; margin: 20px 0; font-size: 14px; line-height: 1.7; border-left: 4px solid; background: var(--bg-card); }
+.callout-note { border-color: var(--accent-blue); background: #F0F4FF; }
+.callout-tip { border-color: var(--primary); background: var(--bg-soft); }
+.callout-warn { border-color: var(--accent-warn); background: #FFF1EC; }
+.callout-label {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+  text-transform: uppercase; margin-bottom: 6px; display: block;
+}
+.callout-note .callout-label { color: var(--accent-blue); }
+.callout-tip .callout-label { color: var(--primary); }
+.callout-warn .callout-label { color: var(--accent-warn); }
+
+/* Gem inline link block */
+.gem-inline {
+  background: linear-gradient(135deg, #FFFCF7 0%, #FFF4E6 100%);
+  border: 1px solid var(--primary-soft);
+  border-radius: 12px; padding: 20px 24px; margin: 20px 0;
+  position: relative; overflow: hidden;
+  display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+}
+.gem-inline::before {
+  content: '✨'; position: absolute; top: -8px; right: 0;
+  font-size: 50px; opacity: 0.15; transform: rotate(15deg);
+}
+.gem-inline .gem-text { flex: 1; min-width: 240px; }
+.gem-inline .gem-text strong { display: block; font-size: 14px; margin-bottom: 4px; color: var(--ink); }
+.gem-inline .gem-text span { font-size: 13px; color: var(--ink-soft); }
+.gem-inline .gem-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px; background: var(--primary); color: #fff;
+  font-weight: 700; font-size: 13px; border-radius: 8px;
+  text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+.gem-inline .gem-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255,111,60,0.3); }
+
+/* Info card */
+.info-card { background: var(--bg-card); border: 1px solid var(--rule); border-radius: 12px; padding: 28px 32px; margin: 24px 0; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 12px; }
+@media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
+.info-block h4 { font-size: 13px; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.05em; }
+.info-block.ok h4 { color: var(--primary); }
+.info-block.ng h4 { color: var(--ink-mute); }
+.info-block ul { list-style: none; }
+.info-block li { padding: 4px 0 4px 22px; position: relative; font-size: 13px; }
+.info-block.ok li::before { content: '✓'; position: absolute; left: 0; top: 4px; color: var(--primary); font-weight: 800; }
+.info-block.ng li::before { content: '—'; position: absolute; left: 0; top: 4px; color: var(--ink-mute); }
+
+/* Flowchart */
+.flowchart-wrapper { background: var(--bg-card); border: 1px solid var(--rule); border-radius: 12px; padding: 32px 24px; margin: 24px 0; overflow-x: auto; }
+.mermaid { display: flex; justify-content: center; min-width: fit-content; }
+
+/* Step card */
+.step-card {
+  background: var(--bg-card); border-radius: 14px;
+  padding: 32px 36px; margin-bottom: 24px;
+  border: 1px solid var(--rule); position: relative;
+}
+.step-card::before {
+  content: ''; position: absolute;
+  left: 0; top: 32px; bottom: 32px; width: 4px;
+  background: var(--primary); border-radius: 0 4px 4px 0;
+}
+.step-card.is-goal::before { background: linear-gradient(180deg, var(--primary), var(--accent-blue)); }
+.step-card.is-goal { background: linear-gradient(135deg, #FFF8F2 0%, #FFFCFC 100%); }
+.step-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; color: var(--primary); font-weight: 700; margin-bottom: 4px; text-transform: uppercase; }
+.step-title { font-family: var(--serif); font-size: 26px; font-weight: 700; margin-bottom: 18px; letter-spacing: -0.01em; }
+.step-title .tag {
+  display: inline-block; background: var(--primary); color: #fff;
+  font-family: var(--sans); font-size: 11px;
+  padding: 3px 10px; border-radius: 4px;
+  vertical-align: middle; margin-left: 10px; letter-spacing: 0.05em;
+}
+
+/* Table */
+.rule-table {
+  width: 100%; border-collapse: collapse;
+  margin: 16px 0; font-size: 14px;
+  background: var(--bg-card); border-radius: 8px;
+  overflow: hidden; border: 1px solid var(--rule);
+}
+.rule-table th { background: var(--bg-soft); text-align: left; padding: 12px 16px; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--rule); }
+.rule-table td { padding: 12px 16px; border-top: 1px solid var(--rule); vertical-align: top; }
+.rule-table tr:first-child td { border-top: 0; }
+
+/* Source tile */
+.source-tiles { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 20px 0; }
+.source-tile {
+  background: var(--bg-card); border: 1px solid var(--rule);
+  border-left: 4px solid var(--primary);
+  border-radius: 8px; padding: 18px 22px;
+}
+.source-tile.optional { border-left-color: var(--accent-blue); }
+.source-tile .src-num {
+  display: inline-block; font-family: var(--mono); font-weight: 700;
+  background: var(--bg-warm); color: var(--primary-dark);
+  padding: 2px 10px; border-radius: 4px; font-size: 12px; margin-right: 8px;
+}
+.source-tile.optional .src-num { background: #E0E7FF; color: var(--accent-blue); }
+.source-tile .src-req { display: inline-block; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 3px; letter-spacing: 0.08em; vertical-align: middle; }
+.source-tile .src-req.must { background: var(--primary); color: #fff; }
+.source-tile .src-req.want { background: var(--accent-blue); color: #fff; }
+.source-tile h5 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+
+/* ============ CAROUSEL ============ */
+.carousel-section {
+  margin: 36px -32px; padding: 36px 0;
+  background: linear-gradient(180deg, #1A1612 0%, #2A2520 100%);
+  position: relative;
+}
+@media (min-width: 984px) {
+  .carousel-section {
+    margin: 36px calc(50% - 50vw);
+    padding-left: calc(50vw - 460px);
+    padding-right: calc(50vw - 460px);
+  }
+}
+.carousel-section.theme-design { background: linear-gradient(180deg, #2A2520 0%, #1A1612 100%); }
+.carousel-header { display: flex; justify-content: space-between; align-items: center; padding: 0 32px; margin-bottom: 24px; color: #fff; }
+.carousel-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: #fff; }
+.carousel-title .pre { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; color: var(--primary); font-weight: 500; margin-bottom: 4px; }
+.carousel-nav { display: flex; gap: 8px; }
+.carousel-nav button {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.06); color: #fff;
+  cursor: pointer; font-size: 18px;
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+}
+.carousel-nav button:hover { background: var(--primary); border-color: var(--primary); }
+.carousel-nav button:disabled { opacity: 0.3; cursor: not-allowed; }
+.carousel-track {
+  display: flex; gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  padding: 4px 32px 28px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+.carousel-track::-webkit-scrollbar { height: 6px; }
+.carousel-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
+.carousel-track::-webkit-scrollbar-thumb { background: rgba(255,111,60,0.4); border-radius: 3px; }
+.carousel-track::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* Industry tile */
+.industry-tile {
+  flex: 0 0 460px; scroll-snap-align: start;
+  background: var(--bg-card); border-radius: 12px;
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.industry-tile:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+@media (max-width: 640px) { .industry-tile { flex: 0 0 85vw; } }
+.tile-header { display: flex; align-items: center; gap: 12px; padding: 16px 20px; background: var(--bg-soft); border-bottom: 1px solid var(--rule); }
+.tile-icon { width: 40px; height: 40px; background: var(--primary); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.tile-title { font-family: var(--serif); font-size: 18px; font-weight: 700; line-height: 1.3; flex: 1; }
+.tile-duration { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--primary); background: #fff; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--primary-soft); white-space: nowrap; }
+.tile-image-wrap { width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #FAF5EC; }
+.tile-image-wrap img, .tile-image-wrap svg { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tile-body { padding: 18px 22px; flex: 1; }
+.scene-mini { list-style: none; margin: 8px 0 14px; }
+.scene-mini li { padding: 6px 0 6px 30px; position: relative; font-size: 12.5px; line-height: 1.55; border-bottom: 1px dashed var(--rule); }
+.scene-mini li:last-child { border-bottom: 0; }
+.scene-mini li .num-mini { position: absolute; left: 0; top: 6px; width: 20px; height: 20px; background: var(--bg-warm); color: var(--primary-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; font-family: var(--mono); }
+.scene-mini .ts { font-family: var(--mono); font-size: 10px; background: var(--bg); padding: 1px 5px; border-radius: 3px; color: var(--ink-soft); margin-right: 4px; }
+.tile-lines { background: linear-gradient(135deg, #FFF4E6 0%, #FFE8DC 100%); border-radius: 8px; padding: 12px 14px; font-size: 11.5px; line-height: 1.75; border-left: 3px solid var(--primary); }
+.tile-lines::before { content: '🎙 セリフ例'; display: block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; color: var(--primary-dark); margin-bottom: 4px; }
+.tile-note { margin-top: 10px; font-size: 11.5px; color: var(--ink-soft); padding: 8px 12px; background: #FFF8F2; border-radius: 6px; border-left: 2px solid var(--primary-soft); }
+
+/* DESIGN VARIATION TILES */
+.design-tile {
+  flex: 0 0 540px; scroll-snap-align: start;
+  background: var(--bg-card); border-radius: 14px;
+  overflow: hidden; display: flex; flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.design-tile:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+@media (max-width: 640px) { .design-tile { flex: 0 0 88vw; } }
+
+.design-label {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px;
+  background: linear-gradient(90deg, var(--primary) 0%, #FF8B5A 100%);
+  color: #fff;
+}
+.design-letter {
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 16px; font-weight: 800;
+  border: 1.5px solid rgba(255,255,255,0.5);
+}
+.design-name { font-family: var(--serif); font-size: 17px; font-weight: 700; flex: 1; }
+.design-tags { display: flex; gap: 6px; flex-shrink: 0; }
+.design-tag {
+  font-size: 10.5px; font-weight: 700;
+  background: rgba(255,255,255,0.95); color: var(--primary-dark);
+  padding: 4px 10px; border-radius: 999px; letter-spacing: 0.05em;
+}
+.design-tag.use-web { background: #E0E7FF; color: var(--accent-blue); }
+.design-tag.use-print { background: #FFE9E9; color: var(--accent-warn); }
+
+.design-preview-wrap { width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #FAF5EC; }
+.design-preview-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.design-meta { padding: 16px 22px 8px; border-bottom: 1px dashed var(--rule); }
+.design-meta .feature { font-size: 13px; line-height: 1.65; color: var(--ink); margin-bottom: 6px; }
+.design-meta .feature strong { color: var(--primary-dark); }
+.design-meta .recommend { font-size: 11.5px; color: var(--ink-soft); background: var(--bg-soft); padding: 6px 10px; border-radius: 6px; margin-top: 8px; display: inline-block; }
+
+.prompt-block {
+  margin: 14px 22px 22px;
+  background: #2A2520;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255,111,60,0.2);
+}
+.prompt-header {
+  padding: 8px 14px;
+  background: rgba(255,111,60,0.15);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.prompt-header span {
+  font-size: 10.5px; color: var(--primary);
+  font-weight: 700; letter-spacing: 0.12em;
+}
+.copy-btn {
+  background: var(--primary); color: #fff;
+  border: 0; padding: 5px 12px; border-radius: 4px;
+  font-size: 11px; cursor: pointer; font-weight: 700;
+  font-family: var(--sans); transition: all 0.2s;
+}
+.copy-btn:hover { background: var(--primary-dark); }
+.copy-btn.copied { background: #2DBA7B; }
+.prompt-content {
+  padding: 14px 16px;
+  font-family: var(--mono); font-size: 11px;
+  color: #F4EDE2; line-height: 1.75;
+  max-height: 320px; overflow-y: auto;
+  white-space: pre-wrap; word-break: break-all;
+}
+.prompt-content::-webkit-scrollbar { width: 5px; }
+.prompt-content::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+.prompt-content::-webkit-scrollbar-thumb { background: rgba(255,111,60,0.4); border-radius: 3px; }
+
+/* Code block (for main prompt in STEP 4) */
+.code-block {
+  background: #2A2520; color: #F4EDE2;
+  padding: 20px 24px; border-radius: 8px;
+  font-family: var(--mono); font-size: 12.5px;
+  line-height: 1.7; margin: 16px 0;
+  overflow-x: auto; position: relative;
+  white-space: pre-wrap; word-break: break-all;
+}
+.code-block::before {
+  content: 'PROMPT'; position: absolute;
+  top: 8px; right: 12px;
+  font-size: 10px; letter-spacing: 0.15em;
+  color: var(--primary); font-weight: 700;
+}
+
+/* Checklist */
+.checklist { list-style: none; margin: 16px 0; }
+.checklist li { padding: 8px 0 8px 28px; position: relative; font-size: 14px; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 12px; width: 16px; height: 16px; border: 1.5px solid var(--ink-mute); border-radius: 3px; }
+
+/* Numbered steps */
+.numbered-steps { list-style: none; counter-reset: stepCount; margin: 16px 0; }
+.numbered-steps > li { counter-increment: stepCount; padding: 12px 0 12px 44px; position: relative; font-size: 14px; line-height: 1.75; }
+.numbered-steps > li::before { content: counter(stepCount); position: absolute; left: 0; top: 11px; width: 28px; height: 28px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; font-weight: 700; }
+
+/* FAQ */
+.faq-item { background: var(--bg-card); border: 1px solid var(--rule); border-radius: 8px; padding: 18px 22px; margin: 12px 0; }
+.faq-q { font-weight: 700; font-size: 14px; display: flex; gap: 10px; margin-bottom: 8px; }
+.faq-q::before { content: 'Q'; background: var(--accent-blue); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; font-family: var(--mono); }
+.faq-a { font-size: 13.5px; color: var(--ink-soft); padding-left: 32px; }
+
+footer { margin: 80px 0 40px; padding: 32px 0; border-top: 1px solid var(--rule); font-size: 13px; color: var(--ink-soft); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.related-links { background: var(--bg-card); padding: 24px 28px; border-radius: 12px; border: 1px solid var(--rule); }
+.related-links ul { list-style: none; }
+.related-links li { padding: 6px 0 6px 24px; position: relative; font-size: 14px; }
+.related-links li::before { content: '→'; position: absolute; left: 0; color: var(--primary); font-weight: 700; }
+.related-links a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.related-links a:hover { border-color: var(--primary); }
+.kbd { font-family: var(--mono); background: var(--bg-soft); padding: 2px 8px; border-radius: 4px; font-size: 12.5px; border: 1px solid var(--rule); font-weight: 500; }
+
+strong { color: var(--ink); font-weight: 700; }
+em { font-style: normal; background: linear-gradient(180deg, transparent 65%, var(--primary-soft) 65%); padding: 0 2px; }
+
+/* ============ ACCORDION (Shooting Guides) ============ */
+.accordion-intro {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin: 20px 0 16px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #FFF4E6 0%, #FFE8DC 100%);
+  border-radius: 10px;
+  border-left: 3px solid var(--primary);
+  font-size: 13px;
+}
+.accordion-intro strong { color: var(--primary-dark); }
+
+.accordion-section { margin: 24px 0; }
+.accordion-item {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.accordion-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.accordion-item[open] {
+  box-shadow: 0 8px 24px rgba(255,111,60,0.12);
+  border-color: var(--primary-soft);
+}
+.accordion-header {
+  list-style: none;
+  cursor: pointer;
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-soft);
+  font-weight: 700;
+  transition: background 0.2s;
+  user-select: none;
+}
+.accordion-header::-webkit-details-marker { display: none; }
+.accordion-header::marker { content: ''; }
+.accordion-header:hover { background: var(--bg-warm); }
+.accordion-item[open] .accordion-header {
+  background: linear-gradient(90deg, var(--primary) 0%, #FF8B5A 100%);
+  color: #fff;
+  border-bottom: 1px solid var(--rule);
+}
+.accordion-icon {
+  width: 38px; height: 38px;
+  background: var(--primary); color: #fff;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; flex-shrink: 0;
+}
+.accordion-item[open] .accordion-icon {
+  background: rgba(255,255,255,0.22);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.accordion-industry {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.12em; color: var(--ink-mute);
+  text-transform: uppercase; flex-shrink: 0;
+}
+.accordion-item[open] .accordion-industry { color: rgba(255,255,255,0.85); }
+.accordion-title { font-family: var(--serif); font-size: 17px; flex: 1; line-height: 1.3; }
+.accordion-duration {
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  color: var(--primary); background: #fff;
+  padding: 4px 12px; border-radius: 999px;
+  border: 1px solid var(--primary-soft);
+  white-space: nowrap; flex-shrink: 0;
+}
+.accordion-item[open] .accordion-duration {
+  background: rgba(255,255,255,0.95); color: var(--primary-dark);
+  border-color: transparent;
+}
+.accordion-chevron {
+  font-size: 12px; color: var(--ink-mute);
+  transition: transform 0.3s; flex-shrink: 0;
+}
+.accordion-item[open] .accordion-chevron { transform: rotate(180deg); color: #fff; }
+
+.accordion-body { padding: 22px 26px 24px; }
+.accordion-img-wrap {
+  width: 100%;
+  margin: 0 0 18px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: var(--bg-soft);
+  cursor: zoom-in;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.accordion-img-wrap:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+}
+.accordion-img-wrap img { width: 100%; height: auto; display: block; }
+.accordion-img-wrap::after {
+  content: '🔍 クリックで拡大';
+  position: absolute;
+  bottom: 12px; right: 12px;
+  background: rgba(42,37,32,0.85); color: #fff;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.05em;
+  opacity: 0; transition: opacity 0.2s;
+  backdrop-filter: blur(4px);
+}
+.accordion-img-wrap:hover::after { opacity: 1; }
+
+/* ============ LIGHTBOX ============ */
+.lightbox-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 9999;
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 40px 20px;
+  cursor: zoom-out;
+}
+.lightbox-overlay.active {
+  display: flex;
+  animation: lbFadeIn 0.2s ease-out;
+}
+@keyframes lbFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.lightbox-overlay img {
+  max-width: 96vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+}
+.lightbox-close {
+  position: fixed;
+  top: 20px; right: 24px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  font-size: 22px; font-weight: 300;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s;
+  z-index: 10000;
+  font-family: var(--sans);
+}
+.lightbox-close:hover {
+  background: rgba(255,255,255,0.25);
+  transform: rotate(90deg);
+}
+.lightbox-caption {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 13px;
+  background: rgba(0,0,0,0.55);
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 500;
+  backdrop-filter: blur(8px);
+  letter-spacing: 0.03em;
+  max-width: 90vw;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-badge">MANUAL CREATION GUIDE</div>
+    <h1 class="hero-title">マニュアル<span class="accent">作成</span>手順書</h1>
+    <p class="hero-sub">
+      ワーカー受け入れ用の業務マニュアルを、NotebookLMで完成させるための手順書です。<br>
+      <strong>物流／小売／飲食／介護／製造の5業界対応。各業界の参考資料も掲載。</strong>
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">ゴール</span>
+        <span class="hero-meta-value">PDFダウンロード</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">所要時間</span>
+        <span class="hero-meta-value">撮影30〜60分／作業15〜20分</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">対応業界</span>
+        <span class="hero-meta-value">物流／小売／飲食／介護／製造</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 使い方 -->
+  <section>
+    <h2 class="section-title"><span class="num">00</span>このページの使い方</h2>
+    <div class="info-card">
+      <p style="font-size:14px; color:var(--ink-soft); margin-bottom:8px;">この手順書のスコープを明確にしておきます。</p>
+      <div class="info-grid">
+        <div class="info-block ok">
+          <h4>✅ できること</h4>
+          <ul>
+            <li>業界別の動画撮影（5業界）</li>
+            <li>NotebookLMでのマニュアル生成</li>
+            <li>4種類のデザインバリエーション選択</li>
+            <li>PDFダウンロード</li>
+          </ul>
+        </div>
+        <div class="info-block ng">
+          <h4>❌ 対象外</h4>
+          <ul>
+            <li>ひな形・サムネイル改善 → 別手順書</li>
+            <li>Google Slide／Canvaでの後加工（不要）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="callout callout-warn">
+      <span class="callout-label">⚠ 重要</span>
+      <strong>「動画撮影が本丸」</strong> です。撮影は手を抜かず、業界別ガイドのとおり進めてください。
+    </div>
+  </section>
+
+  <!-- 事前準備 -->
+  <section>
+    <h2 class="section-title"><span class="num">01</span><span class="icon">🛠</span>事前準備</h2>
+    <h4 class="minor-title">必要なアクセス</h4>
+    <ul class="checklist">
+      <li><strong>NotebookLM</strong>：<a href="https://notebooklm.google.com/">https://notebooklm.google.com/</a></li>
+      <li><strong>スマートフォン</strong>：横向き撮影用（三脚またはスタンドがあると安定）</li>
+      <li><strong>YouTube</strong>：撮影動画の限定公開アップロード用</li>
+    </ul>
+    <h4 class="minor-title">用意するもの</h4>
+    <ul class="checklist">
+      <li>対象ひな形のadmin URL</li>
+      <li>撮影場所（クライアント事業所）の使用許可</li>
+      <li>演者役のスタッフ</li>
+      <li>既存マニュアル・手順書（あれば任意）</li>
+      <li>現場写真（業務風景・設備など／あれば任意）</li>
+    </ul>
+
+    <div class="gem-inline">
+      <div class="gem-text">
+        <strong>✨ 作業マニュアルGem</strong>
+        <span>既存マニュアル・手順書がない案件では、Gemで補完用のGoogle Docsを作成できます（STEP 3のソース③として使用）。</span>
+      </div>
+      <a class="gem-cta" href="https://gemini.google.com/gem/1aDT6fvVj25AB5EgPUbhAGBlUG5IYeI-z?usp=sharing" target="_blank">Gemを開く →</a>
+    </div>
+  </section>
+
+  <!-- 全体フロー -->
+  <section>
+    <h2 class="section-title"><span class="num">02</span><span class="icon">🗺</span>全体フロー</h2>
+    <div class="flowchart-wrapper">
+      <div class="mermaid">
+flowchart TD
+    Start([スタート]) --> S1[STEP 1<br/>動画を撮影する]
+    S1 --> Check1{業界は？}
+    Check1 -->|物流| L1[出荷ピッキング<br/>90秒]
+    Check1 -->|小売| L2[品出し<br/>120秒]
+    Check1 -->|飲食| L3[案内〜オーダー<br/>120秒]
+    Check1 -->|介護| L4[移乗/食事介助<br/>90秒]
+    Check1 -->|製造| L5[ラベル貼り/個包装<br/>60〜90秒]
+    L1 --> Upload[YouTube<br/>限定公開]
+    L2 --> Upload
+    L3 --> Upload
+    L4 --> Upload
+    L5 --> Upload
+    Upload --> S2[STEP 2<br/>NotebookLM新規ノート]
+    S2 --> S3[STEP 3<br/>ソースを追加]
+    S3 --> Src1[① ひな形情報<br/>必須]
+    S3 --> Src2[② 動画URL<br/>必須]
+    S3 --> Src3[③ 既存マニュアル/写真<br/>任意]
+    Src1 --> S4[STEP 4<br/>マニュアルプロンプト]
+    Src2 --> S4
+    Src3 --> S4
+    S4 --> S5[STEP 5<br/>デザイン選択<br/>→スライド生成]
+    S5 --> S6[STEP 6<br/>内容チェック＆改訂]
+    S6 --> Check2{内容OK？}
+    Check2 -->|NG| Fix[改訂版を生成<br/>1度で全部修正]
+    Fix --> Check2
+    Check2 -->|OK| S7[STEP 7<br/>PDFダウンロード]
+    S7 --> Goal([GOAL マニュアル完成])
+
+    classDef stepBox fill:#FFF4E6,stroke:#FF6F3C,stroke-width:2px,color:#2A2520
+    classDef decBox fill:#FFE8DC,stroke:#FF6F3C,stroke-width:2px,color:#2A2520
+    classDef goalBox fill:#FF6F3C,stroke:#2A2520,stroke-width:2px,color:#fff
+    classDef subBox fill:#FFF9F2,stroke:#FFB088,stroke-width:1.5px,color:#2A2520
+    classDef srcBox fill:#F0F4FF,stroke:#3B5BDB,stroke-width:1.5px,color:#2A2520
+    class S1,S2,S3,S4,S5,S6,S7 stepBox
+    class Check1,Check2 decBox
+    class Start,Goal,Upload goalBox
+    class L1,L2,L3,L4,L5,Fix subBox
+    class Src1,Src2,Src3 srcBox
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 1: 動画撮影 -->
+  <section>
+    <div class="step-card">
+      <div class="step-num">STEP 01</div>
+      <h2 class="step-title">動画を撮影する<span class="tag">本丸</span></h2>
+      <p>NotebookLMに入れる <strong>「業務動画」</strong> を撮影します。</p>
+
+      <h3 class="sub-title">🎬 撮影の共通ルール（全業界共通）</h3>
+      <table class="rule-table">
+        <thead><tr><th style="width:30%">項目</th><th>ルール</th></tr></thead>
+        <tbody>
+          <tr><td>撮影機材</td><td>スマートフォン（<strong>横向き固定</strong>）</td></tr>
+          <tr><td>撮影方式</td><td><strong>1カット撮影（カット割なし）</strong></td></tr>
+          <tr><td>演者</td><td>動作しながら<strong>セリフを声に出す</strong></td></tr>
+          <tr><td>公開設定</td><td>YouTube <strong>限定公開</strong></td></tr>
+          <tr><td>撮影後</td><td>再生確認 → URLをコピーしてNotebookLMに追加</td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout-warn">
+        <span class="callout-label">⚠ NGパターン</span>
+        ・縦向き撮影（NotebookLMで読み込み精度が落ちる）<br>
+        ・編集でカットを切り貼り（手順の前後関係が崩れる）<br>
+        ・無言での撮影（セリフ＝マニュアルの読み上げ素材になります）
+      </div>
+    </div>
+
+    <!-- INDUSTRY ACCORDION -->
+    <section style="margin-top:36px;">
+      <h3 class="sub-title" style="font-family:var(--serif); font-size:22px; margin-bottom:8px;">
+        📹 業界別 1カット撮影ガイド（参考資料）
+      </h3>
+      <p style="font-size:13.5px; color:var(--ink-soft); margin-bottom:4px;">
+        5業界・7業務をカバー。担当業界の項目をクリックして展開すると、撮影レイアウト／キーモーメント／タイムラインの参考画像が表示されます。画像をクリックすると拡大表示されます。
+      </p>
+      <div class="accordion-intro">
+        <span><strong>📐 共通仕様：</strong> スマホ横向き固定／カット割なし／演者は動作しながらセリフを声に出す／撮影後にYouTube限定公開でアップロード</span>
+      </div>
+
+      <div class="accordion-section">
+
+        <!-- 1. 物流 -->
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🏭</div>
+            <span class="accordion-industry">LOGISTICS</span>
+            <span class="accordion-title">物流｜出荷ピッキング</span>
+            <span class="accordion-duration">90秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_logistics_picking.png','物流｜出荷ピッキング 1カット撮影ガイド')">
+              <img src="./images/guide_logistics_picking.png" alt="物流｜出荷ピッキング 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>装備見せ＆指示確認</strong> 軍手・安全靴を見せ、ハンディを読む</li>
+              <li><span class="num-mini">2</span><span class="ts">0:15-0:30</span><strong>棚番スキャン</strong> 棚番ラベルにハンディをかざす</li>
+              <li><span class="num-mini">3</span><span class="ts">0:30-0:45</span><strong>商品スキャン</strong> 商品バーコードにかざす</li>
+              <li><span class="num-mini">4</span><span class="ts">0:45-1:10</span><strong>指差し呼称</strong> 1個ずつ指差してカゴ車へ</li>
+              <li><span class="num-mini">5</span><span class="ts">1:10-1:30</span><strong>確定＆移動</strong> 数量入力しカゴ車を押す</li>
+            </ul>
+            <div class="tile-lines">「軍手・安全靴OK。棚番A-01-3、数量2」「棚番スキャン、ピッ、棚一致」「商品スキャン、ピッ、コード一致」「2個取ります。1個、2個」「数量2、確定。検品エリアへ」</div>
+          </div>
+        </details>
+
+        <!-- 2. 小売 -->
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🛒</div>
+            <span class="accordion-industry">RETAIL</span>
+            <span class="accordion-title">小売｜品出し</span>
+            <span class="accordion-duration">120秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_retail_stocking.png','小売｜品出し 1カット撮影ガイド')">
+              <img src="./images/guide_retail_stocking.png" alt="小売｜品出し 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:25</span><strong>開封</strong> カッターを手前→奥へ滑らせる</li>
+              <li><span class="num-mini">2</span><span class="ts">0:25-0:45</span><strong>積載</strong> 賞味期限を1本ずつ確認</li>
+              <li><span class="num-mini">3</span><span class="ts">0:45-1:05</span><strong>移動</strong> 通路右寄りで台車を押す</li>
+              <li><span class="num-mini">4</span><span class="ts">1:05-1:40</span><strong>JAN照合＆先入れ先出し</strong> 棚札と商品を指差しで照合</li>
+              <li><span class="num-mini">5</span><span class="ts">1:40-2:00</span><strong>前出し</strong> ラベルを正面に向けて整える</li>
+            </ul>
+            <div class="tile-lines">「指は刃の進行方向に置きません」「賞味期限を見ながら積みます」「お客さま優先、通路右寄り」「JAN末尾4桁が一致。古いものを手前へ」「ラベルを正面、面を揃えます」</div>
+          </div>
+        </details>
+
+        <!-- 3. 飲食 -->
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🍽</div>
+            <span class="accordion-industry">RESTAURANT</span>
+            <span class="accordion-title">飲食｜お客さま案内〜オーダー取り</span>
+            <span class="accordion-duration">120秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_restaurant_order.png','飲食｜お客さま案内〜オーダー取り 1カット撮影ガイド')">
+              <img src="./images/guide_restaurant_order.png" alt="飲食｜お客さま案内〜オーダー取り 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>出迎え</strong> 笑顔で頭を下げる</li>
+              <li><span class="num-mini">2</span><span class="ts">0:15-0:40</span><strong>席へ案内</strong> 先導し椅子を引く</li>
+              <li><span class="num-mini">3</span><span class="ts">0:40-1:00</span><strong>おしぼり・お水</strong> お客さまから見て右側に置く</li>
+              <li><span class="num-mini">4</span><span class="ts">1:00-1:40</span><strong>注文取り＆復唱</strong> ハンディに入力する</li>
+              <li><span class="num-mini">5</span><span class="ts">1:40-2:00</span><strong>厨房送信</strong> 送信ボタンを押す</li>
+            </ul>
+            <div class="tile-lines">「いらっしゃいませ。2名さまですか？」「こちらのお席にどうぞ」「お冷とおしぼりです」「Aランチ1、Bランチ1、繰り返します」「ご注文承りました」</div>
+          </div>
+        </details>
+
+        <!-- 4. 介護｜移乗介助 -->
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🧑‍🦽</div>
+            <span class="accordion-industry">CARE</span>
+            <span class="accordion-title">介護｜移乗介助</span>
+            <span class="accordion-duration">90秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_care_transfer.png','介護｜移乗介助 1カット撮影ガイド')">
+              <img src="./images/guide_care_transfer.png" alt="介護｜移乗介助 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>事前説明</strong> 正面に立ち目線を合わせる</li>
+              <li><span class="num-mini">2</span><span class="ts">0:15-0:35</span><strong>ブレーキ確認</strong> 車椅子を30°寄せ、ブレーキを押す</li>
+              <li><span class="num-mini">3</span><span class="ts">0:35-0:55</span><strong>立ち上がり</strong> 両膝を自分の膝で支える</li>
+              <li><span class="num-mini">4</span><span class="ts">0:55-1:15</span><strong>方向転換＆着座</strong> ゆっくり旋回して腰を下ろす</li>
+              <li><span class="num-mini">5</span><span class="ts">1:15-1:30</span><strong>終了</strong> ベッド中央に座り直す</li>
+            </ul>
+            <div class="tile-lines">「ベッドにお移りしますね」「ブレーキかけました」「1、2、3で立ちますよ」「そのまま腰を下ろして」「お疲れさまでした」</div>
+            <div class="tile-note">⚠️ ご利用者の顔・氏名・部屋番号が映り込まないよう徹底。代理演者を立てるのが安全です。</div>
+          </div>
+        </details>
+
+        <!-- 5. 介護｜食事介助 -->
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🍱</div>
+            <span class="accordion-industry">CARE</span>
+            <span class="accordion-title">介護｜食事介助</span>
+            <span class="accordion-duration">90秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_care_meal.png','介護｜食事介助 1カット撮影ガイド')">
+              <img src="./images/guide_care_meal.png" alt="介護｜食事介助 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:10</span><strong>挨拶</strong> 食札を見せる</li>
+              <li><span class="num-mini">2</span><span class="ts">0:10-0:25</span><strong>姿勢確認</strong> 背もたれと足元を整える</li>
+              <li><span class="num-mini">3</span><span class="ts">0:25-0:50</span><strong>介助開始</strong> スプーンを下から運ぶ</li>
+              <li><span class="num-mini">4</span><span class="ts">0:50-1:15</span><strong>嚥下確認</strong> 飲み込みを目視で待つ</li>
+              <li><span class="num-mini">5</span><span class="ts">1:15-1:30</span><strong>終了</strong> 口元を拭く</li>
+            </ul>
+            <div class="tile-lines">「お昼ごはんお持ちしました」「背中まっすぐ、足は床に？」「お粥からいきますね」「飲み込めましたか？」「ごちそうさまでした」</div>
+            <div class="tile-note">⚠️ ご利用者の顔・氏名・部屋番号が映り込まないよう徹底。スプーンは必ず下から運ぶ（誤嚥防止）。</div>
+          </div>
+        </details>
+
+        <!-- 6. 製造｜ラベル貼り -->
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🏷️</div>
+            <span class="accordion-industry">MANUFACTURING</span>
+            <span class="accordion-title">製造｜ラベル貼り</span>
+            <span class="accordion-duration">60秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_mfg_label.png','製造｜ラベル貼り 1カット撮影ガイド')">
+              <img src="./images/guide_mfg_label.png" alt="製造｜ラベル貼り 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:10</span><strong>ラベル準備</strong> ラベル台紙から1枚剥がす</li>
+              <li><span class="num-mini">2</span><span class="ts">0:10-0:25</span><strong>ボトルを固定</strong> 左手で持ち作業位置で安定させる</li>
+              <li><span class="num-mini">3</span><span class="ts">0:25-0:40</span><strong>位置合わせ</strong> ラベル上端をボトル肩の下に合わせる</li>
+              <li><span class="num-mini">4</span><span class="ts">0:40-0:55</span><strong>中央から外へ</strong> 親指で中央から外へ押し付け空気を抜く</li>
+              <li><span class="num-mini">5</span><span class="ts">0:55-1:00</span><strong>完成品ラインへ</strong> ベルトに戻すか完成品トレーに移す</li>
+            </ul>
+            <div class="tile-lines">「ラベルを1枚、剥がします」「ボトルを左手で固定。ぐらつかせません」「位置はボトルの肩の下。合わせ目に注意」「中央から外へ、空気を抜きながら密着させます」「完成、ラインへ戻します。次のボトルへ」</div>
+            <div class="tile-note">⚠️ ラベルの位置ズレ・気泡・シワが品質クレームの典型。「中央から外へ」のセリフは必ず入れてください。</div>
+          </div>
+        </details>
+
+        <!-- 7. 製造｜個包装 -->
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">📦</div>
+            <span class="accordion-industry">MANUFACTURING</span>
+            <span class="accordion-title">製造｜製品の個包装</span>
+            <span class="accordion-duration">90秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./images/guide_mfg_packaging.png','製造｜製品の個包装 1カット撮影ガイド')">
+              <img src="./images/guide_mfg_packaging.png" alt="製造｜製品の個包装 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>包装紙を準備</strong> 1枚取り、台の上に広げる</li>
+              <li><span class="num-mini">2</span><span class="ts">0:15-0:35</span><strong>商品を中央に置く</strong> 端だと折りにくい</li>
+              <li><span class="num-mini">3</span><span class="ts">0:35-0:55</span><strong>折り込む</strong> 左右→上下の順、折り目をきっちり</li>
+              <li><span class="num-mini">4</span><span class="ts">0:55-1:15</span><strong>シールで封</strong> 合わせ目に貼って密着</li>
+              <li><span class="num-mini">5</span><span class="ts">1:15-1:30</span><strong>出荷箱へ</strong> 重ねず横並びで</li>
+            </ul>
+            <div class="tile-lines">「包装紙を1枚、台に広げます」「商品は必ず中央に。端だと折りにくいです」「左右、上下の順に。折り目をきっちりつけます」「シールで封をします。空気を抜きながら密着」「完成、箱に並べます。重ねず横並びで」</div>
+            <div class="tile-note">⚠️ 折り順（左右→上下）を間違えると見栄えが崩れる。出荷箱は「重ねず横並び」で必ず指示してください。</div>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <div class="step-card">
+      <h3 class="sub-title" style="margin-top:0;">📤 撮影後のアップロード手順</h3>
+      <ol class="numbered-steps">
+        <li>スマホで <strong>再生確認</strong>（音声が入っているか／全カット繋がっているか）</li>
+        <li>YouTubeに <strong>限定公開</strong> でアップロード<br><span style="font-size:13px; color:var(--ink-soft);">「子ども向け：いいえ」を選択／公開設定：<strong>限定公開</strong></span></li>
+        <li>アップロード後、動画のURLをコピー</li>
+        <li>STEP 3でNotebookLMに貼り付けて使います</li>
+      </ol>
+      <div class="callout callout-note">
+        <span class="callout-label">📌 NOTE</span>
+        限定公開＝URLを知っている人だけが視聴できる設定。<strong>「非公開」だとNotebookLMが読み込めません。</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2: NotebookLM new note -->
+  <section>
+    <div class="step-card">
+      <div class="step-num">STEP 02</div>
+      <h2 class="step-title">NotebookLMで新規ノートを作成</h2>
+      <ol class="numbered-steps">
+        <li><a href="https://notebooklm.google.com/">https://notebooklm.google.com/</a> にアクセス</li>
+        <li>画面左上の <span class="kbd">新規作成</span> をクリック</li>
+        <li>ノート名を <strong>「【マニュアル】〇〇（クライアント名）_ひな形ID」</strong> に設定</li>
+      </ol>
+      <div class="callout callout-tip">
+        <span class="callout-label">💡 TIP</span>
+        ノート名にひな形IDを入れておくと、後で見返したときに対応関係がすぐわかります。
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 3: sources -->
+  <section>
+    <div class="step-card">
+      <div class="step-num">STEP 03</div>
+      <h2 class="step-title">ソースを追加する（最大3種）</h2>
+      <p>NotebookLMの「ソースを追加」から、以下を追加します。<strong>①②は必須、③は任意</strong>ですが、③があるほどマニュアルの精度が上がります。</p>
+
+      <div class="source-tiles">
+        <div class="source-tile">
+          <h5><span class="src-num">①</span>ひな形情報（テキスト）<span class="src-req must">MUST</span></h5>
+          <ul class="checklist" style="margin:6px 0;">
+            <li>admin画面で対象ひな形の情報をコピー<br>
+              <span style="font-size:12px; color:var(--ink-soft); padding-left:0;">対象項目：クライアント名／求人タイトル／業種／職種／業務内容／注意事項／待遇／持ち物／働くための条件／働く前の質問・回答期限／資格種別／管理用ラベル</span></li>
+            <li>NotebookLMで「コピーしたテキスト」を選択</li>
+            <li>コピーした情報を<strong>そのまま貼り付け</strong></li>
+            <li><span class="kbd">追加</span>をクリック</li>
+          </ul>
+        </div>
+
+        <div class="source-tile">
+          <h5><span class="src-num">②</span>業務動画（YouTube URL）<span class="src-req must">MUST</span></h5>
+          <ul class="checklist" style="margin:6px 0;">
+            <li>「YouTube」を選択</li>
+            <li>STEP 1で取得した<strong>限定公開URL</strong>を貼り付け</li>
+            <li><span class="kbd">追加</span>をクリック</li>
+          </ul>
+        </div>
+
+        <div class="source-tile optional">
+          <h5><span class="src-num">③</span>既存マニュアル・手順書・現場写真<span class="src-req want">WANT</span></h5>
+          <p style="font-size:13px; margin:8px 0;">クライアントに既存マニュアルがあれば、または現場写真があれば、ソースとして追加します。<br>既存マニュアルがない場合は、<a href="https://gemini.google.com/gem/1aDT6fvVj25AB5EgPUbhAGBlUG5IYeI-z?usp=sharing" target="_blank">作業マニュアルGem</a> で補完用のGoogle Docsを生成して追加してもOK。</p>
+          <table class="rule-table" style="margin:8px 0 0;">
+            <thead><tr><th style="width:42%;">形式</th><th>NotebookLMへの追加方法</th></tr></thead>
+            <tbody>
+              <tr><td>PDF（紙のマニュアルをスキャンしたもの含む）</td><td>「ファイルアップロード」→ PDFを選択</td></tr>
+              <tr><td>Google ドキュメント／スライド</td><td>「Google Drive」から該当ファイルを選択</td></tr>
+              <tr><td>Word文書</td><td>「ファイルアップロード」→ .docxを選択</td></tr>
+              <tr><td>現場写真（業務風景・設備など）</td><td>Google Docsに貼り付けてからアップロード推奨</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-label">⚠ 注意</span>
+        ソースを追加した直後は、NotebookLMが内容を読み込むまで数十秒〜1分かかります。サムネイル横のローディング表示が消えるまで待ってから次のステップへ進んでください。
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 4: manual prompt -->
+  <section>
+    <div class="step-card">
+      <div class="step-num">STEP 04</div>
+      <h2 class="step-title">マニュアルプロンプトを実行</h2>
+      <p>チャット欄に下記プロンプトを<strong>そのまま</strong>貼り付けて送信します。</p>
+      <div class="code-block">タイミーの「初回稼働用マニュアル」を15pで作成します。ソースを参照して初回稼働する人が安心して働ける詳細プロンプトを書き出してください。解説や挨拶、ツールへの導入文などは一切不要です。『プロンプトの内容そのもの』だけをコピーしやすいように直接出力してください。このプロンプトについての解説も不要です。</div>
+      <h4 class="minor-title">このプロンプトが返してくれるもの</h4>
+      <p style="font-size:14px;">15ページ分のスライドに使える、マニュアル本文のテキストです。</p>
+      <div class="callout callout-tip">
+        <span class="callout-label">💡 TIP</span>
+        出力が短すぎる／薄いと感じたら、ソース（動画）が短すぎる可能性。STEP 1に戻って撮り直すか、ソース③として既存マニュアルや手順書を追加すると改善します。
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 5: design selection -->
+  <section>
+    <div class="step-card">
+      <div class="step-num">STEP 05</div>
+      <h2 class="step-title">メモ保存 → デザイン選択 → スライド生成</h2>
+      <h4 class="minor-title">共通の手順</h4>
+      <ol class="numbered-steps">
+        <li>STEP 4の回答の右上にある <span class="kbd">メモに保存</span> をクリック</li>
+        <li>保存されたメモを開き、<span class="kbd">ソースに変換</span> をクリック</li>
+        <li><strong>最後に追加されたソース（変換したメモ）だけ</strong> にチェックを入れる<br><span style="font-size:13px; color:var(--accent-warn);">⚠️ 元のひな形情報・動画・既存マニュアルのチェックは<strong>外す</strong></span></li>
+        <li>「スライド資料」ボタン右側の <span class="kbd">カスタマイズ</span> マークをクリック</li>
+        <li><strong>下記4種類のデザインから1つ選んでプロンプトを貼り付け</strong>、生成</li>
+      </ol>
+      <div class="callout callout-warn">
+        <span class="callout-label">⚠ 重要</span>
+        <strong>チェック対象を間違えると別物が生成されます。</strong><br>
+        「変換したメモ」だけにチェック → 他のソースのチェックは外す、を必ず確認してください。
+      </div>
+      <div class="callout callout-tip" style="margin-top:14px;">
+        <span class="callout-label">💡 用途別の選び方</span>
+        🖨️ <strong>印刷が必要なら白背景がおすすめ</strong>（B / D）<br>
+        📱 <strong>Webやスマホ閲覧中心なら黄色背景</strong>（A / C）
+      </div>
+    </div>
+
+    <!-- DESIGN VARIATION CAROUSEL -->
+    <div class="carousel-section theme-design">
+      <div class="carousel-header">
+        <div class="carousel-title">
+          <span class="pre">DESIGN VARIATIONS — PICK ONE OF 4</span>
+          🎨 デザインバリエーション
+        </div>
+        <div class="carousel-nav">
+          <button class="nav-prev" data-target="designTrack" aria-label="前へ">←</button>
+          <button class="nav-next" data-target="designTrack" aria-label="次へ">→</button>
+        </div>
+      </div>
+      <div class="carousel-track" id="designTrack">
+
+        <!-- A: Yellow + Illust (Web) -->
+        <article class="design-tile">
+          <div class="design-label">
+            <div class="design-letter">A</div>
+            <div class="design-name">黄色背景 × イラスト</div>
+            <div class="design-tags">
+              <span class="design-tag use-web">📱 Web</span>
+            </div>
+          </div>
+          <div class="design-preview-wrap"><img src="./images/design_a_yellow_illust.png" alt="デザインA：黄色背景×イラスト"></div>
+          <div class="design-meta">
+            <p class="feature">Timeeブランドカラーの黄色背景＋親しみやすい<strong>イラスト</strong>。初日でも緊張しない柔らかさ。</p>
+            <span class="recommend">📌 飲食／小売／初心者ワーカー多めの現場</span>
+          </div>
+          <div class="prompt-block">
+            <div class="prompt-header">
+              <span>🎨 DESIGN PROMPT — A</span>
+              <button class="copy-btn">📋 コピー</button>
+            </div>
+<pre class="prompt-content">【カラー指定（厳守）】
+・背景カラーは #FFD700（RGB: 255,215,0）を厳密に使用し、RGB値の変更・明度調整・彩度調整・透過・グラデーション・影・減光処理を一切行わず、必ず単色ベタ塗りで完全一致させること。
+・文字色は #212121(本文・見出し)、#FFFFFF(暗色背景上のみ)。
+・アクセントカラーは #007AFF、警告・注意喚起カラーは #FF3B30。
+・視認性確保のため、黄背景に白文字等の低コントラスト組み合わせは避けること。
+
+【デザイン】
+・黄色・黒・白を基調とする。
+・簡潔な図解とイラストを使用し、情報を整理して見やすく配置する。
+
+【トーン＆マナー】
+・初めての方でも安心できる優しい伴走型のトーン(煽る表現は避ける)。
+
+【強調表示】
+・注意喚起には赤色(#FF3B30)や目立つアイコンを使用してメリハリをつける。
+
+【画像生成(スタッフイラスト)】
+・実写風画像は使用せず、必ず「淡い水色のポロシャツとチノパン」を着たスタッフのフラットでやさしいタッチのイラスト(親しみやすいキャラクター風)を生成して挿入する。
+・線は均一でやわらかく、彩度は中程度に抑え、黄色背景と調和する配色にすること。
+・写真調・3D・リアル系の描写は禁止。
+・黄色くて丸いキャラクターは登場させないこと。
+
+【コピー防止用の透かし(全スライド共通)】
+・全スライドの背景全面に「Timee」という文字を半透明の白(#FFFFFF)で透かしとして配置すること。
+・配置角度は左下から右上に向けて約-30度の斜め配置。
+・タイル状(格子状)に等間隔で繰り返し配置し、スライド全面を覆うこと。
+・1文字あたりのフォントサイズは小さめ(目安: 18〜24pt程度)、不透明度は薄め(目安: 10〜15%)に設定し、本文の可読性を妨げないこと。
+・フォントはサンセリフ体(Helvetica、Arial、Noto Sans等)を使用。
+・透かしはコンテンツ・図解・イラストの背面に配置し、前面要素の視認性を最優先すること。</pre>
+          </div>
+        </article>
+
+        <!-- B: White + Illust (Print) -->
+        <article class="design-tile">
+          <div class="design-label">
+            <div class="design-letter">B</div>
+            <div class="design-name">白背景 × イラスト</div>
+            <div class="design-tags">
+              <span class="design-tag use-print">🖨 印刷</span>
+            </div>
+          </div>
+          <div class="design-preview-wrap"><img src="./images/design_b_white_illust.png" alt="デザインB：白背景×イラスト"></div>
+          <div class="design-meta">
+            <p class="feature">清潔感のある<strong>白背景</strong>＋イラスト。情報量が多くても読みやすい。印刷時に最適。</p>
+            <span class="recommend">📌 製造／物流／工程が多い現場</span>
+          </div>
+          <div class="prompt-block">
+            <div class="prompt-header">
+              <span>🎨 DESIGN PROMPT — B</span>
+              <button class="copy-btn">📋 コピー</button>
+            </div>
+<pre class="prompt-content">【カラー指定（厳守）】
+・背景カラーは #FFFFFF（RGB: 255,255,255）を厳密に使用し、RGB値の変更・明度調整・彩度調整・透過・グラデーション・影・減光処理を一切行わず、必ず単色ベタ塗りで完全一致させること。
+・文字色は #212121（本文・見出し）を基本とし、暗色背景上でのみ #FFFFFF を使用する。
+・アクセントカラーは #007AFF、警告・注意喚起カラーは #FF3B30。
+・視認性確保のため、白背景に白文字や淡色文字等の低コントラスト組み合わせは避けること。
+
+【デザイン】
+・白・黒・差し色（#007AFF / #FF3B30）を基調とする。
+・簡潔な図解とイラストを使用し、情報を整理して見やすく配置する。
+
+【トーン＆マナー】
+・初めての方でも安心できる優しい伴走型のトーン（煽る表現は避ける）。
+
+【強調表示】
+・注意喚起には赤色（#FF3B30）や目立つアイコンを使用してメリハリをつける。
+
+【画像生成（スタッフイラスト）】
+・実写風画像は使用せず、必ず「淡い水色のポロシャツとチノパン」を着たスタッフのフラットでやさしいタッチのイラスト（親しみやすいキャラクター風）を生成して挿入する。
+・線は均一でやわらかく、彩度は中程度に抑え、白背景と調和する配色にすること。
+・写真調・3D・リアル系の描写は禁止。
+・黄色くて丸いキャラクターは登場させないこと。
+
+【コピー防止用の透かし（全スライド共通）】
+・全スライドの背景全面に「Timee」という文字を、ごく薄いグレー（目安: #E5E5E5 〜 #EEEEEE 相当、または黒 #000000 を不透明度 4〜6% に設定）で透かしとして配置すること。 ※白背景のため、純白の透かしは視認できないので使用しない。
+・配置角度は左下から右上に向けて約 -30 度の斜め配置。
+・タイル状（格子状）に等間隔で繰り返し配置し、スライド全面を覆うこと。
+・1文字あたりのフォントサイズは小さめ（目安: 18〜24pt 程度）、不透明度は前回より薄め（目安: 4〜6%）に設定し、本文の可読性を一切妨げないこと。
+・フォントはサンセリフ体（Helvetica、Arial、Noto Sans 等）を使用。
+・透かしはコンテンツ・図解・イラストの背面に配置し、前面要素の視認性を最優先すること。</pre>
+          </div>
+        </article>
+
+        <!-- C: Yellow + Photo (Web - Standard) -->
+        <article class="design-tile">
+          <div class="design-label">
+            <div class="design-letter">C</div>
+            <div class="design-name">黄色背景 × 実写</div>
+            <div class="design-tags">
+              <span class="design-tag use-web">📱 Web</span>
+              <span class="design-tag">標準</span>
+            </div>
+          </div>
+          <div class="design-preview-wrap"><img src="./images/design_c_yellow_photo.png" alt="デザインC：黄色背景×実写"></div>
+          <div class="design-meta">
+            <p class="feature">黄色＋<strong>実写人物</strong>でTimeeらしさ最強。信頼感＋ブランド一貫性。</p>
+            <span class="recommend">📌 標準採用パターン。迷ったらこれ</span>
+          </div>
+          <div class="prompt-block">
+            <div class="prompt-header">
+              <span>🎨 DESIGN PROMPT — C</span>
+              <button class="copy-btn">📋 コピー</button>
+            </div>
+<pre class="prompt-content">【カラー指定（厳守）】
+・背景カラーは #FFD700（RGB: 255,215,0）を厳密に使用し、RGB値の変更・明度調整・彩度調整・透過・グラデーション・影・減光処理を一切行わず、必ず単色ベタ塗りで完全一致させること。
+・文字色は #212121(本文・見出し)、#FFFFFF(暗色背景上のみ)。
+・アクセントカラーは #007AFF、警告・注意喚起カラーは #FF3B30。
+・視認性確保のため、黄背景に白文字等の低コントラスト組み合わせは避けること。
+【デザイン】
+・黄色・黒・白を基調とする。
+・簡潔な図解を使用し、情報を整理して見やすく配置する。
+・余白を十分に取り、清潔感のあるレイアウトにすること。
+【トーン＆マナー】
+・初めての方でも安心できる優しい伴走型のトーン(煽る表現は避ける)。
+【強調表示】
+・注意喚起には赤色(#FF3B30)や目立つアイコンを使用してメリハリをつける。
+【使用する画像(スタッフ実写画像)】
+・イラストは使用しないこと。
+・原則として、ソース(アップロード資料)に含まれている実写写真をそのまま使用すること。
+・ソース内の写真の中から、内容に最も適した場面(作業中・案内中・説明中など)を選定して挿入する。
+・写真のトリミングや配置調整は可だが、人物の差し替え・合成・加工(色味の大幅変更、フィルター追加、AIによる修正等)は行わないこと。
+・ソースに該当する写真が含まれていない場合に限り、AIによる実写風画像を新規生成して挿入してよい。
+・新規生成する場合は、必ず「淡い水色のポロシャツとチノパン」を着たスタッフのリアルな実写風(写真的な)画像とすること。
+・性別・年齢は内容に合わせて自然に設定し、表情は柔らかく親しみやすい印象にすること。
+・スタッフが実際に作業している様子・案内している様子・説明している様子など、内容に即した自然なシチュエーションで人物を登場させること。
+・背景は白または淡いグレーのシンプルな環境とし、被写体(スタッフ)が主役として際立つようにすること(黄色背景のスライド上に配置する際は、写真自体の背景は白〜淡グレーを維持し、写真の周囲に十分な余白を確保して視認性を担保すること)。
+・照明は自然光のような柔らかい光を意識し、明るくクリアな写真品質にすること。
+・3Dレンダリング調・CG調・アニメ調・過度な加工は禁止。あくまで自然な実写写真のクオリティを保つこと。
+・黄色くて丸いキャラクターは登場させないこと。
+【コピー防止用の透かし(全スライド共通)】
+・全スライドの背景全面に「Timee」という文字を半透明の白(#FFFFFF)で透かしとして配置すること。
+・配置角度は左下から右上に向けて約-30度の斜め配置。
+・タイル状(格子状)に等間隔で繰り返し配置し、スライド全面を覆うこと。
+・1文字あたりのフォントサイズは小さめ(目安: 18〜24pt程度)、不透明度は薄め(目安: 10〜15%)に設定し、本文の可読性を妨げないこと。
+・フォントはサンセリフ体(Helvetica、Arial、Noto Sans等)を使用。
+・透かしはコンテンツ・図解・写真の背面に配置し、前面要素の視認性を最優先すること。</pre>
+          </div>
+        </article>
+
+        <!-- D: White + Photo (Print) -->
+        <article class="design-tile">
+          <div class="design-label">
+            <div class="design-letter">D</div>
+            <div class="design-name">白背景 × 実写</div>
+            <div class="design-tags">
+              <span class="design-tag use-print">🖨 印刷</span>
+            </div>
+          </div>
+          <div class="design-preview-wrap"><img src="./images/design_d_white_photo.png" alt="デザインD：白背景×実写"></div>
+          <div class="design-meta">
+            <p class="feature">白背景＋実写でプロフェッショナル感。落ち着いた印象。印刷時に最適。</p>
+            <span class="recommend">📌 介護／医療系／フォーマルな現場</span>
+          </div>
+          <div class="prompt-block">
+            <div class="prompt-header">
+              <span>🎨 DESIGN PROMPT — D</span>
+              <button class="copy-btn">📋 コピー</button>
+            </div>
+<pre class="prompt-content">【カラー指定（厳守）】
+・背景カラーは #FFFFFF（RGB: 255,255,255）を厳密に使用し、RGB値の変更・明度調整・彩度調整・透過・グラデーション・影・減光処理を一切行わず、必ず単色ベタ塗りで完全一致させること。
+・文字色は #212121(本文・見出し)。
+・アクセントカラーは #007AFF、警告・注意喚起カラーは #FF3B30。
+・視認性確保のため、白背景に淡色文字等の低コントラスト組み合わせは避けること。
+【デザイン】
+・白・黒を基調とし、アクセントに青(#007AFF)、警告に赤(#FF3B30)を使用する。
+・簡潔な図解を使用し、情報を整理して見やすく配置する。
+・余白を十分に取り、清潔感のあるレイアウトにすること。
+【トーン＆マナー】
+・初めての方でも安心できる優しい伴走型のトーン(煽る表現は避ける)。
+【強調表示】
+・注意喚起には赤色(#FF3B30)や目立つアイコンを使用してメリハリをつける。
+【使用する画像(スタッフ実写画像)】
+・イラストは使用しないこと。
+・原則として、ソース(アップロード資料)に含まれている実写写真をそのまま使用すること。
+・ソース内の写真の中から、内容に最も適した場面(作業中・案内中・説明中など)を選定して挿入する。
+・写真のトリミングや配置調整は可だが、人物の差し替え・合成・加工(色味の大幅変更、フィルター追加、AIによる修正等)は行わないこと。
+・ソースに該当する写真が含まれていない場合に限り、AIによる実写風画像を新規生成して挿入してよい。
+・新規生成する場合は、必ず「淡い水色のポロシャツとチノパン」を着たスタッフのリアルな実写風(写真的な)画像とすること。
+・性別・年齢は内容に合わせて自然に設定し、表情は柔らかく親しみやすい印象にすること。
+・スタッフが実際に作業している様子・案内している様子・説明している様子など、内容に即した自然なシチュエーションで人物を登場させること。
+・背景は白または淡いグレーのシンプルな環境とし、被写体(スタッフ)が主役として際立つようにすること。
+・照明は自然光のような柔らかい光を意識し、明るくクリアな写真品質にすること。
+・3Dレンダリング調・CG調・アニメ調・過度な加工は禁止。あくまで自然な実写写真のクオリティを保つこと。
+【ロゴ・キャラクターの非使用(厳守)】
+・ロゴ、キャラクター、マスコット、アイコン化された人物・動物等のシンボルマークは一切配置しないこと。
+・「黄色くて丸いキャラクター」を含む、いかなる企業ロゴ・キャラクターも全スライドにおいて使用禁止とする。
+・AIによるロゴ・キャラクターの自動生成・自動挿入も絶対禁止。
+・スライド右下を含む全領域において、ロゴ・キャラクターを意図せず生成・配置しないよう厳守すること。
+【コピー防止用の透かし(全スライド共通・必須)】
+・全スライド(表紙・本文・章扉・裏表紙すべて例外なく)の背景全面に「Timee」という文字を半透明のグレー(#212121)で透かしとして必ず配置すること。透かしの省略は不可。
+・配置角度は左下から右上に向けて約-30度の斜め配置。
+・タイル状(格子状)に等間隔で繰り返し配置し、スライド全面(四隅・端部含む)を漏れなく覆うこと。
+・1文字あたりのフォントサイズは小さめ(目安: 18〜24pt程度)、不透明度は薄め(目安: 8〜12%)に設定し、本文の可読性を妨げないこと。
+・フォントはサンセリフ体(Helvetica、Arial、Noto Sans等)を使用。
+・透かしはコンテンツ・図解・写真の背面に配置し、前面要素の視認性を最優先すること。
+・透かしレイヤーはすべてのスライドで同一の仕様(角度・間隔・サイズ・不透明度)を維持し、スライドごとに省略・変動しないこと。</pre>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 6: check & revise -->
+  <section>
+    <div class="step-card">
+      <div class="step-num">STEP 06</div>
+      <h2 class="step-title">内容チェック＆改訂</h2>
+      <h4 class="minor-title">確認すること</h4>
+      <ul class="checklist">
+        <li>文字化けしているスライドがないか</li>
+        <li>不適切な画像（業務と関係ない／ブランドにそぐわない）がないか</li>
+        <li><strong>「Timee」のウォーターマーク</strong>が入っているか</li>
+        <li>安全に関わる手順（指差し呼称・ブレーキ確認・員数確認など）が抜けていないか</li>
+        <li>選んだデザインバリエーションどおりに生成されているか</li>
+      </ul>
+      <h4 class="minor-title">修正が必要な場合</h4>
+      <ol class="numbered-steps">
+        <li>該当スライドを開いて <span class="kbd">変更</span> をクリック</li>
+        <li><strong>修正したい箇所を1度でまとめて、すべて具体的に指示</strong><br>
+          <span style="font-size:13px; color:var(--ink-soft);">例：「3枚目の画像を、ヘルメットを被った男性のイラストに差し替え、5枚目の本文を敬語に書き直し、7枚目の警告アイコンを大きく」</span>
+        </li>
+        <li><span class="kbd">改訂版のスライドを生成</span> をクリック</li>
+      </ol>
+      <div class="callout callout-warn">
+        <span class="callout-label">⚠ 重要</span>
+        <strong>書き出し（再生成）は初回生成と同じくらい時間がかかります。</strong><br>
+        1スライドずつ直すと毎回その時間が積み上がってしまうため、<strong>修正箇所は1度ですべて洗い出し、具体的な指示でまとめて投げる</strong>のが効率的です。
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 7: PDF download -->
+  <section>
+    <div class="step-card is-goal">
+      <div class="step-num" style="color:var(--accent-blue);">🎯 GOAL — STEP 07</div>
+      <h2 class="step-title">PDFでダウンロード</h2>
+      <ol class="numbered-steps">
+        <li>NotebookLMの右上 <span class="kbd">︙（その他）</span> をクリック</li>
+        <li><span class="kbd">PDFでダウンロード</span> を選択して保存</li>
+        <li>ローカルに保存して<strong>完成</strong></li>
+      </ol>
+      <div class="callout callout-tip" style="margin-top:20px;">
+        <span class="callout-label">💡 TIP</span>
+        PDF化することで、ワーカーがスマホで見ても崩れず、印刷時の精度も安定します。
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <h2 class="section-title"><span class="num">FAQ</span><span class="icon">⚠️</span>よくあるつまずき</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">NotebookLMが動画を読み込んでくれない</div>
+      <div class="faq-a">YouTubeの公開設定が <strong>「限定公開」</strong> になっているか確認。「非公開」だと読み込めません。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">生成されたマニュアルがスカスカ</div>
+      <div class="faq-a">ソース動画が短い／セリフが少ない可能性。STEP 1の演者セリフ例を見直して撮り直し。または、ソース③として既存マニュアル・手順書を追加すると改善します。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">黄色背景にならない／意図したデザインにならない</div>
+      <div class="faq-a">STEP 5のデザインバリエーションで選んだプロンプトを <strong>そのまま</strong> 貼り付けているか確認。途中で改行や文字が抜けると精度が落ちます。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">ひな形IDが重複しているマニュアルがある</div>
+      <div class="faq-a">既存のマニュアル掲載DBで該当ひな形を検索。既にマニュアルがある場合は、内容を確認の上、更新か新規作成かを判断してください。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">クライアントから撮影NGと言われた</div>
+      <div class="faq-a">演者をワーカー役の代理スタッフに置き換え、固有顔が映らないアングル（後ろ姿／手元のみ）で撮影してください。<strong>これは全業界共通で必要な配慮</strong>です。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">デザインバリエーション、どれを選べばいい？</div>
+      <div class="faq-a">用途で先に絞る：<strong>印刷が必要なら白背景（B / D）、Web中心なら黄色（A / C）</strong>。さらに迷ったら <strong>C（黄色背景×実写）</strong> が標準。介護・医療など落ち着いた印象が必要なら D（白背景×実写）。初心者ワーカーが多い飲食・小売は A（黄色×イラスト）が好相性。</div>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section>
+    <h2 class="section-title"><span class="num">LINKS</span><span class="icon">🔗</span>関連リンク</h2>
+    <div class="related-links">
+      <ul>
+        <li><a href="https://notebooklm.google.com/">NotebookLM</a></li>
+        <li><a href="https://gemini.google.com/gem/1aDT6fvVj25AB5EgPUbhAGBlUG5IYeI-z?usp=sharing">作業マニュアルGem</a></li>
+        <li><a href="https://www.notion.so/312c5579d2b8804591c0fb9a09cf77b2">マニュアル掲載ひな形DB</a> ※既存DBに作成後の登録をお願いします</li>
+        <li><a href="https://www.notion.so/timee/2edc5579d2b88063ab6de491a692190c">マニュアル作成、ひな形・サムネイル改善｜作業手順書（SST版）</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div>作成・運用：マーケティング 菊地亮</div>
+    <div>問い合わせ：Slack #manual-workflow</div>
+  </footer>
+
+</div>
+
+<!-- LIGHTBOX OVERLAY -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+  <button class="lightbox-close" type="button" aria-label="閉じる" onclick="event.stopPropagation(); closeLightbox();">×</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'base',
+  themeVariables: {
+    primaryColor: '#FFF4E6',
+    primaryTextColor: '#2A2520',
+    primaryBorderColor: '#FF6F3C',
+    lineColor: '#FF6F3C',
+    secondaryColor: '#FFE8DC',
+    tertiaryColor: '#FFF9F2',
+    fontFamily: 'Noto Sans JP, sans-serif',
+    fontSize: '14px'
+  },
+  flowchart: { curve: 'basis', padding: 20 }
+});
+
+// Generic carousel handler
+(function() {
+  function setupCarousel(trackId) {
+    const track = document.getElementById(trackId);
+    if (!track) return;
+    const prev = document.querySelector(`.nav-prev[data-target="${trackId}"]`);
+    const next = document.querySelector(`.nav-next[data-target="${trackId}"]`);
+    if (!prev || !next) return;
+    const getStep = () => {
+      const tile = track.querySelector('.industry-tile, .design-tile');
+      if (!tile) return 480;
+      const style = getComputedStyle(track);
+      const gap = parseFloat(style.gap) || 18;
+      return tile.getBoundingClientRect().width + gap;
+    };
+    const updateButtons = () => {
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+    };
+    prev.addEventListener('click', () => track.scrollBy({ left: -getStep(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: getStep(), behavior: 'smooth' }));
+    track.addEventListener('scroll', updateButtons, { passive: true });
+    window.addEventListener('resize', updateButtons);
+    setTimeout(updateButtons, 100);
+  }
+  setupCarousel('designTrack');
+
+  // Lightbox functions (global)
+  window.openLightbox = function(src, caption) {
+    const overlay = document.getElementById('lightboxOverlay');
+    const img = document.getElementById('lightboxImg');
+    const cap = document.getElementById('lightboxCaption');
+    img.src = src;
+    img.alt = caption || '';
+    cap.textContent = caption || '';
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeLightbox = function() {
+    document.getElementById('lightboxOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  };
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') window.closeLightbox();
+  });
+
+  // Copy button for design prompts
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const block = btn.closest('.prompt-block');
+      const text = block.querySelector('.prompt-content').textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        const original = btn.textContent;
+        btn.textContent = '✓ コピー済';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 1800);
+      } catch (e) {
+        btn.textContent = '⚠ 失敗';
+        setTimeout(() => { btn.textContent = '📋 コピー'; }, 1800);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
