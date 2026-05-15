@@ -774,31 +774,34 @@ em { font-style: normal; background: linear-gradient(180deg, transparent 65%, va
   background: var(--primary);
   color: #fff;
   font-family: var(--sans);
-  font-weight: 700;
-  font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 4px;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  padding: 7px 14px;
+  border-radius: 6px;
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
   transform: translateY(4px);
   z-index: 5;
-  box-shadow: 0 4px 12px -2px rgba(255,111,60,.5);
+  box-shadow:
+    0 3px 0 rgba(180, 60, 0, 0.35),
+    0 8px 20px -4px rgba(255,111,60,.55);
 }
 .op-pin::before {
   content: "";
   position: absolute;
-  left: var(--arrow-x, 12px);
+  left: var(--arrow-x, 16px);
   top: 100%;
   width: 0; height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 6px solid var(--primary);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 9px solid var(--primary);
 }
 .op-pin.below::before {
   top: auto; bottom: 100%;
   border-top: none;
-  border-bottom: 6px solid var(--primary);
+  border-bottom: 9px solid var(--primary);
 }
 .op-frame.run .op-pin {
   animation: opPinIn 0.4s 1.2s cubic-bezier(.16,1.4,.3,1) forwards;
@@ -869,7 +872,7 @@ em { font-style: normal; background: linear-gradient(180deg, transparent 65%, va
 @media (max-width: 640px) {
   .op-shot { grid-template-columns: 40px 1fr; gap: 10px; }
   .op-shot__num { width: 36px; height: 36px; font-size: 14px; }
-  .op-pin { font-size: 9px; padding: 3px 7px; }
+  .op-pin { font-size: 12px; padding: 5px 10px; }
 }
 
 </style>
@@ -1223,7 +1226,7 @@ flowchart LR
         <div class="op-frame__img-wrap">
           <img src="./image/step04_memo_saved.png" alt="STEP 04-A：メモ保存完了、Studio パネルにメモが出現" loading="lazy">
           <div class="op-highlight" style="--x:71.0%; --y:57.0%; --w:28.5%; --h:9.0%;"></div>
-        <div class="op-pin" style="--px:74.0%; --py:49.5%; --arrow-x:16px;">✓ 保存完了 — クリックして開く</div>
+        <div class="op-pin" style="--px:62.0%; --py:49.5%; --arrow-x:180px;">✓ 保存完了 — クリックして開く</div>
         <div class="op-cursor" style="--start-x:45.0%; --start-y:35.0%; --end-x:87.0%; --end-y:62.5%;"><svg viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.3 L10 13 L16 13 Z" fill="#1f1f1f" stroke="white" stroke-width="1" stroke-linejoin="round"/></svg></div>
         <div class="op-click" style="--end-x:87.0%; --end-y:62.5%;"></div>
         </div>
@@ -1281,7 +1284,7 @@ flowchart LR
         <div class="op-frame__img-wrap">
           <img src="./image/step04_generation_started.png" alt="STEP 04-D：スライド資料の生成中" loading="lazy">
           <div class="op-highlight" style="--x:72.0%; --y:57.0%; --w:27.0%; --h:9.0%;"></div>
-        <div class="op-pin" style="--px:74.0%; --py:49.5%; --arrow-x:16px;">⏳ 生成中（数十秒）</div>
+        <div class="op-pin" style="--px:72.0%; --py:49.5%; --arrow-x:96px;">⏳ 生成中（数十秒）</div>
         </div>
       </div>
     </div>
