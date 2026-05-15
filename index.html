@@ -1,11 +1,2164 @@
 <!DOCTYPE html>
-  <html lang="ja">
-  <head>
-  <meta charset="UTF-8">
-  <title>Manual</title>
-  <meta http-equiv="refresh" content="0; url=manual_creation_workflow.html">
-  </head>
-  <body>
-  <p>Redirecting to <a href="manual_creation_workflow.html">manual_creation_workflow.html</a>...</p>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マニュアル作成手順書｜タイミー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --bg: #FAF5EC;
+  --bg-card: #FFFFFF;
+  --bg-soft: #FFF4E6;
+  --bg-warm: #FFE8DC;
+  --ink: #2A2520;
+  --ink-soft: #6B6258;
+  --ink-mute: #9C9489;
+  --primary: #FF6F3C;
+  --primary-dark: #E55A28;
+  --primary-soft: #FFD9C4;
+  --accent-blue: #3B5BDB;
+  --accent-warn: #D9480F;
+  --rule: #E8DFD2;
+  --serif: 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  --sans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+  --mono: 'JetBrains Mono', 'Menlo', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans); background: var(--bg);
+  color: var(--ink); line-height: 1.75;
+  font-size: 15px; -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: radial-gradient(circle at 25% 30%, rgba(255,111,60,0.04) 0%, transparent 50%),
+                    radial-gradient(circle at 75% 70%, rgba(59,91,219,0.03) 0%, transparent 50%);
+  pointer-events: none; z-index: 0;
+}
+.container { max-width: 920px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+.hero { padding: 80px 0 60px; border-bottom: 1px solid var(--rule); margin-bottom: 60px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; background: var(--primary); color: #fff;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+  border-radius: 999px; margin-bottom: 24px;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; background: #fff; border-radius: 50%; }
+h1.hero-title {
+  font-family: var(--serif); font-size: clamp(40px, 6vw, 64px);
+  font-weight: 800; letter-spacing: -0.02em;
+  line-height: 1.15; margin-bottom: 20px;
+}
+h1.hero-title .accent { color: var(--primary); }
+.hero-sub { font-size: 17px; color: var(--ink-soft); max-width: 640px; line-height: 1.8; }
+.hero-sub strong { color: var(--ink); font-weight: 700; }
+.hero-meta { display: flex; gap: 32px; margin-top: 36px; flex-wrap: wrap; }
+.hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
+.hero-meta-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); font-weight: 700; }
+.hero-meta-value { font-family: var(--serif); font-size: 18px; font-weight: 700; }
+
+section { margin-bottom: 64px; }
+
+h2.section-title {
+  font-family: var(--serif); font-size: 30px; font-weight: 700;
+  margin-bottom: 24px; display: flex; align-items: baseline; gap: 16px;
+  letter-spacing: -0.01em;
+}
+h2.section-title .icon { font-size: 28px; }
+h2.section-title .num {
+  font-family: var(--mono); font-size: 14px; font-weight: 500;
+  color: var(--primary); letter-spacing: 0.05em;
+}
+h3.sub-title { font-size: 17px; font-weight: 700; margin: 28px 0 12px; display: flex; align-items: center; gap: 8px; }
+h4.minor-title { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: var(--ink-soft); letter-spacing: 0.02em; }
+p { margin-bottom: 14px; }
+
+.callout { padding: 18px 22px; border-radius: 8px; margin: 20px 0; font-size: 14px; line-height: 1.7; border-left: 4px solid; background: var(--bg-card); }
+.callout-note { border-color: var(--accent-blue); background: #F0F4FF; }
+.callout-tip { border-color: var(--primary); background: var(--bg-soft); }
+.callout-warn { border-color: var(--accent-warn); background: #FFF1EC; }
+.callout-label {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+  text-transform: uppercase; margin-bottom: 6px; display: block;
+}
+.callout-note .callout-label { color: var(--accent-blue); }
+.callout-tip .callout-label { color: var(--primary); }
+.callout-warn .callout-label { color: var(--accent-warn); }
+
+.gem-inline {
+  background: linear-gradient(135deg, #FFFCF7 0%, #FFF4E6 100%);
+  border: 1px solid var(--primary-soft);
+  border-radius: 12px; padding: 20px 24px; margin: 20px 0;
+  position: relative; overflow: hidden;
+  display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+}
+.gem-inline::before {
+  content: '✨'; position: absolute; top: -8px; right: 0;
+  font-size: 50px; opacity: 0.15; transform: rotate(15deg);
+}
+.gem-inline .gem-text { flex: 1; min-width: 240px; }
+.gem-inline .gem-text strong { display: block; font-size: 14px; margin-bottom: 4px; color: var(--ink); }
+.gem-inline .gem-text span { font-size: 13px; color: var(--ink-soft); }
+.gem-inline .gem-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px; background: var(--primary); color: #fff;
+  font-weight: 700; font-size: 13px; border-radius: 8px;
+  text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+.gem-inline .gem-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255,111,60,0.3); }
+
+.info-card { background: var(--bg-card); border: 1px solid var(--rule); border-radius: 12px; padding: 28px 32px; margin: 24px 0; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 12px; }
+@media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
+.info-block h4 { font-size: 13px; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.05em; }
+.info-block.ok h4 { color: var(--primary); }
+.info-block.ng h4 { color: var(--ink-mute); }
+.info-block ul { list-style: none; }
+.info-block li { padding: 4px 0 4px 22px; position: relative; font-size: 13px; }
+.info-block.ok li::before { content: '✓'; position: absolute; left: 0; top: 4px; color: var(--primary); font-weight: 800; }
+.info-block.ng li::before { content: '—'; position: absolute; left: 0; top: 4px; color: var(--ink-mute); }
+
+.flowchart-wrapper { background: var(--bg-card); border: 1px solid var(--rule); border-radius: 12px; padding: 32px 24px; margin: 24px 0; overflow-x: auto; }
+.mermaid { display: flex; justify-content: center; min-width: fit-content; }
+
+/* ============ TABS ============ */
+.tab-nav-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 6px;
+  margin: 16px 0 32px;
+  display: flex;
+  gap: 6px;
+  position: sticky;
+  top: 12px;
+  z-index: 50;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  backdrop-filter: blur(10px);
+}
+.tab-btn {
+  flex: 1;
+  padding: 12px 14px;
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-align: center;
+  line-height: 1.25;
+}
+.tab-btn .tab-num { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; opacity: 0.6; }
+.tab-btn .tab-label { font-size: 14px; letter-spacing: 0.02em; }
+.tab-btn .tab-sub { font-size: 10.5px; opacity: 0.7; font-weight: 500; }
+.tab-btn:hover { background: var(--bg-soft); color: var(--ink); }
+.tab-btn.active {
+  background: linear-gradient(135deg, var(--primary) 0%, #FF8B5A 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(255,111,60,0.35);
+}
+.tab-btn.active .tab-num { opacity: 0.9; color: #fff; }
+.tab-btn.active .tab-sub { opacity: 0.85; color: #fff; }
+@media (max-width: 640px) {
+  .tab-nav-wrapper { padding: 4px; gap: 3px; top: 8px; }
+  .tab-btn { padding: 10px 6px; }
+  .tab-btn .tab-num { font-size: 9px; letter-spacing: 0.06em; }
+  .tab-btn .tab-label { font-size: 11.5px; }
+  .tab-btn .tab-sub { font-size: 9.5px; }
+}
+
+.tab-panel { display: none; animation: tabFadeIn 0.3s ease-out; }
+.tab-panel.active { display: block; }
+@keyframes tabFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.tab-intro {
+  background: linear-gradient(135deg, #FFF4E6 0%, #FFE8DC 100%);
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin-bottom: 24px;
+  border-left: 4px solid var(--primary);
+}
+#tab2 .tab-intro { background: linear-gradient(135deg, #F0F4FF 0%, #E8EEFF 100%); border-left-color: var(--accent-blue); }
+#tab3 .tab-intro { background: linear-gradient(135deg, #FFFCF7 0%, #FFF4E6 100%); border-left-color: var(--accent-warn); }
+.tab-intro-label {
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.15em; color: var(--primary-dark);
+  margin-bottom: 6px;
+}
+#tab2 .tab-intro-label { color: var(--accent-blue); }
+#tab3 .tab-intro-label { color: var(--accent-warn); }
+.tab-intro h3 { font-family: var(--serif); font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.tab-intro p { font-size: 14px; color: var(--ink); margin: 0; line-height: 1.7; }
+
+.mini-flow-wrapper {
+  background: var(--bg-card);
+  border: 1px dashed var(--rule);
+  border-radius: 10px;
+  padding: 16px 14px 8px;
+  margin: 0 0 28px;
+  overflow-x: auto;
+}
+.mini-flow-label {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.12em; color: var(--ink-mute);
+  text-align: center; margin-bottom: 4px;
+}
+
+.back-to-tab1 {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, var(--primary) 0%, #FF8B5A 100%);
+  color: #fff !important;
+  font-weight: 700;
+  border-radius: 12px;
+  text-decoration: none;
+  margin: 32px 0 8px;
+  transition: all 0.2s;
+  border: 0; cursor: pointer;
+  font-family: var(--sans); font-size: 14px;
+}
+.back-to-tab1:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(255,111,60,0.35); }
+.back-to-tab1::before { content: '✓'; font-size: 16px; }
+.back-to-tab1::after { content: '→'; font-size: 18px; opacity: 0.9; }
+
+.tab-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px;
+  background: var(--accent-blue); color: #fff !important;
+  font-size: 12px; font-weight: 700;
+  border-radius: 999px; text-decoration: none;
+  border: 0; cursor: pointer; font-family: var(--sans);
+  transition: all 0.2s;
+}
+.tab-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59,91,219,0.3); }
+.tab-cta.is-tab3 { background: var(--accent-warn); }
+
+.step-card {
+  background: var(--bg-card); border-radius: 14px;
+  padding: 32px 36px; margin-bottom: 24px;
+  border: 1px solid var(--rule); position: relative;
+}
+.step-card::before {
+  content: ''; position: absolute;
+  left: 0; top: 32px; bottom: 32px; width: 4px;
+  background: var(--primary); border-radius: 0 4px 4px 0;
+}
+#tab2 .step-card::before { background: var(--accent-blue); }
+#tab3 .step-card::before { background: var(--accent-warn); }
+.step-card.is-goal::before { background: linear-gradient(180deg, var(--primary), var(--accent-blue)); }
+.step-card.is-goal { background: linear-gradient(135deg, #FFF8F2 0%, #FFFCFC 100%); }
+.step-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; color: var(--primary); font-weight: 700; margin-bottom: 4px; text-transform: uppercase; }
+#tab2 .step-num { color: var(--accent-blue); }
+#tab3 .step-num { color: var(--accent-warn); }
+.step-title { font-family: var(--serif); font-size: 26px; font-weight: 700; margin-bottom: 18px; letter-spacing: -0.01em; }
+.step-title .tag {
+  display: inline-block; background: var(--primary); color: #fff;
+  font-family: var(--sans); font-size: 11px;
+  padding: 3px 10px; border-radius: 4px;
+  vertical-align: middle; margin-left: 10px; letter-spacing: 0.05em;
+}
+
+.rule-table {
+  width: 100%; border-collapse: collapse;
+  margin: 16px 0; font-size: 14px;
+  background: var(--bg-card); border-radius: 8px;
+  overflow: hidden; border: 1px solid var(--rule);
+}
+.rule-table th { background: var(--bg-soft); text-align: left; padding: 12px 16px; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--rule); }
+.rule-table td { padding: 12px 16px; border-top: 1px solid var(--rule); vertical-align: top; }
+.rule-table tr:first-child td { border-top: 0; }
+
+/* CAROUSEL (design only) */
+.carousel-section {
+  margin: 36px -32px; padding: 36px 0;
+  background: linear-gradient(180deg, #2A2520 0%, #1A1612 100%);
+  position: relative;
+}
+@media (min-width: 984px) {
+  .carousel-section {
+    margin: 36px calc(50% - 50vw);
+    padding-left: calc(50vw - 460px);
+    padding-right: calc(50vw - 460px);
+  }
+}
+.carousel-header { display: flex; justify-content: space-between; align-items: center; padding: 0 32px; margin-bottom: 24px; color: #fff; }
+.carousel-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: #fff; }
+.carousel-title .pre { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; color: var(--primary); font-weight: 500; margin-bottom: 4px; }
+.carousel-nav { display: flex; gap: 8px; }
+.carousel-nav button {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.06); color: #fff;
+  cursor: pointer; font-size: 18px;
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+}
+.carousel-nav button:hover { background: var(--primary); border-color: var(--primary); }
+.carousel-nav button:disabled { opacity: 0.3; cursor: not-allowed; }
+.carousel-track {
+  display: flex; gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  padding: 4px 32px 28px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+.carousel-track::-webkit-scrollbar { height: 6px; }
+.carousel-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
+.carousel-track::-webkit-scrollbar-thumb { background: rgba(255,111,60,0.4); border-radius: 3px; }
+.carousel-track::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+.design-tile {
+  flex: 0 0 540px; scroll-snap-align: start;
+  background: var(--bg-card); border-radius: 14px;
+  overflow: hidden; display: flex; flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.design-tile:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+@media (max-width: 640px) { .design-tile { flex: 0 0 88vw; } }
+.design-label {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px;
+  background: linear-gradient(90deg, var(--primary) 0%, #FF8B5A 100%);
+  color: #fff;
+}
+.design-letter {
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 16px; font-weight: 800;
+  border: 1.5px solid rgba(255,255,255,0.5);
+}
+.design-name { font-family: var(--serif); font-size: 17px; font-weight: 700; flex: 1; }
+.design-tags { display: flex; gap: 6px; flex-shrink: 0; }
+.design-tag {
+  font-size: 10.5px; font-weight: 700;
+  background: rgba(255,255,255,0.95); color: var(--primary-dark);
+  padding: 4px 10px; border-radius: 999px; letter-spacing: 0.05em;
+}
+.design-tag.use-web { background: #E0E7FF; color: var(--accent-blue); }
+.design-tag.use-print { background: #FFE9E9; color: var(--accent-warn); }
+.design-preview-wrap { width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #FAF5EC; }
+.design-preview-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.design-meta { padding: 16px 22px 8px; border-bottom: 1px dashed var(--rule); }
+.design-meta .feature { font-size: 13px; line-height: 1.65; color: var(--ink); margin-bottom: 6px; }
+.design-meta .feature strong { color: var(--primary-dark); }
+.design-meta .recommend { font-size: 11.5px; color: var(--ink-soft); background: var(--bg-soft); padding: 6px 10px; border-radius: 6px; margin-top: 8px; display: inline-block; }
+
+.design-preview-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin: 14px 22px 0;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, var(--accent-blue) 0%, #5571E0 100%);
+  color: #fff !important;
+  font-size: 13px; font-weight: 700;
+  text-decoration: none; border-radius: 8px;
+  transition: all 0.2s; letter-spacing: 0.02em;
+  border: 0; position: relative; overflow: hidden;
+}
+.design-preview-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(59,91,219,0.4); background: linear-gradient(135deg, #2A4AC0 0%, #4060D0 100%); }
+.design-preview-btn::before { content: '📄'; font-size: 16px; }
+.design-preview-btn::after { content: '↗'; margin-left: 4px; opacity: 0.8; font-size: 14px; font-weight: 400; }
+
+.prompt-block {
+  margin: 14px 22px 22px;
+  background: #2A2520;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255,111,60,0.2);
+}
+.prompt-header {
+  padding: 8px 14px;
+  background: rgba(255,111,60,0.15);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.prompt-header span { font-size: 10.5px; color: var(--primary); font-weight: 700; letter-spacing: 0.12em; }
+.copy-btn {
+  background: var(--primary); color: #fff;
+  border: 0; padding: 5px 12px; border-radius: 4px;
+  font-size: 11px; cursor: pointer; font-weight: 700;
+  font-family: var(--sans); transition: all 0.2s;
+}
+.copy-btn:hover { background: var(--primary-dark); }
+.copy-btn.copied { background: #2DBA7B; }
+.prompt-content {
+  padding: 14px 16px;
+  font-family: var(--mono); font-size: 11px;
+  color: #F4EDE2; line-height: 1.75;
+  max-height: 320px; overflow-y: auto;
+  white-space: pre-wrap; word-break: break-all;
+}
+.prompt-content::-webkit-scrollbar { width: 5px; }
+.prompt-content::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+.prompt-content::-webkit-scrollbar-thumb { background: rgba(255,111,60,0.4); border-radius: 3px; }
+
+.code-block {
+  background: #2A2520; color: #F4EDE2;
+  padding: 20px 24px; border-radius: 8px;
+  font-family: var(--mono); font-size: 12.5px;
+  line-height: 1.7; margin: 16px 0;
+  overflow-x: auto; position: relative;
+  white-space: pre-wrap; word-break: break-all;
+}
+.code-block::before {
+  content: 'PROMPT'; position: absolute;
+  top: 8px; right: 12px;
+  font-size: 10px; letter-spacing: 0.15em;
+  color: var(--primary); font-weight: 700;
+}
+
+.checklist { list-style: none; margin: 16px 0; }
+.checklist li { padding: 8px 0 8px 28px; position: relative; font-size: 14px; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 12px; width: 16px; height: 16px; border: 1.5px solid var(--ink-mute); border-radius: 3px; }
+
+.numbered-steps { list-style: none; counter-reset: stepCount; margin: 16px 0; }
+.numbered-steps > li { counter-increment: stepCount; padding: 12px 0 12px 44px; position: relative; font-size: 14px; line-height: 1.75; }
+.numbered-steps > li::before { content: counter(stepCount); position: absolute; left: 0; top: 11px; width: 28px; height: 28px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; font-weight: 700; }
+#tab2 .numbered-steps > li::before { background: var(--accent-blue); }
+#tab3 .numbered-steps > li::before { background: var(--accent-warn); }
+
+.faq-item { background: var(--bg-card); border: 1px solid var(--rule); border-radius: 8px; padding: 18px 22px; margin: 12px 0; }
+.faq-q { font-weight: 700; font-size: 14px; display: flex; gap: 10px; margin-bottom: 8px; }
+.faq-q::before { content: 'Q'; background: var(--accent-blue); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; font-family: var(--mono); }
+.faq-a { font-size: 13.5px; color: var(--ink-soft); padding-left: 32px; }
+
+footer { margin: 80px 0 40px; padding: 32px 0; border-top: 1px solid var(--rule); font-size: 13px; color: var(--ink-soft); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.related-links { background: var(--bg-card); padding: 24px 28px; border-radius: 12px; border: 1px solid var(--rule); }
+.related-links ul { list-style: none; }
+.related-links li { padding: 6px 0 6px 24px; position: relative; font-size: 14px; }
+.related-links li::before { content: '→'; position: absolute; left: 0; color: var(--primary); font-weight: 700; }
+.related-links a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.related-links a:hover { border-color: var(--primary); }
+.kbd { font-family: var(--mono); background: var(--bg-soft); padding: 2px 8px; border-radius: 4px; font-size: 12.5px; border: 1px solid var(--rule); font-weight: 500; }
+
+strong { color: var(--ink); font-weight: 700; }
+em { font-style: normal; background: linear-gradient(180deg, transparent 65%, var(--primary-soft) 65%); padding: 0 2px; }
+
+/* ACCORDION */
+.accordion-intro {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin: 20px 0 16px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #FFF4E6 0%, #FFE8DC 100%);
+  border-radius: 10px;
+  border-left: 3px solid var(--primary);
+  font-size: 13px;
+}
+.accordion-intro strong { color: var(--primary-dark); }
+.accordion-section { margin: 24px 0; }
+.accordion-item {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.accordion-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.accordion-item[open] { box-shadow: 0 8px 24px rgba(255,111,60,0.12); border-color: var(--primary-soft); }
+.accordion-header {
+  list-style: none;
+  cursor: pointer;
+  padding: 16px 22px;
+  display: flex; align-items: center; gap: 14px;
+  background: var(--bg-soft);
+  font-weight: 700;
+  transition: background 0.2s;
+  user-select: none;
+}
+.accordion-header::-webkit-details-marker { display: none; }
+.accordion-header::marker { content: ''; }
+.accordion-header:hover { background: var(--bg-warm); }
+.accordion-item[open] .accordion-header {
+  background: linear-gradient(90deg, var(--primary) 0%, #FF8B5A 100%);
+  color: #fff;
+  border-bottom: 1px solid var(--rule);
+}
+.accordion-icon {
+  width: 38px; height: 38px;
+  background: var(--primary); color: #fff;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; flex-shrink: 0;
+}
+.accordion-item[open] .accordion-icon { background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.5); }
+.accordion-industry { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; color: var(--ink-mute); text-transform: uppercase; flex-shrink: 0; }
+.accordion-item[open] .accordion-industry { color: rgba(255,255,255,0.85); }
+.accordion-title { font-family: var(--serif); font-size: 17px; flex: 1; line-height: 1.3; }
+.accordion-duration {
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  color: var(--primary); background: #fff;
+  padding: 4px 12px; border-radius: 999px;
+  border: 1px solid var(--primary-soft);
+  white-space: nowrap; flex-shrink: 0;
+}
+.accordion-item[open] .accordion-duration { background: rgba(255,255,255,0.95); color: var(--primary-dark); border-color: transparent; }
+.accordion-chevron { font-size: 12px; color: var(--ink-mute); transition: transform 0.3s; flex-shrink: 0; }
+.accordion-item[open] .accordion-chevron { transform: rotate(180deg); color: #fff; }
+
+.accordion-body { padding: 22px 26px 24px; }
+.accordion-img-wrap {
+  width: 100%; margin: 0 0 18px;
+  border-radius: 8px; overflow: hidden;
+  border: 1px solid var(--rule); background: var(--bg-soft);
+  cursor: zoom-in; position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.accordion-img-wrap:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.12); }
+.accordion-img-wrap img { width: 100%; height: auto; display: block; }
+.accordion-img-wrap::after {
+  content: '🔍 クリックで拡大';
+  position: absolute; bottom: 12px; right: 12px;
+  background: rgba(42,37,32,0.85); color: #fff;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.05em;
+  opacity: 0; transition: opacity 0.2s;
+  backdrop-filter: blur(4px);
+}
+.accordion-img-wrap:hover::after { opacity: 1; }
+.scene-mini { list-style: none; margin: 8px 0 14px; }
+.scene-mini li { padding: 6px 0 6px 30px; position: relative; font-size: 12.5px; line-height: 1.55; border-bottom: 1px dashed var(--rule); }
+.scene-mini li:last-child { border-bottom: 0; }
+.scene-mini li .num-mini { position: absolute; left: 0; top: 6px; width: 20px; height: 20px; background: var(--bg-warm); color: var(--primary-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; font-family: var(--mono); }
+.scene-mini .ts { font-family: var(--mono); font-size: 10px; background: var(--bg); padding: 1px 5px; border-radius: 3px; color: var(--ink-soft); margin-right: 4px; }
+.tile-lines { background: linear-gradient(135deg, #FFF4E6 0%, #FFE8DC 100%); border-radius: 8px; padding: 12px 14px; font-size: 11.5px; line-height: 1.75; border-left: 3px solid var(--primary); }
+.tile-lines::before { content: '🎙 セリフ例'; display: block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; color: var(--primary-dark); margin-bottom: 4px; }
+.tile-note { margin-top: 10px; font-size: 11.5px; color: var(--ink-soft); padding: 8px 12px; background: #FFF8F2; border-radius: 6px; border-left: 2px solid var(--primary-soft); }
+
+/* LIGHTBOX */
+.lightbox-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 9999; display: none;
+  align-items: center; justify-content: center;
+  padding: 40px 20px; cursor: zoom-out;
+}
+.lightbox-overlay.active { display: flex; animation: lbFadeIn 0.2s ease-out; }
+@keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.lightbox-overlay img { max-width: 96vw; max-height: 90vh; object-fit: contain; border-radius: 4px; box-shadow: 0 20px 80px rgba(0,0,0,0.6); }
+.lightbox-close {
+  position: fixed; top: 20px; right: 24px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  font-size: 22px; font-weight: 300; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s; z-index: 10000; font-family: var(--sans);
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.25); transform: rotate(90deg); }
+.lightbox-caption {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  color: #fff; font-size: 13px;
+  background: rgba(0,0,0,0.55);
+  padding: 8px 18px; border-radius: 999px;
+  font-weight: 500; backdrop-filter: blur(8px);
+  letter-spacing: 0.03em; max-width: 90vw; text-align: center;
+}
+
+/* SHORTCUT LIST */
+.shortcut-steps { margin: 8px 0 4px; padding-left: 22px; font-size: 13px; color: var(--ink); }
+.shortcut-steps li { padding: 3px 0; }
+.shortcut-section-label { display: block; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; color: var(--ink); margin: 14px 0 6px; }
+.shortcut-list { list-style: none; margin: 6px 0 4px; padding: 0; display: grid; gap: 6px; }
+.shortcut-list li {
+  background: linear-gradient(90deg, #F0F4FF 0%, #F7F9FF 100%);
+  border: 1px solid #C5D2F5;
+  border-left: 3px solid var(--accent-blue);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px; flex-wrap: wrap;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.shortcut-list li:hover { transform: translateX(2px); box-shadow: 0 3px 10px rgba(59,91,219,0.15); }
+.shortcut-list .sc-label { color: var(--ink); font-weight: 600; flex: 1; min-width: 200px; }
+.shortcut-list .sc-label .sc-tag {
+  display: inline-block; background: rgba(59,91,219,0.12);
+  color: var(--accent-blue); font-family: var(--mono);
+  font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 3px;
+  margin-right: 6px; letter-spacing: 0.05em;
+}
+.shortcut-list .sc-link {
+  background: var(--accent-blue); color: #fff;
+  padding: 6px 14px; border-radius: 999px; text-decoration: none;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex; align-items: center; gap: 4px; border: 0;
+}
+.shortcut-list .sc-link:hover { background: #2A4AC0; transform: scale(1.05); }
+
+/* === Operation Screenshot Animations (Part 1) ============================ */
+.op-shots {
+  margin: 28px 0 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.op-shots__heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--primary);
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--rule);
+  margin-bottom: -8px;
+}
+.op-shots__heading::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: var(--primary);
+}
+
+.op-shot {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.op-shot__num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-family: var(--serif);
+  font-weight: 800;
+  font-size: 17px;
+  flex: 0 0 44px;
+  position: relative;
+  box-shadow: 0 4px 12px -4px rgba(255,111,60,.5);
+}
+.op-shot__num::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 100%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 18px;
+  background: linear-gradient(180deg, var(--primary), transparent);
+}
+.op-shot__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.op-shot__label {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.op-shot__label .target {
+  background: linear-gradient(transparent 60%, rgba(255,111,60,.25) 60%);
+  padding: 0 2px;
+}
+.op-shot__hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.op-frame {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f3f5f9;
+  border: 1px solid var(--rule);
+  box-shadow:
+    0 1px 2px rgba(42,37,32,.04),
+    0 16px 36px -12px rgba(42,37,32,.18);
+  margin-top: 6px;
+  isolation: isolate;
+}
+.op-frame__chrome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  background: #ebe5d7;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-mute);
+}
+.op-frame__chrome span {
+  width: 9px; height: 9px; border-radius: 50%;
+  display: inline-block;
+}
+.op-frame__chrome span:nth-child(1){ background:#ff5f57;}
+.op-frame__chrome span:nth-child(2){ background:#febc2e;}
+.op-frame__chrome span:nth-child(3){ background:#28c840;}
+.op-frame__chrome .url {
+  margin-left: 6px;
+  background: #fdfaf2;
+  border-radius: 4px;
+  padding: 2px 10px;
+  border: 1px solid var(--rule);
+  font-size: 10px;
+}
+.op-frame__img-wrap {
+  position: relative;
+  display: block;
+  line-height: 0;
+}
+.op-frame__img-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Highlight box (pulses around the action target) */
+.op-highlight {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: var(--h);
+  border-radius: var(--r, 10px);
+  pointer-events: none;
+  border: 4px solid var(--primary);
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.7),
+    0 0 0 6px rgba(255,111,60,.45);
+  opacity: 0;
+  transform: scale(0.85);
+  z-index: 4;
+}
+.op-frame.run .op-highlight {
+  animation: opHlIn 0.5s 0.4s cubic-bezier(.16,1.4,.3,1) forwards,
+             opHlPulse 1.8s 1.0s ease-out infinite;
+}
+@keyframes opHlIn {
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes opHlPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(255,255,255,.7), 0 0 0 6px rgba(255,111,60,.45); }
+  50%      { box-shadow: 0 0 0 4px rgba(255,255,255,.7), 0 0 0 14px rgba(255,111,60,0); }
+}
+
+/* Pin annotation (label callout sticking out from highlight) */
+.op-pin {
+  position: absolute;
+  left: var(--px);
+  top: var(--py);
+  background: var(--primary);
+  color: #fff;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  z-index: 5;
+  box-shadow: 0 4px 12px -2px rgba(255,111,60,.5);
+}
+.op-pin::before {
+  content: "";
+  position: absolute;
+  left: var(--arrow-x, 12px);
+  top: 100%;
+  width: 0; height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--primary);
+}
+.op-pin.below::before {
+  top: auto; bottom: 100%;
+  border-top: none;
+  border-bottom: 6px solid var(--primary);
+}
+.op-frame.run .op-pin {
+  animation: opPinIn 0.4s 1.2s cubic-bezier(.16,1.4,.3,1) forwards;
+}
+@keyframes opPinIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cursor */
+.op-cursor {
+  position: absolute;
+  left: var(--start-x, 92%);
+  top: var(--start-y, 92%);
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 6;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.35));
+  opacity: 0;
+}
+.op-cursor svg { width: 100%; height: 100%; display: block; }
+.op-frame.run .op-cursor {
+  animation: opCursorMove 5s 0.4s ease-in-out infinite;
+}
+@keyframes opCursorMove {
+  0%   { opacity: 0;
+         left: var(--start-x, 92%);
+         top:  var(--start-y, 92%); }
+  6%   { opacity: 1; }
+  40%  { opacity: 1;
+         left: var(--end-x);
+         top:  var(--end-y); }
+  72%  { opacity: 1;
+         left: var(--end-x);
+         top:  var(--end-y); }
+  82%  { opacity: 0;
+         left: var(--end-x);
+         top:  var(--end-y); }
+  100% { opacity: 0;
+         left: var(--start-x, 92%);
+         top:  var(--start-y, 92%); }
+}
+
+/* Click ripple — synced to cursor cycle (5s) */
+.op-click {
+  position: absolute;
+  left: var(--end-x);
+  top: var(--end-y);
+  width: 12px; height: 12px;
+  margin-left: -6px; margin-top: -6px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+}
+.op-frame.run .op-click {
+  animation: opClick 5s 0.4s ease-out infinite;
+}
+@keyframes opClick {
+  0%, 43%   { opacity: 0; transform: scale(0); background: rgba(255,111,60,.55); }
+  45%       { opacity: 1; transform: scale(0); background: rgba(255,111,60,.55); }
+  60%       { opacity: 0; transform: scale(7); background: rgba(255,111,60,0); }
+  100%      { opacity: 0; transform: scale(7); }
+}
+
+/* (Replay indicator removed — animations now loop) */
+
+@media (max-width: 640px) {
+  .op-shot { grid-template-columns: 40px 1fr; gap: 10px; }
+  .op-shot__num { width: 36px; height: 36px; font-size: 14px; }
+  .op-pin { font-size: 9px; padding: 3px 7px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-badge">MANUAL CREATION GUIDE</div>
+    <h1 class="hero-title">マニュアル<span class="accent">作成</span>手順書</h1>
+    <p class="hero-sub">
+      ワーカー受け入れ用の業務マニュアルを、NotebookLMで完成させるための手順書です。<br>
+      <strong>基本コース（タブ①）でPDF完成 → 動画（タブ②）／既存資料・Gem（タブ③）で品質UP</strong> の3タブ構成。
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">ゴール</span>
+        <span class="hero-meta-value">PDFダウンロード</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">所要時間</span>
+        <span class="hero-meta-value">作業15〜20分／撮影30〜60分</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">対応業界</span>
+        <span class="hero-meta-value">物流／小売／飲食／介護／製造</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SECTION 00 -->
+  <section>
+    <h2 class="section-title"><span class="num">00</span>このページの使い方</h2>
+    <div class="info-card">
+      <p style="font-size:14px; color:var(--ink-soft); margin-bottom:8px;">この手順書は <strong>3タブ構成</strong>。基本コース（タブ①）だけでPDFまで作れ、必要に応じて品質UPタブ（②③）を使い分けます。</p>
+      <div class="info-grid">
+        <div class="info-block ok">
+          <h4>✅ できること</h4>
+          <ul>
+            <li>タブ①：ひな形コピペ → プロンプト → PDFまで一気に</li>
+            <li>タブ②：動画撮影でクオリティUP（業界別7業務）</li>
+            <li>タブ③：既存資料／Gemでクオリティ UP</li>
+            <li>4種類のデザインバリエーション選択</li>
+          </ul>
+        </div>
+        <div class="info-block ng">
+          <h4>❌ 対象外</h4>
+          <ul>
+            <li>ひな形・サムネイル改善 → 別手順書</li>
+            <li>Google Slide／Canvaでの後加工（不要）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 01 事前準備 -->
+  <section>
+    <h2 class="section-title"><span class="num">01</span><span class="icon">🛠</span>事前準備</h2>
+    <h4 class="minor-title">必要なアクセス</h4>
+    <ul class="checklist">
+      <li><strong>NotebookLM</strong>：<a href="https://notebooklm.google.com/">https://notebooklm.google.com/</a>（タブ①で必須）</li>
+      <li><strong>スマートフォン</strong>：横向き撮影用（タブ②で使用）</li>
+      <li><strong>YouTube</strong>：動画の限定公開アップロード用（タブ②で使用）</li>
+    </ul>
+    <h4 class="minor-title">用意するもの</h4>
+    <ul class="checklist">
+      <li>対象ひな形のadmin URL（タブ①で必須）</li>
+      <li>撮影場所の使用許可・演者役のスタッフ（タブ②で使用）</li>
+      <li>既存マニュアル・手順書（タブ③／あれば任意）</li>
+      <li>現場写真（タブ③／あれば任意）</li>
+    </ul>
+
+    <div class="gem-inline">
+      <div class="gem-text">
+        <strong>✨ 作業マニュアルGem</strong>
+        <span>既存マニュアル・手順書がない案件では、Gemで補完用のGoogle Docsを作成できます（タブ③で詳細）。</span>
+      </div>
+      <a class="gem-cta" href="https://gemini.google.com/gem/1aDT6fvVj25AB5EgPUbhAGBlUG5IYeI-z?usp=sharing" target="_blank">Gemを開く →</a>
+    </div>
+  </section>
+
+  <!-- SECTION 02 全体フロー -->
+  <section>
+    <h2 class="section-title"><span class="num">02</span><span class="icon">🗺</span>全体フロー（3タブ俯瞰）</h2>
+    <p style="font-size:14px; color:var(--ink-soft); margin-bottom:8px;">
+      <strong style="color:var(--primary);">オレンジ＝タブ①基本</strong>　／　<strong style="color:var(--accent-blue);">青＝タブ②動画</strong>　／　<strong style="color:var(--accent-warn);">赤＝タブ③既存資料/Gem</strong>
+    </p>
+    <div class="flowchart-wrapper">
+      <div class="mermaid">
+flowchart TD
+    Start([スタート]) --> Note[NotebookLM<br/>新規ノート]
+    Note --> SrcGroup{ソースを追加}
+
+    SrcGroup --> Hina[ひな形<br/>ソース①<br/>必須]
+    SrcGroup -. 任意 .-> Video[動画URL<br/>ソース②]
+    SrcGroup -. 任意 .-> Docs[既存資料/Gem<br/>ソース③]
+
+    Hina --> Prompt[マニュアル<br/>プロンプト]
+    Video --> Prompt
+    Docs --> Prompt
+
+    Prompt --> Design[デザイン<br/>選択→生成]
+    Design --> Check[チェック<br/>＆改訂]
+    Check --> PDF([🎯 PDF])
+
+    classDef tab1 fill:#FFF4E6,stroke:#FF6F3C,stroke-width:2px,color:#2A2520
+    classDef tab2 fill:#F0F4FF,stroke:#3B5BDB,stroke-width:1.5px,color:#2A2520
+    classDef tab3 fill:#FFF1EC,stroke:#D9480F,stroke-width:1.5px,color:#2A2520
+    classDef startEnd fill:#FF6F3C,stroke:#2A2520,stroke-width:2px,color:#fff
+    classDef decision fill:#FFE8DC,stroke:#FF6F3C,stroke-width:2px,color:#2A2520
+
+    class Note,Hina,Prompt,Design,Check tab1
+    class Video tab2
+    class Docs tab3
+    class Start,PDF startEnd
+    class SrcGroup decision
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB NAVIGATION -->
+  <nav class="tab-nav-wrapper" role="tablist">
+    <button class="tab-btn active" data-target="tab1" role="tab" aria-selected="true">
+      <span class="tab-num">TAB 01</span>
+      <span class="tab-label">① 基本コース</span>
+      <span class="tab-sub">最速マニュアル化</span>
+    </button>
+    <button class="tab-btn" data-target="tab2" role="tab" aria-selected="false">
+      <span class="tab-num">TAB 02</span>
+      <span class="tab-label">② 動画で品質UP</span>
+      <span class="tab-sub">1カット撮影→YouTube</span>
+    </button>
+    <button class="tab-btn" data-target="tab3" role="tab" aria-selected="false">
+      <span class="tab-num">TAB 03</span>
+      <span class="tab-label">③ 既存資料/Gem</span>
+      <span class="tab-sub">作業内容を回収</span>
+    </button>
+  </nav>
+
+  <!-- ============ TAB 1 PANEL ============ -->
+  <section class="tab-panel active" id="tab1" role="tabpanel">
+
+    <div class="tab-intro">
+      <div class="tab-intro-label">TAB 01 — BASIC COURSE</div>
+      <h3>基本コース：最速マニュアル化</h3>
+      <p>求人ひな形を <strong>コピー＆ペースト</strong> して、プロンプトを実行するだけ。動画なし／既存資料なしでもPDFまで完走できる最小構成です。品質UPは <a href="#" class="tab-cta" data-switch-tab="tab2" style="font-size:11px; padding:4px 10px; margin:0 4px;">タブ②</a> / <a href="#" class="tab-cta is-tab3" data-switch-tab="tab3" style="font-size:11px; padding:4px 10px; margin:0 4px;">タブ③</a> で。</p>
+    </div>
+
+    <div class="mini-flow-wrapper">
+      <div class="mini-flow-label">▼ TAB 01 FLOW</div>
+      <div class="mermaid">
+flowchart LR
+    N[ノート作成] --> H[ひな形<br/>コピペ]
+    H --> P[マニュアル<br/>プロンプト]
+    P --> D[デザイン<br/>選択→生成]
+    D --> C[チェック<br/>改訂]
+    C --> PDF([🎯 PDF])
+    classDef stepBox fill:#FFF4E6,stroke:#FF6F3C,stroke-width:2px,color:#2A2520
+    classDef goalBox fill:#FF6F3C,stroke:#2A2520,stroke-width:2px,color:#fff
+    class N,H,P,D,C stepBox
+    class PDF goalBox
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ① — STEP 01</div>
+      <h2 class="step-title">NotebookLMで新規ノートを作成</h2>
+      <ol class="numbered-steps">
+        <li><a href="https://notebooklm.google.com/">https://notebooklm.google.com/</a> にアクセス</li>
+        <li>画面左上の <span class="kbd">新規作成</span> をクリック</li>
+        <li>ノート名を <strong>「【マニュアル】〇〇（クライアント名）_ひな形ID」</strong> に設定</li>
+      </ol>
+      <div class="op-shots">
+  <div class="op-shots__heading">操作シーン — STEP 01</div>
+<figure class="op-shot">
+    <div class="op-shot__num">01</div>
+    <div class="op-shot__body">
+      <div class="op-shot__label">新規ノートが作成された状態</div>
+      <div class="op-shot__hint">ノート名にひな形ID（例：2292158）を入れておくと、後で対応関係がすぐわかります。</div>
+      <div class="op-frame">
+        <div class="op-frame__chrome">
+          <span></span><span></span><span></span>
+          <span class="url">notebooklm.google.com</span>
+        </div>
+        <div class="op-frame__img-wrap">
+          <img src="./image/step01_notebook_created.png" alt="STEP 01：新規ノートが作成された状態" loading="lazy">
+          <div class="op-highlight" style="--x:2.0%; --y:0.5%; --w:28.0%; --h:6.0%;"></div>
+        <div class="op-pin below" style="--px:3.0%; --py:8.5%; --arrow-x:14px;">✓ ノート名にひな形IDを含める</div>
+        </div>
+      </div>
+    </div>
+  </figure>
+</div>
+
+    <div class="callout callout-tip">
+        <span class="callout-label">💡 TIP</span>
+        ノート名にひな形IDを入れておくと、後で見返したときに対応関係がすぐわかります。
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ① — STEP 02</div>
+      <h2 class="step-title">求人ひな形をコピペ<span class="tag">ソース①</span></h2>
+      <p>admin画面から対象ひな形の情報をコピーして、NotebookLMの <strong>ソース①</strong> として貼り付けます。</p>
+
+      <h4 class="minor-title">手順</h4>
+      <ol class="numbered-steps">
+        <li>admin画面で対象ひな形の情報をコピー<br>
+          <span style="font-size:13px; color:var(--ink-soft);">対象項目：クライアント名／求人タイトル／業種／職種／業務内容／注意事項／待遇／持ち物／働くための条件／働く前の質問・回答期限／資格種別／管理用ラベル</span></li>
+        <li>NotebookLMで「ソースを追加」→ <strong>「コピーしたテキスト」</strong> を選択</li>
+        <li>コピーした情報を <strong>そのまま貼り付け</strong></li>
+        <li><span class="kbd">追加</span> をクリック</li>
+      </ol>
+
+      <div class="op-shots">
+  <div class="op-shots__heading">操作シーン — STEP 02</div>
+<figure class="op-shot">
+    <div class="op-shot__num">02-A</div>
+    <div class="op-shot__body">
+      <div class="op-shot__label">「コピーしたテキスト」に貼り付けて<span class="target">挿入</span>をクリック</div>
+      <div class="op-shot__hint">admin画面でコピーした内容を、ダイアログのテキストエリアに直接ペースト。</div>
+      <div class="op-frame">
+        <div class="op-frame__chrome">
+          <span></span><span></span><span></span>
+          <span class="url">notebooklm.google.com</span>
+        </div>
+        <div class="op-frame__img-wrap">
+          <img src="./image/step02_paste_text.png" alt="STEP 02-A：コピーしたテキストを貼り付け、挿入をクリック" loading="lazy">
+          <div class="op-highlight" style="--x:61.5%; --y:69.5%; --w:12.0%; --h:9.0%;"></div>
+        <div class="op-pin below" style="--px:63.0%; --py:81.0%; --arrow-x:22px;">クリック</div>
+        <div class="op-cursor" style="--start-x:82.0%; --start-y:92.0%; --end-x:68.0%; --end-y:74.0%;"><svg viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.3 L10 13 L16 13 Z" fill="#1f1f1f" stroke="white" stroke-width="1" stroke-linejoin="round"/></svg></div>
+        <div class="op-click" style="--end-x:68.0%; --end-y:74.0%;"></div>
+        </div>
+      </div>
+    </div>
+  </figure>
+<figure class="op-shot">
+    <div class="op-shot__num">02-B</div>
+    <div class="op-shot__body">
+      <div class="op-shot__label">ソース①が追加され、読み込みが始まる</div>
+      <div class="op-shot__hint">左パネルに「貼り付けたテキスト」が出現。中央のスケルトン表示が消えるまで30秒〜1分待機。</div>
+      <div class="op-frame">
+        <div class="op-frame__chrome">
+          <span></span><span></span><span></span>
+          <span class="url">notebooklm.google.com</span>
+        </div>
+        <div class="op-frame__img-wrap">
+          <img src="./image/step02_source_added.png" alt="STEP 02-B：ソース①が追加され、読み込み中" loading="lazy">
+          <div class="op-highlight" style="--x:1.0%; --y:36.0%; --w:26.0%; --h:9.0%;"></div>
+        <div class="op-pin below" style="--px:2.0%; --py:47.0%; --arrow-x:14px;">✓ ソース①追加</div>
+        </div>
+      </div>
+    </div>
+  </figure>
+</div>
+
+    <div class="callout callout-tip">
+        <span class="callout-label">🚀 品質UPしたい場合</span>
+        ここで <a href="#" class="tab-cta" data-switch-tab="tab2" style="font-size:11px; padding:4px 10px; margin:0 4px;">タブ②動画</a> や <a href="#" class="tab-cta is-tab3" data-switch-tab="tab3" style="font-size:11px; padding:4px 10px; margin:0 4px;">タブ③既存資料/Gem</a> で <strong>ソース② / ③</strong> も追加するとマニュアル精度が大幅に上がります。基本コースだけならスキップしてSTEP 03へ。
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-label">⚠ 注意</span>
+        ソースを追加した直後は、NotebookLMが内容を読み込むまで数十秒〜1分かかります。サムネイル横のローディング表示が消えるまで待ってから次のステップへ進んでください。
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ① — STEP 03</div>
+      <h2 class="step-title">マニュアルプロンプトを実行</h2>
+      <p>チャット欄に下記プロンプトを <strong>そのまま</strong> 貼り付けて送信します。</p>
+      <div class="code-block">タイミーの「初回稼働用マニュアル」を15pで作成します。ソースを参照して初回稼働する人が安心して働ける詳細プロンプトを書き出してください。解説や挨拶、ツールへの導入文などは一切不要です。『プロンプトの内容そのもの』だけをコピーしやすいように直接出力してください。このプロンプトについての解説も不要です。</div>
+      <h4 class="minor-title">このプロンプトが返してくれるもの</h4>
+      <p style="font-size:14px;">15ページ分のスライドに使える、マニュアル本文のテキストです。</p>
+      <div class="op-shots">
+  <div class="op-shots__heading">操作シーン — STEP 03</div>
+<figure class="op-shot">
+    <div class="op-shot__num">03-A</div>
+    <div class="op-shot__body">
+      <div class="op-shot__label">マニュアルプロンプトを貼り付けて<span class="target">送信</span></div>
+      <div class="op-shot__hint">青い送信ボタン（↑）をクリックして実行。1個のソースが対象になっていることを確認。</div>
+      <div class="op-frame">
+        <div class="op-frame__chrome">
+          <span></span><span></span><span></span>
+          <span class="url">notebooklm.google.com</span>
+        </div>
+        <div class="op-frame__img-wrap">
+          <img src="./image/step03_prompt_input.png" alt="STEP 03-A：プロンプトを入力して送信" loading="lazy">
+          <div class="op-highlight" style="--x:65.5%; --y:86.5%; --w:9.5%; --h:9.5%;"></div>
+        <div class="op-pin" style="--px:67.5%; --py:79.0%; --arrow-x:20px;">送信</div>
+        <div class="op-cursor" style="--start-x:85.0%; --start-y:65.0%; --end-x:70.5%; --end-y:92.0%;"><svg viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.3 L10 13 L16 13 Z" fill="#1f1f1f" stroke="white" stroke-width="1" stroke-linejoin="round"/></svg></div>
+        <div class="op-click" style="--end-x:70.5%; --end-y:92.0%;"></div>
+        </div>
+      </div>
+    </div>
+  </figure>
+<figure class="op-shot">
+    <div class="op-shot__num">03-B</div>
+    <div class="op-shot__body">
+      <div class="op-shot__label">生成された回答の左下、<span class="target">メモに保存</span>をクリック</div>
+      <div class="op-shot__hint">15ページ分のマニュアル本文が返ってきたら、必ずメモに保存。次のSTEP 04でソースに変換します。</div>
+      <div class="op-frame">
+        <div class="op-frame__chrome">
+          <span></span><span></span><span></span>
+          <span class="url">notebooklm.google.com</span>
+        </div>
+        <div class="op-frame__img-wrap">
+          <img src="./image/step03_prompt_result.png" alt="STEP 03-B：生成結果のメモに保存ボタンをクリック" loading="lazy">
+          <div class="op-highlight" style="--x:25.0%; --y:64.5%; --w:11.0%; --h:7.5%;"></div>
+        <div class="op-pin" style="--px:26.5%; --py:56.5%; --arrow-x:22px;">クリック</div>
+        <div class="op-cursor" style="--start-x:75.0%; --start-y:35.0%; --end-x:31.0%; --end-y:69.0%;"><svg viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.3 L10 13 L16 13 Z" fill="#1f1f1f" stroke="white" stroke-width="1" stroke-linejoin="round"/></svg></div>
+        <div class="op-click" style="--end-x:31.0%; --end-y:69.0%;"></div>
+        </div>
+      </div>
+    </div>
+  </figure>
+</div>
+
+    <div class="callout callout-tip">
+        <span class="callout-label">💡 TIP</span>
+        出力が短すぎる／薄いと感じたら、ソース材料が足りない可能性。<a href="#" class="tab-cta" data-switch-tab="tab2" style="font-size:11px; padding:4px 10px;">タブ②動画</a> や <a href="#" class="tab-cta is-tab3" data-switch-tab="tab3" style="font-size:11px; padding:4px 10px;">タブ③</a> でソースを追加すると改善します。
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ① — STEP 04</div>
+      <h2 class="step-title">メモ保存 → デザイン選択 → スライド生成</h2>
+      <h4 class="minor-title">共通の手順</h4>
+      <ol class="numbered-steps">
+        <li>STEP 03の回答の右上にある <span class="kbd">メモに保存</span> をクリック</li>
+        <li>保存されたメモを開き、<span class="kbd">ソースに変換</span> をクリック</li>
+        <li><strong>最後に追加されたソース（変換したメモ）だけ</strong> にチェックを入れる<br><span style="font-size:13px; color:var(--accent-warn);">⚠️ 元のひな形情報・動画・既存マニュアルのチェックは<strong>外す</strong></span></li>
+        <li>「スライド資料」ボタン右側の <span class="kbd">カスタマイズ</span> マークをクリック</li>
+        <li><strong>下記4種類のデザインから1つ選んでプロンプトを貼り付け</strong>、生成</li>
+      </ol>
+      <div class="op-shots">
+  <div class="op-shots__heading">操作シーン — STEP 04</div>
+<figure class="op-shot">
+    <div class="op-shot__num">04-A</div>
+    <div class="op-shot__body">
+      <div class="op-shot__label"><span class="target">メモが Studio パネルに保存された</span></div>
+      <div class="op-shot__hint">Studio パネルの一番下に「保存したメモ」が新しく出現。ここをクリックして開くと、次のステップ（ソースに変換）に進めます。</div>
+      <div class="op-frame">
+        <div class="op-frame__chrome">
+          <span></span><span></span><span></span>
+          <span class="url">notebooklm.google.com</span>
+        </div>
+        <div class="op-frame__img-wrap">
+          <img src="./image/step04_memo_saved.png" alt="STEP 04-A：メモ保存完了、Studio パネルにメモが出現" loading="lazy">
+          <div class="op-highlight" style="--x:71.0%; --y:57.0%; --w:28.5%; --h:9.0%;"></div>
+        <div class="op-pin" style="--px:74.0%; --py:49.5%; --arrow-x:16px;">✓ 保存完了 — クリックして開く</div>
+        <div class="op-cursor" style="--start-x:45.0%; --start-y:35.0%; --end-x:87.0%; --end-y:62.5%;"><svg viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.3 L10 13 L16 13 Z" fill="#1f1f1f" stroke="white" stroke-width="1" stroke-linejoin="round"/></svg></div>
+        <div class="op-click" style="--end-x:87.0%; --end-y:62.5%;"></div>
+        </div>
+      </div>
+    </div>
+  </figure>
+<figure class="op-shot">
+    <div class="op-shot__num">04-B</div>
+    <div class="op-shot__body">
+      <div class="op-shot__label"><span class="target">変換したメモだけ</span>にチェック／他はチェックを外す</div>
+      <div class="op-shot__hint">元の「貼り付けたテキスト」のチェックは必ず外す。チェック対象を間違えると別物が生成されます。</div>
+      <div class="op-frame">
+        <div class="op-frame__chrome">
+          <span></span><span></span><span></span>
+          <span class="url">notebooklm.google.com</span>
+        </div>
+        <div class="op-frame__img-wrap">
+          <img src="./image/step04_checkbox_toggled.png" alt="STEP 04-B：変換したメモだけにチェックを入れる" loading="lazy">
+          <div class="op-highlight" style="--x:0.5%; --y:36.5%; --w:27.0%; --h:14.0%;"></div>
+        <div class="op-pin below" style="--px:1.5%; --py:52.0%; --arrow-x:16px;">✓ メモのみ ON</div>
+        </div>
+      </div>
+    </div>
+  </figure>
+<figure class="op-shot">
+    <div class="op-shot__num">04-C</div>
+    <div class="op-shot__body">
+      <div class="op-shot__label">デザインプロンプトを貼り付けて<span class="target">生成</span></div>
+      <div class="op-shot__hint">「スライド資料」横のカスタマイズマークから、4種類のデザインから1つ選び、プロンプトをそのまま貼って実行。</div>
+      <div class="op-frame">
+        <div class="op-frame__chrome">
+          <span></span><span></span><span></span>
+          <span class="url">notebooklm.google.com</span>
+        </div>
+        <div class="op-frame__img-wrap">
+          <img src="./image/step04_design_prompt.png" alt="STEP 04-C：デザインプロンプトを入力して生成" loading="lazy">
+          <div class="op-highlight" style="--x:67.5%; --y:81.5%; --w:12.0%; --h:9.0%;"></div>
+        <div class="op-pin" style="--px:69.5%; --py:74.0%; --arrow-x:22px;">クリック</div>
+        <div class="op-cursor" style="--start-x:45.0%; --start-y:55.0%; --end-x:73.5%; --end-y:86.0%;"><svg viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.3 L10 13 L16 13 Z" fill="#1f1f1f" stroke="white" stroke-width="1" stroke-linejoin="round"/></svg></div>
+        <div class="op-click" style="--end-x:73.5%; --end-y:86.0%;"></div>
+        </div>
+      </div>
+    </div>
+  </figure>
+<figure class="op-shot">
+    <div class="op-shot__num">04-D</div>
+    <div class="op-shot__body">
+      <div class="op-shot__label">スライド資料の生成が開始される</div>
+      <div class="op-shot__hint">右側Studioパネルに「スライド資料を生成しています…」と表示。完了したらクリックしてPDFダウンロード。</div>
+      <div class="op-frame">
+        <div class="op-frame__chrome">
+          <span></span><span></span><span></span>
+          <span class="url">notebooklm.google.com</span>
+        </div>
+        <div class="op-frame__img-wrap">
+          <img src="./image/step04_generation_started.png" alt="STEP 04-D：スライド資料の生成中" loading="lazy">
+          <div class="op-highlight" style="--x:72.0%; --y:57.0%; --w:27.0%; --h:9.0%;"></div>
+        <div class="op-pin" style="--px:74.0%; --py:49.5%; --arrow-x:16px;">⏳ 生成中（数十秒）</div>
+        </div>
+      </div>
+    </div>
+  </figure>
+</div>
+
+    <div class="callout callout-warn">
+        <span class="callout-label">⚠ 重要</span>
+        <strong>チェック対象を間違えると別物が生成されます。</strong><br>
+        「変換したメモ」だけにチェック → 他のソースのチェックは外す、を必ず確認してください。
+      </div>
+      <div class="callout callout-tip" style="margin-top:14px;">
+        <span class="callout-label">💡 用途別の選び方</span>
+        🖨️ <strong>印刷が必要なら白背景がおすすめ</strong>（B / D）<br>
+        📱 <strong>Webやスマホ閲覧中心なら黄色背景</strong>（A / C）
+      </div>
+    </div>
+
+    <div class="carousel-section">
+      <div class="carousel-header">
+        <div class="carousel-title">
+          <span class="pre">DESIGN VARIATIONS — PICK ONE OF 4</span>
+          🎨 デザインバリエーション
+        </div>
+        <div class="carousel-nav">
+          <button class="nav-prev" data-target="designTrack" aria-label="前へ">←</button>
+          <button class="nav-next" data-target="designTrack" aria-label="次へ">→</button>
+        </div>
+      </div>
+      <div class="carousel-track" id="designTrack">
+
+        <article class="design-tile">
+          <div class="design-label">
+            <div class="design-letter">A</div>
+            <div class="design-name">黄色背景 × イラスト</div>
+            <div class="design-tags"><span class="design-tag use-web">📱 Web</span></div>
+          </div>
+          <div class="design-preview-wrap"><img src="./image/design_a_yellow_illust.png" alt="デザインA：黄色背景×イラスト"></div>
+          <div class="design-meta">
+            <p class="feature">Timeeブランドカラーの黄色背景＋親しみやすい<strong>イラスト</strong>。初日でも緊張しない柔らかさ。</p>
+            <span class="recommend">📌 飲食／小売／初心者ワーカー多めの現場</span>
+          </div>
+          <a class="design-preview-btn" href="https://canva.link/dx3mij1ivg5i5ks" target="_blank" rel="noopener">完成サンプルPDFを見る（Canva）</a>
+          <div class="prompt-block">
+            <div class="prompt-header">
+              <span>🎨 DESIGN PROMPT — A</span>
+              <button class="copy-btn">📋 コピー</button>
+            </div>
+<pre class="prompt-content">【カラー指定（厳守）】
+・背景カラーは #FFD700（RGB: 255,215,0）を厳密に使用し、RGB値の変更・明度調整・彩度調整・透過・グラデーション・影・減光処理を一切行わず、必ず単色ベタ塗りで完全一致させること。
+・文字色は #212121(本文・見出し)、#FFFFFF(暗色背景上のみ)。
+・アクセントカラーは #007AFF、警告・注意喚起カラーは #FF3B30。
+・視認性確保のため、黄背景に白文字等の低コントラスト組み合わせは避けること。
+
+【デザイン】
+・黄色・黒・白を基調とする。
+・簡潔な図解とイラストを使用し、情報を整理して見やすく配置する。
+
+【トーン＆マナー】
+・初めての方でも安心できる優しい伴走型のトーン(煽る表現は避ける)。
+
+【強調表示】
+・注意喚起には赤色(#FF3B30)や目立つアイコンを使用してメリハリをつける。
+
+【画像生成(スタッフイラスト)】
+・実写風画像は使用せず、必ず「淡い水色のポロシャツとチノパン」を着たスタッフのフラットでやさしいタッチのイラスト(親しみやすいキャラクター風)を生成して挿入する。
+・線は均一でやわらかく、彩度は中程度に抑え、黄色背景と調和する配色にすること。
+・写真調・3D・リアル系の描写は禁止。
+・黄色くて丸いキャラクターは登場させないこと。
+
+【コピー防止用の透かし(全スライド共通)】
+・全スライドの背景全面に「Timee」という文字を半透明の白(#FFFFFF)で透かしとして配置すること。
+・配置角度は左下から右上に向けて約-30度の斜め配置。
+・タイル状(格子状)に等間隔で繰り返し配置し、スライド全面を覆うこと。
+・1文字あたりのフォントサイズは小さめ(目安: 18〜24pt程度)、不透明度は薄め(目安: 10〜15%)に設定し、本文の可読性を妨げないこと。
+・フォントはサンセリフ体(Helvetica、Arial、Noto Sans等)を使用。
+・透かしはコンテンツ・図解・イラストの背面に配置し、前面要素の視認性を最優先すること。</pre>
+          </div>
+        </article>
+
+        <article class="design-tile">
+          <div class="design-label">
+            <div class="design-letter">B</div>
+            <div class="design-name">白背景 × イラスト</div>
+            <div class="design-tags"><span class="design-tag use-print">🖨 印刷</span></div>
+          </div>
+          <div class="design-preview-wrap"><img src="./image/design_b_white_illust.png" alt="デザインB：白背景×イラスト"></div>
+          <div class="design-meta">
+            <p class="feature">清潔感のある<strong>白背景</strong>＋イラスト。情報量が多くても読みやすい。印刷時に最適。</p>
+            <span class="recommend">📌 製造／物流／工程が多い現場</span>
+          </div>
+          <a class="design-preview-btn" href="https://canva.link/4zqzn86865nqvgx" target="_blank" rel="noopener">完成サンプルPDFを見る（Canva）</a>
+          <div class="prompt-block">
+            <div class="prompt-header">
+              <span>🎨 DESIGN PROMPT — B</span>
+              <button class="copy-btn">📋 コピー</button>
+            </div>
+<pre class="prompt-content">【カラー指定（厳守）】
+・背景カラーは #FFFFFF（RGB: 255,255,255）を厳密に使用し、RGB値の変更・明度調整・彩度調整・透過・グラデーション・影・減光処理を一切行わず、必ず単色ベタ塗りで完全一致させること。
+・文字色は #212121（本文・見出し）を基本とし、暗色背景上でのみ #FFFFFF を使用する。
+・アクセントカラーは #007AFF、警告・注意喚起カラーは #FF3B30。
+・視認性確保のため、白背景に白文字や淡色文字等の低コントラスト組み合わせは避けること。
+
+【デザイン】
+・白・黒・差し色（#007AFF / #FF3B30）を基調とする。
+・簡潔な図解とイラストを使用し、情報を整理して見やすく配置する。
+
+【トーン＆マナー】
+・初めての方でも安心できる優しい伴走型のトーン（煽る表現は避ける）。
+
+【強調表示】
+・注意喚起には赤色（#FF3B30）や目立つアイコンを使用してメリハリをつける。
+
+【画像生成（スタッフイラスト）】
+・実写風画像は使用せず、必ず「淡い水色のポロシャツとチノパン」を着たスタッフのフラットでやさしいタッチのイラスト（親しみやすいキャラクター風）を生成して挿入する。
+・線は均一でやわらかく、彩度は中程度に抑え、白背景と調和する配色にすること。
+・写真調・3D・リアル系の描写は禁止。
+・黄色くて丸いキャラクターは登場させないこと。
+
+【コピー防止用の透かし（全スライド共通）】
+・全スライドの背景全面に「Timee」という文字を、ごく薄いグレー（目安: #E5E5E5 〜 #EEEEEE 相当、または黒 #000000 を不透明度 4〜6% に設定）で透かしとして配置すること。 ※白背景のため、純白の透かしは視認できないので使用しない。
+・配置角度は左下から右上に向けて約 -30 度の斜め配置。
+・タイル状（格子状）に等間隔で繰り返し配置し、スライド全面を覆うこと。
+・1文字あたりのフォントサイズは小さめ（目安: 18〜24pt 程度）、不透明度は前回より薄め（目安: 4〜6%）に設定し、本文の可読性を一切妨げないこと。
+・フォントはサンセリフ体（Helvetica、Arial、Noto Sans 等）を使用。
+・透かしはコンテンツ・図解・イラストの背面に配置し、前面要素の視認性を最優先すること。</pre>
+          </div>
+        </article>
+
+        <article class="design-tile">
+          <div class="design-label">
+            <div class="design-letter">C</div>
+            <div class="design-name">黄色背景 × 実写</div>
+            <div class="design-tags"><span class="design-tag use-web">📱 Web</span><span class="design-tag">標準</span></div>
+          </div>
+          <div class="design-preview-wrap"><img src="./image/design_c_yellow_photo.png" alt="デザインC：黄色背景×実写"></div>
+          <div class="design-meta">
+            <p class="feature">黄色＋<strong>実写人物</strong>でTimeeらしさ最強。信頼感＋ブランド一貫性。</p>
+            <span class="recommend">📌 標準採用パターン。迷ったらこれ</span>
+          </div>
+          <a class="design-preview-btn" href="https://canva.link/p7uxisybhuezhdu" target="_blank" rel="noopener">完成サンプルPDFを見る（Canva）</a>
+          <div class="prompt-block">
+            <div class="prompt-header">
+              <span>🎨 DESIGN PROMPT — C</span>
+              <button class="copy-btn">📋 コピー</button>
+            </div>
+<pre class="prompt-content">【カラー指定（厳守）】
+・背景カラーは #FFD700（RGB: 255,215,0）を厳密に使用し、RGB値の変更・明度調整・彩度調整・透過・グラデーション・影・減光処理を一切行わず、必ず単色ベタ塗りで完全一致させること。
+・文字色は #212121(本文・見出し)、#FFFFFF(暗色背景上のみ)。
+・アクセントカラーは #007AFF、警告・注意喚起カラーは #FF3B30。
+・視認性確保のため、黄背景に白文字等の低コントラスト組み合わせは避けること。
+【デザイン】
+・黄色・黒・白を基調とする。
+・簡潔な図解を使用し、情報を整理して見やすく配置する。
+・余白を十分に取り、清潔感のあるレイアウトにすること。
+【トーン＆マナー】
+・初めての方でも安心できる優しい伴走型のトーン(煽る表現は避ける)。
+【強調表示】
+・注意喚起には赤色(#FF3B30)や目立つアイコンを使用してメリハリをつける。
+【使用する画像(スタッフ実写画像)】
+・イラストは使用しないこと。
+・原則として、ソース(アップロード資料)に含まれている実写写真をそのまま使用すること。
+・ソース内の写真の中から、内容に最も適した場面(作業中・案内中・説明中など)を選定して挿入する。
+・写真のトリミングや配置調整は可だが、人物の差し替え・合成・加工(色味の大幅変更、フィルター追加、AIによる修正等)は行わないこと。
+・ソースに該当する写真が含まれていない場合に限り、AIによる実写風画像を新規生成して挿入してよい。
+・新規生成する場合は、必ず「淡い水色のポロシャツとチノパン」を着たスタッフのリアルな実写風(写真的な)画像とすること。
+・性別・年齢は内容に合わせて自然に設定し、表情は柔らかく親しみやすい印象にすること。
+・スタッフが実際に作業している様子・案内している様子・説明している様子など、内容に即した自然なシチュエーションで人物を登場させること。
+・背景は白または淡いグレーのシンプルな環境とし、被写体(スタッフ)が主役として際立つようにすること(黄色背景のスライド上に配置する際は、写真自体の背景は白〜淡グレーを維持し、写真の周囲に十分な余白を確保して視認性を担保すること)。
+・照明は自然光のような柔らかい光を意識し、明るくクリアな写真品質にすること。
+・3Dレンダリング調・CG調・アニメ調・過度な加工は禁止。あくまで自然な実写写真のクオリティを保つこと。
+・黄色くて丸いキャラクターは登場させないこと。
+【コピー防止用の透かし(全スライド共通)】
+・全スライドの背景全面に「Timee」という文字を半透明の白(#FFFFFF)で透かしとして配置すること。
+・配置角度は左下から右上に向けて約-30度の斜め配置。
+・タイル状(格子状)に等間隔で繰り返し配置し、スライド全面を覆うこと。
+・1文字あたりのフォントサイズは小さめ(目安: 18〜24pt程度)、不透明度は薄め(目安: 10〜15%)に設定し、本文の可読性を妨げないこと。
+・フォントはサンセリフ体(Helvetica、Arial、Noto Sans等)を使用。
+・透かしはコンテンツ・図解・写真の背面に配置し、前面要素の視認性を最優先すること。</pre>
+          </div>
+        </article>
+
+        <article class="design-tile">
+          <div class="design-label">
+            <div class="design-letter">D</div>
+            <div class="design-name">白背景 × 実写</div>
+            <div class="design-tags"><span class="design-tag use-print">🖨 印刷</span></div>
+          </div>
+          <div class="design-preview-wrap"><img src="./image/design_d_white_photo.png" alt="デザインD：白背景×実写"></div>
+          <div class="design-meta">
+            <p class="feature">白背景＋実写でプロフェッショナル感。落ち着いた印象。印刷時に最適。</p>
+            <span class="recommend">📌 介護／医療系／フォーマルな現場</span>
+          </div>
+          <a class="design-preview-btn" href="https://canva.link/n5zte1m1h9p0gtk" target="_blank" rel="noopener">完成サンプルPDFを見る（Canva）</a>
+          <div class="prompt-block">
+            <div class="prompt-header">
+              <span>🎨 DESIGN PROMPT — D</span>
+              <button class="copy-btn">📋 コピー</button>
+            </div>
+<pre class="prompt-content">【カラー指定（厳守）】
+・背景カラーは #FFFFFF（RGB: 255,255,255）を厳密に使用し、RGB値の変更・明度調整・彩度調整・透過・グラデーション・影・減光処理を一切行わず、必ず単色ベタ塗りで完全一致させること。
+・文字色は #212121(本文・見出し)。
+・アクセントカラーは #007AFF、警告・注意喚起カラーは #FF3B30。
+・視認性確保のため、白背景に淡色文字等の低コントラスト組み合わせは避けること。
+【デザイン】
+・白・黒を基調とし、アクセントに青(#007AFF)、警告に赤(#FF3B30)を使用する。
+・簡潔な図解を使用し、情報を整理して見やすく配置する。
+・余白を十分に取り、清潔感のあるレイアウトにすること。
+【トーン＆マナー】
+・初めての方でも安心できる優しい伴走型のトーン(煽る表現は避ける)。
+【強調表示】
+・注意喚起には赤色(#FF3B30)や目立つアイコンを使用してメリハリをつける。
+【使用する画像(スタッフ実写画像)】
+・イラストは使用しないこと。
+・原則として、ソース(アップロード資料)に含まれている実写写真をそのまま使用すること。
+・ソース内の写真の中から、内容に最も適した場面(作業中・案内中・説明中など)を選定して挿入する。
+・写真のトリミングや配置調整は可だが、人物の差し替え・合成・加工(色味の大幅変更、フィルター追加、AIによる修正等)は行わないこと。
+・ソースに該当する写真が含まれていない場合に限り、AIによる実写風画像を新規生成して挿入してよい。
+・新規生成する場合は、必ず「淡い水色のポロシャツとチノパン」を着たスタッフのリアルな実写風(写真的な)画像とすること。
+・性別・年齢は内容に合わせて自然に設定し、表情は柔らかく親しみやすい印象にすること。
+・スタッフが実際に作業している様子・案内している様子・説明している様子など、内容に即した自然なシチュエーションで人物を登場させること。
+・背景は白または淡いグレーのシンプルな環境とし、被写体(スタッフ)が主役として際立つようにすること。
+・照明は自然光のような柔らかい光を意識し、明るくクリアな写真品質にすること。
+・3Dレンダリング調・CG調・アニメ調・過度な加工は禁止。あくまで自然な実写写真のクオリティを保つこと。
+【ロゴ・キャラクターの非使用(厳守)】
+・ロゴ、キャラクター、マスコット、アイコン化された人物・動物等のシンボルマークは一切配置しないこと。
+・「黄色くて丸いキャラクター」を含む、いかなる企業ロゴ・キャラクターも全スライドにおいて使用禁止とする。
+・AIによるロゴ・キャラクターの自動生成・自動挿入も絶対禁止。
+・スライド右下を含む全領域において、ロゴ・キャラクターを意図せず生成・配置しないよう厳守すること。
+【コピー防止用の透かし(全スライド共通・必須)】
+・全スライド(表紙・本文・章扉・裏表紙すべて例外なく)の背景全面に「Timee」という文字を半透明のグレー(#212121)で透かしとして必ず配置すること。透かしの省略は不可。
+・配置角度は左下から右上に向けて約-30度の斜め配置。
+・タイル状(格子状)に等間隔で繰り返し配置し、スライド全面(四隅・端部含む)を漏れなく覆うこと。
+・1文字あたりのフォントサイズは小さめ(目安: 18〜24pt程度)、不透明度は薄め(目安: 8〜12%)に設定し、本文の可読性を妨げないこと。
+・フォントはサンセリフ体(Helvetica、Arial、Noto Sans等)を使用。
+・透かしはコンテンツ・図解・写真の背面に配置し、前面要素の視認性を最優先すること。
+・透かしレイヤーはすべてのスライドで同一の仕様(角度・間隔・サイズ・不透明度)を維持し、スライドごとに省略・変動しないこと。</pre>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ① — STEP 05</div>
+      <h2 class="step-title">内容チェック＆改訂</h2>
+      <h4 class="minor-title">確認すること</h4>
+      <ul class="checklist">
+        <li>文字化けしているスライドがないか</li>
+        <li>不適切な画像（業務と関係ない／ブランドにそぐわない）がないか</li>
+        <li><strong>「Timee」のウォーターマーク</strong> が入っているか</li>
+        <li>安全に関わる手順（指差し呼称・ブレーキ確認・員数確認など）が抜けていないか</li>
+        <li>選んだデザインバリエーションどおりに生成されているか</li>
+      </ul>
+      <h4 class="minor-title">修正が必要な場合</h4>
+      <ol class="numbered-steps">
+        <li>該当スライドを開いて <span class="kbd">変更</span> をクリック</li>
+        <li><strong>修正したい箇所を1度でまとめて、すべて具体的に指示</strong><br>
+          <span style="font-size:13px; color:var(--ink-soft);">例：「3枚目の画像を、ヘルメットを被った男性のイラストに差し替え、5枚目の本文を敬語に書き直し、7枚目の警告アイコンを大きく」</span>
+        </li>
+        <li><span class="kbd">改訂版のスライドを生成</span> をクリック</li>
+      </ol>
+      <div class="callout callout-warn">
+        <span class="callout-label">⚠ 重要</span>
+        <strong>書き出し（再生成）は初回生成と同じくらい時間がかかります。</strong><br>
+        1スライドずつ直すと毎回その時間が積み上がってしまうため、<strong>修正箇所は1度ですべて洗い出し、具体的な指示でまとめて投げる</strong> のが効率的です。
+      </div>
+    </div>
+
+    <div class="step-card is-goal">
+      <div class="step-num" style="color:var(--accent-blue);">🎯 GOAL — TAB ① STEP 06</div>
+      <h2 class="step-title">PDFでダウンロード</h2>
+      <ol class="numbered-steps">
+        <li>NotebookLMの右上 <span class="kbd">︙（その他）</span> をクリック</li>
+        <li><span class="kbd">PDFでダウンロード</span> を選択して保存</li>
+        <li>ローカルに保存して <strong>完成</strong></li>
+      </ol>
+      <div class="callout callout-tip" style="margin-top:20px;">
+        <span class="callout-label">💡 TIP</span>
+        PDF化することで、ワーカーがスマホで見ても崩れず、印刷時の精度も安定します。
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ TAB 2 PANEL ============ -->
+  <section class="tab-panel" id="tab2" role="tabpanel">
+
+    <div class="tab-intro">
+      <div class="tab-intro-label">TAB 02 — VIDEO QUALITY BOOST</div>
+      <h3>動画でクオリティUP</h3>
+      <p>業界別1カット動画を撮影してYouTube限定公開し、<strong>ソース②</strong> としてNotebookLMに追加。マニュアルの完成度が大幅に上がります（このタブが本丸）。</p>
+    </div>
+
+    <div class="mini-flow-wrapper">
+      <div class="mini-flow-label">▼ TAB 02 FLOW</div>
+      <div class="mermaid">
+flowchart LR
+    R[共通ルール<br/>確認] --> I[業界別<br/>1カット撮影]
+    I --> Y[YouTube<br/>限定公開]
+    Y --> Add[NotebookLM<br/>ソース②追加]
+    Add -.-> Back[タブ① STEP 03へ]
+    classDef stepBox fill:#F0F4FF,stroke:#3B5BDB,stroke-width:2px,color:#2A2520
+    classDef backBox fill:#FFF4E6,stroke:#FF6F3C,stroke-width:1.5px,stroke-dasharray:4 2,color:#2A2520
+    class R,I,Y,Add stepBox
+    class Back backBox
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ② — STEP 01</div>
+      <h2 class="step-title">撮影の共通ルール</h2>
+      <table class="rule-table">
+        <thead><tr><th style="width:30%">項目</th><th>ルール</th></tr></thead>
+        <tbody>
+          <tr><td>撮影機材</td><td>スマートフォン（<strong>横向き固定</strong>）</td></tr>
+          <tr><td>撮影方式</td><td><strong>1カット撮影（カット割なし）</strong></td></tr>
+          <tr><td>演者</td><td>動作しながら <strong>セリフを声に出す</strong></td></tr>
+          <tr><td>公開設定</td><td>YouTube <strong>限定公開</strong></td></tr>
+          <tr><td>撮影後</td><td>再生確認 → URLをコピーしてNotebookLMに追加</td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout-warn">
+        <span class="callout-label">⚠ NGパターン</span>
+        ・縦向き撮影（NotebookLMで読み込み精度が落ちる）<br>
+        ・編集でカットを切り貼り（手順の前後関係が崩れる）<br>
+        ・無言での撮影（セリフ＝マニュアルの読み上げ素材になります）
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ② — STEP 02</div>
+      <h2 class="step-title">業界別 1カット撮影ガイド</h2>
+      <p>5業界・7業務をカバー。担当業界の項目をクリックして展開すると、撮影レイアウト／キーモーメント／タイムラインの参考画像が表示されます。画像クリックで拡大表示。</p>
+      <div class="accordion-intro">
+        <span><strong>📐 共通仕様：</strong> スマホ横向き固定／カット割なし／演者は動作しながらセリフを声に出す</span>
+      </div>
+
+      <div class="accordion-section">
+
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🏭</div>
+            <span class="accordion-industry">LOGISTICS</span>
+            <span class="accordion-title">物流｜出荷ピッキング</span>
+            <span class="accordion-duration">90秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_logistics_picking.png','物流｜出荷ピッキング 1カット撮影ガイド')">
+              <img src="./image/guide_logistics_picking.png" alt="物流｜出荷ピッキング 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>装備見せ＆指示確認</strong> 軍手・安全靴を見せ、ハンディを読む</li>
+              <li><span class="num-mini">2</span><span class="ts">0:15-0:30</span><strong>棚番スキャン</strong> 棚番ラベルにハンディをかざす</li>
+              <li><span class="num-mini">3</span><span class="ts">0:30-0:45</span><strong>商品スキャン</strong> 商品バーコードにかざす</li>
+              <li><span class="num-mini">4</span><span class="ts">0:45-1:10</span><strong>指差し呼称</strong> 1個ずつ指差してカゴ車へ</li>
+              <li><span class="num-mini">5</span><span class="ts">1:10-1:30</span><strong>確定＆移動</strong> 数量入力しカゴ車を押す</li>
+            </ul>
+            <div class="tile-lines">「軍手・安全靴OK。棚番A-01-3、数量2」「棚番スキャン、ピッ、棚一致」「商品スキャン、ピッ、コード一致」「2個取ります。1個、2個」「数量2、確定。検品エリアへ」</div>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🛒</div>
+            <span class="accordion-industry">RETAIL</span>
+            <span class="accordion-title">小売｜品出し</span>
+            <span class="accordion-duration">120秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_retail_stocking.png','小売｜品出し 1カット撮影ガイド')">
+              <img src="./image/guide_retail_stocking.png" alt="小売｜品出し 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:25</span><strong>開封</strong> カッターを手前→奥へ滑らせる</li>
+              <li><span class="num-mini">2</span><span class="ts">0:25-0:45</span><strong>積載</strong> 賞味期限を1本ずつ確認</li>
+              <li><span class="num-mini">3</span><span class="ts">0:45-1:05</span><strong>移動</strong> 通路右寄りで台車を押す</li>
+              <li><span class="num-mini">4</span><span class="ts">1:05-1:40</span><strong>JAN照合＆先入れ先出し</strong> 棚札と商品を指差しで照合</li>
+              <li><span class="num-mini">5</span><span class="ts">1:40-2:00</span><strong>前出し</strong> ラベルを正面に向けて整える</li>
+            </ul>
+            <div class="tile-lines">「指は刃の進行方向に置きません」「賞味期限を見ながら積みます」「お客さま優先、通路右寄り」「JAN末尾4桁が一致。古いものを手前へ」「ラベルを正面、面を揃えます」</div>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🍽</div>
+            <span class="accordion-industry">RESTAURANT</span>
+            <span class="accordion-title">飲食｜お客さま案内〜オーダー取り</span>
+            <span class="accordion-duration">120秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_restaurant_order.png','飲食｜お客さま案内〜オーダー取り 1カット撮影ガイド')">
+              <img src="./image/guide_restaurant_order.png" alt="飲食｜お客さま案内〜オーダー取り 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>出迎え</strong> 笑顔で頭を下げる</li>
+              <li><span class="num-mini">2</span><span class="ts">0:15-0:40</span><strong>席へ案内</strong> 先導し椅子を引く</li>
+              <li><span class="num-mini">3</span><span class="ts">0:40-1:00</span><strong>おしぼり・お水</strong> お客さまから見て右側に置く</li>
+              <li><span class="num-mini">4</span><span class="ts">1:00-1:40</span><strong>注文取り＆復唱</strong> ハンディに入力する</li>
+              <li><span class="num-mini">5</span><span class="ts">1:40-2:00</span><strong>厨房送信</strong> 送信ボタンを押す</li>
+            </ul>
+            <div class="tile-lines">「いらっしゃいませ。2名さまですか？」「こちらのお席にどうぞ」「お冷とおしぼりです」「Aランチ1、Bランチ1、繰り返します」「ご注文承りました」</div>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🧑‍🦽</div>
+            <span class="accordion-industry">CARE</span>
+            <span class="accordion-title">介護｜移乗介助</span>
+            <span class="accordion-duration">90秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_care_transfer.png','介護｜移乗介助 1カット撮影ガイド')">
+              <img src="./image/guide_care_transfer.png" alt="介護｜移乗介助 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>事前説明</strong> 正面に立ち目線を合わせる</li>
+              <li><span class="num-mini">2</span><span class="ts">0:15-0:35</span><strong>ブレーキ確認</strong> 車椅子を30°寄せ、ブレーキを押す</li>
+              <li><span class="num-mini">3</span><span class="ts">0:35-0:55</span><strong>立ち上がり</strong> 両膝を自分の膝で支える</li>
+              <li><span class="num-mini">4</span><span class="ts">0:55-1:15</span><strong>方向転換＆着座</strong> ゆっくり旋回して腰を下ろす</li>
+              <li><span class="num-mini">5</span><span class="ts">1:15-1:30</span><strong>終了</strong> ベッド中央に座り直す</li>
+            </ul>
+            <div class="tile-lines">「ベッドにお移りしますね」「ブレーキかけました」「1、2、3で立ちますよ」「そのまま腰を下ろして」「お疲れさまでした」</div>
+            <div class="tile-note">⚠️ ご利用者の顔・氏名・部屋番号が映り込まないよう徹底。代理演者を立てるのが安全です。</div>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🍱</div>
+            <span class="accordion-industry">CARE</span>
+            <span class="accordion-title">介護｜食事介助</span>
+            <span class="accordion-duration">90秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_care_meal.png','介護｜食事介助 1カット撮影ガイド')">
+              <img src="./image/guide_care_meal.png" alt="介護｜食事介助 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:10</span><strong>挨拶</strong> 食札を見せる</li>
+              <li><span class="num-mini">2</span><span class="ts">0:10-0:25</span><strong>姿勢確認</strong> 背もたれと足元を整える</li>
+              <li><span class="num-mini">3</span><span class="ts">0:25-0:50</span><strong>介助開始</strong> スプーンを下から運ぶ</li>
+              <li><span class="num-mini">4</span><span class="ts">0:50-1:15</span><strong>嚥下確認</strong> 飲み込みを目視で待つ</li>
+              <li><span class="num-mini">5</span><span class="ts">1:15-1:30</span><strong>終了</strong> 口元を拭く</li>
+            </ul>
+            <div class="tile-lines">「お昼ごはんお持ちしました」「背中まっすぐ、足は床に？」「お粥からいきますね」「飲み込めましたか？」「ごちそうさまでした」</div>
+            <div class="tile-note">⚠️ ご利用者の顔・氏名・部屋番号が映り込まないよう徹底。スプーンは必ず下から運ぶ（誤嚥防止）。</div>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">🏷️</div>
+            <span class="accordion-industry">MANUFACTURING</span>
+            <span class="accordion-title">製造｜ラベル貼り</span>
+            <span class="accordion-duration">60秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_mfg_label.png','製造｜ラベル貼り 1カット撮影ガイド')">
+              <img src="./image/guide_mfg_label.png" alt="製造｜ラベル貼り 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:10</span><strong>ラベル準備</strong> ラベル台紙から1枚剥がす</li>
+              <li><span class="num-mini">2</span><span class="ts">0:10-0:25</span><strong>ボトルを固定</strong> 左手で持ち作業位置で安定させる</li>
+              <li><span class="num-mini">3</span><span class="ts">0:25-0:40</span><strong>位置合わせ</strong> ラベル上端をボトル肩の下に合わせる</li>
+              <li><span class="num-mini">4</span><span class="ts">0:40-0:55</span><strong>中央から外へ</strong> 親指で中央から外へ押し付け空気を抜く</li>
+              <li><span class="num-mini">5</span><span class="ts">0:55-1:00</span><strong>完成品ラインへ</strong> ベルトに戻すか完成品トレーに移す</li>
+            </ul>
+            <div class="tile-lines">「ラベルを1枚、剥がします」「ボトルを左手で固定。ぐらつかせません」「位置はボトルの肩の下。合わせ目に注意」「中央から外へ、空気を抜きながら密着させます」「完成、ラインへ戻します。次のボトルへ」</div>
+            <div class="tile-note">⚠️ ラベルの位置ズレ・気泡・シワが品質クレームの典型。「中央から外へ」のセリフは必ず入れてください。</div>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-header">
+            <div class="accordion-icon">📦</div>
+            <span class="accordion-industry">MANUFACTURING</span>
+            <span class="accordion-title">製造｜製品の個包装</span>
+            <span class="accordion-duration">90秒</span>
+            <span class="accordion-chevron">▼</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-img-wrap" onclick="openLightbox('./image/guide_mfg_packaging.png','製造｜製品の個包装 1カット撮影ガイド')">
+              <img src="./image/guide_mfg_packaging.png" alt="製造｜製品の個包装 1カット撮影ガイド" loading="lazy">
+            </div>
+            <ul class="scene-mini">
+              <li><span class="num-mini">1</span><span class="ts">0:00-0:15</span><strong>包装紙を準備</strong> 1枚取り、台の上に広げる</li>
+              <li><span class="num-mini">2</span><span class="ts">0:15-0:35</span><strong>商品を中央に置く</strong> 端だと折りにくい</li>
+              <li><span class="num-mini">3</span><span class="ts">0:35-0:55</span><strong>折り込む</strong> 左右→上下の順、折り目をきっちり</li>
+              <li><span class="num-mini">4</span><span class="ts">0:55-1:15</span><strong>シールで封</strong> 合わせ目に貼って密着</li>
+              <li><span class="num-mini">5</span><span class="ts">1:15-1:30</span><strong>出荷箱へ</strong> 重ねず横並びで</li>
+            </ul>
+            <div class="tile-lines">「包装紙を1枚、台に広げます」「商品は必ず中央に。端だと折りにくいです」「左右、上下の順に。折り目をきっちりつけます」「シールで封をします。空気を抜きながら密着」「完成、箱に並べます。重ねず横並びで」</div>
+            <div class="tile-note">⚠️ 折り順（左右→上下）を間違えると見栄えが崩れる。出荷箱は「重ねず横並び」で必ず指示してください。</div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ② — STEP 03</div>
+      <h2 class="step-title">YouTube限定公開でアップロード</h2>
+      <ol class="numbered-steps">
+        <li>スマホで <strong>再生確認</strong>（音声が入っているか／全カット繋がっているか）</li>
+        <li>YouTubeに <strong>限定公開</strong> でアップロード<br><span style="font-size:13px; color:var(--ink-soft);">「子ども向け：いいえ」を選択／公開設定：<strong>限定公開</strong></span></li>
+        <li>アップロード後、動画のURLをコピー</li>
+      </ol>
+      <div class="callout callout-note">
+        <span class="callout-label">📌 NOTE</span>
+        限定公開＝URLを知っている人だけが視聴できる設定。<strong>「非公開」だとNotebookLMが読み込めません。</strong>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ② — STEP 04</div>
+      <h2 class="step-title">NotebookLMにソース②として追加</h2>
+      <ol class="numbered-steps">
+        <li>NotebookLMで対象ノートを開く（タブ①STEP 01で作成済み）</li>
+        <li>「ソースを追加」→ <strong>「YouTube」</strong> を選択</li>
+        <li>コピーした <strong>限定公開URL</strong> を貼り付け</li>
+        <li><span class="kbd">追加</span> をクリック</li>
+      </ol>
+      <div class="callout callout-warn">
+        <span class="callout-label">⚠ 注意</span>
+        ソースを追加した直後は、NotebookLMが内容を読み込むまで数十秒〜1分かかります。サムネイル横のローディング表示が消えるまで待ってから次のステップへ進んでください。
+      </div>
+
+      <a href="#" class="back-to-tab1" data-switch-tab="tab1">ソース②追加完了。タブ① STEP 03 へ進む</a>
+    </div>
+
+  </section>
+
+  <!-- ============ TAB 3 PANEL ============ -->
+  <section class="tab-panel" id="tab3" role="tabpanel">
+
+    <div class="tab-intro">
+      <div class="tab-intro-label">TAB 03 — MATERIAL QUALITY BOOST</div>
+      <h3>既存資料 / 作業マニュアルGem で品質UP</h3>
+      <p>既存マニュアルやGemで業務内容を回収し、<strong>ソース③</strong> としてNotebookLMに追加。動画撮影が難しい案件でもクオリティを底上げできます。</p>
+    </div>
+
+    <div class="mini-flow-wrapper">
+      <div class="mini-flow-label">▼ TAB 03 FLOW</div>
+      <div class="mermaid">
+flowchart LR
+    M1[既存マニュアル<br/>あり] --> Up[NotebookLM<br/>アップロード]
+    M2[既存マニュアル<br/>なし] --> G[作業マニュアルGem<br/>質問回答]
+    G --> Doc[Google Docs<br/>生成]
+    Doc --> Up
+    Up --> Add[ソース③<br/>として追加]
+    Add -.-> Back[タブ① STEP 03へ]
+    classDef stepBox fill:#FFF1EC,stroke:#D9480F,stroke-width:2px,color:#2A2520
+    classDef backBox fill:#FFF4E6,stroke:#FF6F3C,stroke-width:1.5px,stroke-dasharray:4 2,color:#2A2520
+    class M1,M2,G,Doc,Up,Add stepBox
+    class Back backBox
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ③ — STEP 01</div>
+      <h2 class="step-title">既存マニュアルがある場合</h2>
+      <p>クライアントから既存マニュアル・手順書を入手できた場合は、そのままアップロードできます。</p>
+
+      <h4 class="minor-title">追加方法（形式別）</h4>
+      <table class="rule-table">
+        <thead><tr><th style="width:42%;">形式</th><th>NotebookLMへの追加方法</th></tr></thead>
+        <tbody>
+          <tr><td>PDF（紙のマニュアルをスキャンしたもの含む）</td><td>「ファイルアップロード」→ PDFを選択</td></tr>
+          <tr><td>Google ドキュメント／スライド</td><td>「Google Drive」から該当ファイルを選択</td></tr>
+          <tr><td>Word文書</td><td>「ファイルアップロード」→ .docxを選択</td></tr>
+          <tr><td>現場写真（業務風景・設備など）</td><td>Google Docsに貼り付けてからアップロード推奨</td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout-tip">
+        <span class="callout-label">💡 既存マニュアルがない場合</span>
+        次のSTEP 02で <strong>作業マニュアルGem</strong> を使って作業内容を回収し、Google Docsを生成します。
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ③ — STEP 02</div>
+      <h2 class="step-title">作業マニュアルGemで作業内容を回収</h2>
+      <p>既存マニュアルがない or 補強したい場合は、<strong>作業マニュアルGem</strong> で業務をヒヤリングしてGoogle Docsを自動生成します。</p>
+
+      <div class="gem-inline" style="margin:18px 0 24px;">
+        <div class="gem-text">
+          <strong>✨ 作業マニュアルGem</strong>
+          <span>クリック → 質問に答える → Canvas で Google Docs に整形 → NotebookLM に追加。</span>
+        </div>
+        <a class="gem-cta" href="https://gemini.google.com/gem/1aDT6fvVj25AB5EgPUbhAGBlUG5IYeI-z?usp=sharing" target="_blank">Gemを開く →</a>
+      </div>
+
+      <h4 class="minor-title">使い方（5ステップ）</h4>
+      <ol class="numbered-steps">
+        <li><strong>Gemにアクセス</strong>：上のボタンからGemを開く</li>
+        <li><strong>質問に答える</strong>：Gemから業務に関する質問が始まるので、対応するワーカー業務の内容を順番に答える</li>
+        <li><strong>Canvas で Google Docs にまとめる</strong>：回答が一通り完了すると、CanvasでGoogle Docsとして整形される</li>
+        <li><strong>現場写真を追加</strong>（任意）：可能であれば業務風景・設備の写真をGoogle Docsに貼り付ける</li>
+        <li><strong>Google Docsを保存</strong>：次のSTEP 03でNotebookLMにアップロードします</li>
+      </ol>
+
+      <div class="callout callout-tip">
+        <span class="callout-label">💡 TIP</span>
+        既存マニュアル・手順書がない案件ほど、Gemで作業書を作っておくとNotebookLMの出力が安定します。撮影NG案件の代替手段としても有効。
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">TAB ③ — STEP 03</div>
+      <h2 class="step-title">NotebookLMにソース③として追加</h2>
+      <ol class="numbered-steps">
+        <li>NotebookLMで対象ノートを開く（タブ①STEP 01で作成済み）</li>
+        <li>「ソースを追加」を選択</li>
+        <li>形式に応じて選択：
+          <ul style="margin:8px 0 0; padding-left:20px; font-size:13px; color:var(--ink-soft);">
+            <li>PDF / Word → 「ファイルアップロード」</li>
+            <li>Google Docs / Slides → 「Google Drive」</li>
+          </ul>
+        </li>
+        <li><span class="kbd">追加</span> をクリック</li>
+      </ol>
+
+      <div class="callout callout-warn">
+        <span class="callout-label">⚠ 注意</span>
+        ソースを追加した直後は、NotebookLMが内容を読み込むまで数十秒〜1分かかります。サムネイル横のローディング表示が消えるまで待ってから次のステップへ進んでください。
+      </div>
+
+      <a href="#" class="back-to-tab1" data-switch-tab="tab1">ソース③追加完了。タブ① STEP 03 へ進む</a>
+    </div>
+
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <h2 class="section-title"><span class="num">FAQ</span><span class="icon">⚠️</span>よくあるつまずき</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">NotebookLMが動画を読み込んでくれない</div>
+      <div class="faq-a">YouTubeの公開設定が <strong>「限定公開」</strong> になっているか確認。「非公開」だと読み込めません。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">生成されたマニュアルがスカスカ</div>
+      <div class="faq-a">ソース材料が不足している可能性。<a href="#" class="tab-cta" data-switch-tab="tab2" style="font-size:11px; padding:4px 10px;">タブ②動画</a> や <a href="#" class="tab-cta is-tab3" data-switch-tab="tab3" style="font-size:11px; padding:4px 10px;">タブ③既存資料/Gem</a> でソースを追加すると改善します。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">黄色背景にならない／意図したデザインにならない</div>
+      <div class="faq-a">タブ① STEP 04 のデザインバリエーションで選んだプロンプトを <strong>そのまま</strong> 貼り付けているか確認。途中で改行や文字が抜けると精度が落ちます。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">ひな形IDが重複しているマニュアルがある</div>
+      <div class="faq-a">既存のマニュアル掲載DBで該当ひな形を検索。既にマニュアルがある場合は、内容を確認の上、更新か新規作成かを判断してください。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">クライアントから撮影NGと言われた</div>
+      <div class="faq-a">撮影ができない場合、作業内容をヒヤリングしDocとしてNotebookLMのソースに読み込めばマニュアルは作成可能です。撮影した実写真もデザインプロンプトをイラスト指示にすれば実写真はイラスト化されます。作業ヒヤリングがわからない時は <a href="https://gemini.google.com/gem/1aDT6fvVj25AB5EgPUbhAGBlUG5IYeI-z?usp=sharing" target="_blank">作業マニュアルGem</a>（<a href="#" class="tab-cta is-tab3" data-switch-tab="tab3" style="font-size:11px; padding:4px 10px;">タブ③</a>）を活用してください。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">デザインバリエーション、どれを選べばいい？</div>
+      <div class="faq-a">用途で先に絞る：<strong>印刷が必要なら白背景（B / D）、Web中心なら黄色（A / C）</strong>。さらに迷ったら <strong>C（黄色背景×実写）</strong> が標準。介護・医療など落ち着いた印象が必要なら D（白背景×実写）。初心者ワーカーが多い飲食・小売は A（黄色×イラスト）が好相性。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">プロンプトをクリップボードへ素早く呼び出したい</div>
+      <div class="faq-a">
+        Mac の「ショートカット」アプリ + Spotlight で、各プロンプトを <strong>2ステップでクリップボードにコピー</strong> できます。
+
+        <span class="shortcut-section-label">📥 初回セットアップ</span>
+        下記リンクから、使いたいショートカットを追加（リンク先で「ショートカットを追加」をクリック）。一度追加すれば次回以降は不要です。
+
+        <span class="shortcut-section-label">🚀 使い方</span>
+        <ol class="shortcut-steps">
+          <li><span class="kbd">⌘ + Space</span> で Spotlight を開く</li>
+          <li>ショートカット名（例：「マニュアルA」）を入力して選択 → 自動でクリップボードへコピー</li>
+          <li>NotebookLM 等で <span class="kbd">⌘ + V</span> で貼り付け</li>
+        </ol>
+
+        <span class="shortcut-section-label">🔗 ショートカット一覧</span>
+        <ul class="shortcut-list">
+          <li>
+            <span class="sc-label"><span class="sc-tag">PROMPT</span>マニュアルプロンプト（タブ①STEP 03でチャットに入れる）</span>
+            <a class="sc-link" href="https://www.icloud.com/shortcuts/06b3dec49fe74ac8800a1cb279123001" target="_blank" rel="noopener">＋ 追加</a>
+          </li>
+          <li>
+            <span class="sc-label"><span class="sc-tag">DESIGN A</span>マニュアルA（黄色背景・イラスト）</span>
+            <a class="sc-link" href="https://www.icloud.com/shortcuts/6b02a0ee0be64a0994156189bdbd4c5a" target="_blank" rel="noopener">＋ 追加</a>
+          </li>
+          <li>
+            <span class="sc-label"><span class="sc-tag">DESIGN B</span>マニュアルB（白背景・イラスト）</span>
+            <a class="sc-link" href="https://www.icloud.com/shortcuts/5eaeeae0cd8b4085a5376cc86c24b8ee" target="_blank" rel="noopener">＋ 追加</a>
+          </li>
+          <li>
+            <span class="sc-label"><span class="sc-tag">DESIGN C</span>マニュアルC（黄色背景・実写）</span>
+            <a class="sc-link" href="https://www.icloud.com/shortcuts/b638add610e3406dad0ac123b1750f3b" target="_blank" rel="noopener">＋ 追加</a>
+          </li>
+          <li>
+            <span class="sc-label"><span class="sc-tag">DESIGN D</span>マニュアルD（白背景・実写）</span>
+            <a class="sc-link" href="https://www.icloud.com/shortcuts/971b23f63d0a4fb3a1bf6304d29aea34" target="_blank" rel="noopener">＋ 追加</a>
+          </li>
+        </ul>
+        <p style="margin-top:10px; font-size:11.5px; color:var(--ink-mute);">※ Mac の「ショートカット」アプリが必要です（iCloud Shortcuts）。iPhone でも追加可能。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section>
+    <h2 class="section-title"><span class="num">LINKS</span><span class="icon">🔗</span>関連リンク</h2>
+    <div class="related-links">
+      <ul>
+        <li><a href="https://notebooklm.google.com/">NotebookLM</a></li>
+        <li><a href="https://gemini.google.com/gem/1aDT6fvVj25AB5EgPUbhAGBlUG5IYeI-z?usp=sharing">作業マニュアルGem</a></li>
+        <li><a href="https://www.notion.so/timee/2edc5579d2b88063ab6de491a692190c">マニュアル作成、ひな形・サムネイル改善｜作業手順書（SST版）</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div>作成・運用：マーケティング 菊地亮</div>
+    <div>問い合わせ：Slack #manual-workflow</div>
+  </footer>
+
+</div>
+
+<!-- LIGHTBOX OVERLAY -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+  <button class="lightbox-close" type="button" aria-label="閉じる" onclick="event.stopPropagation(); closeLightbox();">×</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'base',
+  themeVariables: {
+    primaryColor: '#FFF4E6',
+    primaryTextColor: '#2A2520',
+    primaryBorderColor: '#FF6F3C',
+    lineColor: '#FF6F3C',
+    secondaryColor: '#FFE8DC',
+    tertiaryColor: '#FFF9F2',
+    fontFamily: 'Noto Sans JP, sans-serif',
+    fontSize: '14px'
+  },
+  flowchart: { curve: 'basis', padding: 20 }
+});
+
+(function() {
+  function setupCarousel(trackId) {
+    const track = document.getElementById(trackId);
+    if (!track) return;
+    const prev = document.querySelector(`.nav-prev[data-target="${trackId}"]`);
+    const next = document.querySelector(`.nav-next[data-target="${trackId}"]`);
+    if (!prev || !next) return;
+    const getStep = () => {
+      const tile = track.querySelector('.design-tile');
+      if (!tile) return 540;
+      const style = getComputedStyle(track);
+      const gap = parseFloat(style.gap) || 18;
+      return tile.getBoundingClientRect().width + gap;
+    };
+    const updateButtons = () => {
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+    };
+    prev.addEventListener('click', () => track.scrollBy({ left: -getStep(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: getStep(), behavior: 'smooth' }));
+    track.addEventListener('scroll', updateButtons, { passive: true });
+    window.addEventListener('resize', updateButtons);
+    setTimeout(updateButtons, 100);
+  }
+  setupCarousel('designTrack');
+
+  // Tab switching
+  function switchTab(targetId) {
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    const btn = document.querySelector(`.tab-btn[data-target="${targetId}"]`);
+    const panel = document.getElementById(targetId);
+    if (btn) { btn.classList.add('active'); btn.setAttribute('aria-selected', 'true'); }
+    if (panel) panel.classList.add('active');
+    const nav = document.querySelector('.tab-nav-wrapper');
+    if (nav) {
+      const navTop = nav.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({ top: navTop - 16, behavior: 'smooth' });
+    }
+  }
+  window.switchTab = switchTab;
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.target));
+  });
+  document.querySelectorAll('[data-switch-tab]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      switchTab(link.dataset.switchTab);
+    });
+  });
+
+  // Lightbox
+  window.openLightbox = function(src, caption) {
+    const overlay = document.getElementById('lightboxOverlay');
+    const img = document.getElementById('lightboxImg');
+    const cap = document.getElementById('lightboxCaption');
+    img.src = src;
+    img.alt = caption || '';
+    cap.textContent = caption || '';
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeLightbox = function() {
+    document.getElementById('lightboxOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  };
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') window.closeLightbox();
+  });
+
+  // Copy button for design prompts
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const block = btn.closest('.prompt-block');
+      const text = block.querySelector('.prompt-content').textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        const original = btn.textContent;
+        btn.textContent = '✓ コピー済';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 1800);
+      } catch (e) {
+        btn.textContent = '⚠ 失敗';
+        setTimeout(() => { btn.textContent = '📋 コピー'; }, 1800);
+      }
+    });
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  var frames = document.querySelectorAll('.op-frame');
+  if (!frames.length) return;
+  if (!('IntersectionObserver' in window)) {
+    frames.forEach(function(f){ f.classList.add('run'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var el = entry.target;
+      if (entry.isIntersecting) {
+        el.classList.remove('run');
+        void el.offsetWidth; // restart animations
+        el.classList.add('run');
+      } else {
+        el.classList.remove('run');
+      }
+    });
+  }, { threshold: 0.4 });
+  frames.forEach(function(f){ io.observe(f); });
+})();
+</script>
+
 </body>
 </html>
