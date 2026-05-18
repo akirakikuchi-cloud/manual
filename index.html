@@ -604,277 +604,6 @@ em { font-style: normal; background: linear-gradient(180deg, transparent 65%, va
   display: inline-flex; align-items: center; gap: 4px; border: 0;
 }
 .shortcut-list .sc-link:hover { background: #2A4AC0; transform: scale(1.05); }
-
-/* === Operation Screenshot Animations (Part 1) ============================ */
-.op-shots {
-  margin: 28px 0 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-.op-shots__heading {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--primary);
-  padding-bottom: 10px;
-  border-bottom: 1px dashed var(--rule);
-  margin-bottom: -8px;
-}
-.op-shots__heading::before {
-  content: "";
-  width: 18px;
-  height: 1px;
-  background: var(--primary);
-}
-
-.op-shot {
-  margin: 0;
-  display: grid;
-  grid-template-columns: 56px 1fr;
-  gap: 14px;
-  align-items: start;
-}
-.op-shot__num {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: #fff;
-  font-family: var(--serif);
-  font-weight: 800;
-  font-size: 17px;
-  flex: 0 0 44px;
-  position: relative;
-  box-shadow: 0 4px 12px -4px rgba(255,111,60,.5);
-}
-.op-shot__num::after {
-  content: "";
-  position: absolute;
-  left: 50%; top: 100%;
-  transform: translateX(-50%);
-  width: 2px;
-  height: 18px;
-  background: linear-gradient(180deg, var(--primary), transparent);
-}
-.op-shot__body {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 0;
-}
-.op-shot__label {
-  font-family: var(--sans);
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--ink);
-  line-height: 1.4;
-}
-.op-shot__label .target {
-  background: linear-gradient(transparent 60%, rgba(255,111,60,.25) 60%);
-  padding: 0 2px;
-}
-.op-shot__hint {
-  font-size: 12px;
-  color: var(--ink-soft);
-  line-height: 1.55;
-}
-
-.op-frame {
-  position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #f3f5f9;
-  border: 1px solid var(--rule);
-  box-shadow:
-    0 1px 2px rgba(42,37,32,.04),
-    0 16px 36px -12px rgba(42,37,32,.18);
-  margin-top: 6px;
-  isolation: isolate;
-}
-.op-frame__chrome {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 12px;
-  background: #ebe5d7;
-  border-bottom: 1px solid var(--rule);
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink-mute);
-}
-.op-frame__chrome span {
-  width: 9px; height: 9px; border-radius: 50%;
-  display: inline-block;
-}
-.op-frame__chrome span:nth-child(1){ background:#ff5f57;}
-.op-frame__chrome span:nth-child(2){ background:#febc2e;}
-.op-frame__chrome span:nth-child(3){ background:#28c840;}
-.op-frame__chrome .url {
-  margin-left: 6px;
-  background: #fdfaf2;
-  border-radius: 4px;
-  padding: 2px 10px;
-  border: 1px solid var(--rule);
-  font-size: 10px;
-}
-.op-frame__img-wrap {
-  position: relative;
-  display: block;
-  line-height: 0;
-}
-.op-frame__img-wrap img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* Highlight box (pulses around the action target) */
-.op-highlight {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  width: var(--w);
-  height: var(--h);
-  border-radius: var(--r, 10px);
-  pointer-events: none;
-  border: 4px solid var(--primary);
-  box-shadow:
-    0 0 0 4px rgba(255,255,255,.7),
-    0 0 0 6px rgba(255,111,60,.45);
-  opacity: 0;
-  transform: scale(0.85);
-  z-index: 4;
-}
-.op-frame.run .op-highlight {
-  animation: opHlIn 0.5s 0.4s cubic-bezier(.16,1.4,.3,1) forwards,
-             opHlPulse 1.8s 1.0s ease-out infinite;
-}
-@keyframes opHlIn {
-  to { opacity: 1; transform: scale(1); }
-}
-@keyframes opHlPulse {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(255,255,255,.7), 0 0 0 6px rgba(255,111,60,.45); }
-  50%      { box-shadow: 0 0 0 4px rgba(255,255,255,.7), 0 0 0 14px rgba(255,111,60,0); }
-}
-
-/* Pin annotation (label callout sticking out from highlight) */
-.op-pin {
-  position: absolute;
-  left: var(--px);
-  top: var(--py);
-  background: var(--primary);
-  color: #fff;
-  font-family: var(--sans);
-  font-weight: 800;
-  font-size: 15px;
-  letter-spacing: 0.02em;
-  padding: 7px 14px;
-  border-radius: 6px;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(4px);
-  z-index: 5;
-  box-shadow:
-    0 3px 0 rgba(180, 60, 0, 0.35),
-    0 8px 20px -4px rgba(255,111,60,.55);
-}
-.op-pin::before {
-  content: "";
-  position: absolute;
-  left: var(--arrow-x, 16px);
-  top: 100%;
-  width: 0; height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 9px solid var(--primary);
-}
-.op-pin.below::before {
-  top: auto; bottom: 100%;
-  border-top: none;
-  border-bottom: 9px solid var(--primary);
-}
-.op-frame.run .op-pin {
-  animation: opPinIn 0.4s 1.2s cubic-bezier(.16,1.4,.3,1) forwards;
-}
-@keyframes opPinIn {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Cursor */
-.op-cursor {
-  position: absolute;
-  left: var(--start-x, 92%);
-  top: var(--start-y, 92%);
-  width: 22px;
-  height: 22px;
-  pointer-events: none;
-  z-index: 6;
-  filter: drop-shadow(0 2px 3px rgba(0,0,0,.35));
-  opacity: 0;
-}
-.op-cursor svg { width: 100%; height: 100%; display: block; }
-.op-frame.run .op-cursor {
-  animation: opCursorMove 5s 0.4s ease-in-out infinite;
-}
-@keyframes opCursorMove {
-  0%   { opacity: 0;
-         left: var(--start-x, 92%);
-         top:  var(--start-y, 92%); }
-  6%   { opacity: 1; }
-  40%  { opacity: 1;
-         left: var(--end-x);
-         top:  var(--end-y); }
-  72%  { opacity: 1;
-         left: var(--end-x);
-         top:  var(--end-y); }
-  82%  { opacity: 0;
-         left: var(--end-x);
-         top:  var(--end-y); }
-  100% { opacity: 0;
-         left: var(--start-x, 92%);
-         top:  var(--start-y, 92%); }
-}
-
-/* Click ripple — synced to cursor cycle (5s) */
-.op-click {
-  position: absolute;
-  left: var(--end-x);
-  top: var(--end-y);
-  width: 12px; height: 12px;
-  margin-left: -6px; margin-top: -6px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 5;
-  opacity: 0;
-}
-.op-frame.run .op-click {
-  animation: opClick 5s 0.4s ease-out infinite;
-}
-@keyframes opClick {
-  0%, 43%   { opacity: 0; transform: scale(0); background: rgba(255,111,60,.55); }
-  45%       { opacity: 1; transform: scale(0); background: rgba(255,111,60,.55); }
-  60%       { opacity: 0; transform: scale(7); background: rgba(255,111,60,0); }
-  100%      { opacity: 0; transform: scale(7); }
-}
-
-/* (Replay indicator removed — animations now loop) */
-
-@media (max-width: 640px) {
-  .op-shot { grid-template-columns: 40px 1fr; gap: 10px; }
-  .op-shot__num { width: 36px; height: 36px; font-size: 14px; }
-  .op-pin { font-size: 12px; padding: 5px 10px; }
-}
-
 </style>
 </head>
 <body>
@@ -1048,29 +777,7 @@ flowchart LR
         <li>画面左上の <span class="kbd">新規作成</span> をクリック</li>
         <li>ノート名を <strong>「【マニュアル】〇〇（クライアント名）_ひな形ID」</strong> に設定</li>
       </ol>
-      <div class="op-shots">
-  <div class="op-shots__heading">操作シーン — STEP 01</div>
-<figure class="op-shot">
-    <div class="op-shot__num">01</div>
-    <div class="op-shot__body">
-      <div class="op-shot__label">新規ノートが作成された状態</div>
-      <div class="op-shot__hint">ノート名にひな形ID（例：2292158）を入れておくと、後で対応関係がすぐわかります。</div>
-      <div class="op-frame">
-        <div class="op-frame__chrome">
-          <span></span><span></span><span></span>
-          <span class="url">notebooklm.google.com</span>
-        </div>
-        <div class="op-frame__img-wrap">
-          <img src="./image/step01_notebook_created.png" alt="STEP 01：新規ノートが作成された状態" loading="lazy">
-          <div class="op-highlight" style="--x:2.0%; --y:0.5%; --w:28.0%; --h:6.0%;"></div>
-        <div class="op-pin below" style="--px:3.0%; --py:8.5%; --arrow-x:14px;">✓ ノート名にひな形IDを含める</div>
-        </div>
-      </div>
-    </div>
-  </figure>
-</div>
-
-    <div class="callout callout-tip">
+      <div class="callout callout-tip">
         <span class="callout-label">💡 TIP</span>
         ノート名にひな形IDを入れておくと、後で見返したときに対応関係がすぐわかります。
       </div>
@@ -1090,49 +797,7 @@ flowchart LR
         <li><span class="kbd">追加</span> をクリック</li>
       </ol>
 
-      <div class="op-shots">
-  <div class="op-shots__heading">操作シーン — STEP 02</div>
-<figure class="op-shot">
-    <div class="op-shot__num">02-A</div>
-    <div class="op-shot__body">
-      <div class="op-shot__label">「コピーしたテキスト」に貼り付けて<span class="target">挿入</span>をクリック</div>
-      <div class="op-shot__hint">admin画面でコピーした内容を、ダイアログのテキストエリアに直接ペースト。</div>
-      <div class="op-frame">
-        <div class="op-frame__chrome">
-          <span></span><span></span><span></span>
-          <span class="url">notebooklm.google.com</span>
-        </div>
-        <div class="op-frame__img-wrap">
-          <img src="./image/step02_paste_text.png" alt="STEP 02-A：コピーしたテキストを貼り付け、挿入をクリック" loading="lazy">
-          <div class="op-highlight" style="--x:61.5%; --y:69.5%; --w:12.0%; --h:9.0%;"></div>
-        <div class="op-pin below" style="--px:63.0%; --py:81.0%; --arrow-x:22px;">クリック</div>
-        <div class="op-cursor" style="--start-x:82.0%; --start-y:92.0%; --end-x:68.0%; --end-y:74.0%;"><svg viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.3 L10 13 L16 13 Z" fill="#1f1f1f" stroke="white" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        <div class="op-click" style="--end-x:68.0%; --end-y:74.0%;"></div>
-        </div>
-      </div>
-    </div>
-  </figure>
-<figure class="op-shot">
-    <div class="op-shot__num">02-B</div>
-    <div class="op-shot__body">
-      <div class="op-shot__label">ソース①が追加され、読み込みが始まる</div>
-      <div class="op-shot__hint">左パネルに「貼り付けたテキスト」が出現。中央のスケルトン表示が消えるまで30秒〜1分待機。</div>
-      <div class="op-frame">
-        <div class="op-frame__chrome">
-          <span></span><span></span><span></span>
-          <span class="url">notebooklm.google.com</span>
-        </div>
-        <div class="op-frame__img-wrap">
-          <img src="./image/step02_source_added.png" alt="STEP 02-B：ソース①が追加され、読み込み中" loading="lazy">
-          <div class="op-highlight" style="--x:1.0%; --y:36.0%; --w:26.0%; --h:9.0%;"></div>
-        <div class="op-pin below" style="--px:2.0%; --py:47.0%; --arrow-x:14px;">✓ ソース①追加</div>
-        </div>
-      </div>
-    </div>
-  </figure>
-</div>
-
-    <div class="callout callout-tip">
+      <div class="callout callout-tip">
         <span class="callout-label">🚀 品質UPしたい場合</span>
         ここで <a href="#" class="tab-cta" data-switch-tab="tab2" style="font-size:11px; padding:4px 10px; margin:0 4px;">タブ②動画</a> や <a href="#" class="tab-cta is-tab3" data-switch-tab="tab3" style="font-size:11px; padding:4px 10px; margin:0 4px;">タブ③既存資料/Gem</a> で <strong>ソース② / ③</strong> も追加するとマニュアル精度が大幅に上がります。基本コースだけならスキップしてSTEP 03へ。
       </div>
@@ -1150,51 +815,7 @@ flowchart LR
       <div class="code-block">タイミーの「初回稼働用マニュアル」を15pで作成します。ソースを参照して初回稼働する人が安心して働ける詳細プロンプトを書き出してください。解説や挨拶、ツールへの導入文などは一切不要です。『プロンプトの内容そのもの』だけをコピーしやすいように直接出力してください。このプロンプトについての解説も不要です。</div>
       <h4 class="minor-title">このプロンプトが返してくれるもの</h4>
       <p style="font-size:14px;">15ページ分のスライドに使える、マニュアル本文のテキストです。</p>
-      <div class="op-shots">
-  <div class="op-shots__heading">操作シーン — STEP 03</div>
-<figure class="op-shot">
-    <div class="op-shot__num">03-A</div>
-    <div class="op-shot__body">
-      <div class="op-shot__label">マニュアルプロンプトを貼り付けて<span class="target">送信</span></div>
-      <div class="op-shot__hint">青い送信ボタン（↑）をクリックして実行。1個のソースが対象になっていることを確認。</div>
-      <div class="op-frame">
-        <div class="op-frame__chrome">
-          <span></span><span></span><span></span>
-          <span class="url">notebooklm.google.com</span>
-        </div>
-        <div class="op-frame__img-wrap">
-          <img src="./image/step03_prompt_input.png" alt="STEP 03-A：プロンプトを入力して送信" loading="lazy">
-          <div class="op-highlight" style="--x:65.5%; --y:86.5%; --w:9.5%; --h:9.5%;"></div>
-        <div class="op-pin" style="--px:67.5%; --py:79.0%; --arrow-x:20px;">送信</div>
-        <div class="op-cursor" style="--start-x:85.0%; --start-y:65.0%; --end-x:70.5%; --end-y:92.0%;"><svg viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.3 L10 13 L16 13 Z" fill="#1f1f1f" stroke="white" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        <div class="op-click" style="--end-x:70.5%; --end-y:92.0%;"></div>
-        </div>
-      </div>
-    </div>
-  </figure>
-<figure class="op-shot">
-    <div class="op-shot__num">03-B</div>
-    <div class="op-shot__body">
-      <div class="op-shot__label">生成された回答の左下、<span class="target">メモに保存</span>をクリック</div>
-      <div class="op-shot__hint">15ページ分のマニュアル本文が返ってきたら、必ずメモに保存。次のSTEP 04でソースに変換します。</div>
-      <div class="op-frame">
-        <div class="op-frame__chrome">
-          <span></span><span></span><span></span>
-          <span class="url">notebooklm.google.com</span>
-        </div>
-        <div class="op-frame__img-wrap">
-          <img src="./image/step03_prompt_result.png" alt="STEP 03-B：生成結果のメモに保存ボタンをクリック" loading="lazy">
-          <div class="op-highlight" style="--x:25.0%; --y:64.5%; --w:11.0%; --h:7.5%;"></div>
-        <div class="op-pin" style="--px:26.5%; --py:56.5%; --arrow-x:22px;">クリック</div>
-        <div class="op-cursor" style="--start-x:75.0%; --start-y:35.0%; --end-x:31.0%; --end-y:69.0%;"><svg viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.3 L10 13 L16 13 Z" fill="#1f1f1f" stroke="white" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        <div class="op-click" style="--end-x:31.0%; --end-y:69.0%;"></div>
-        </div>
-      </div>
-    </div>
-  </figure>
-</div>
-
-    <div class="callout callout-tip">
+      <div class="callout callout-tip">
         <span class="callout-label">💡 TIP</span>
         出力が短すぎる／薄いと感じたら、ソース材料が足りない可能性。<a href="#" class="tab-cta" data-switch-tab="tab2" style="font-size:11px; padding:4px 10px;">タブ②動画</a> や <a href="#" class="tab-cta is-tab3" data-switch-tab="tab3" style="font-size:11px; padding:4px 10px;">タブ③</a> でソースを追加すると改善します。
       </div>
@@ -1206,92 +827,12 @@ flowchart LR
       <h4 class="minor-title">共通の手順</h4>
       <ol class="numbered-steps">
         <li>STEP 03の回答の右上にある <span class="kbd">メモに保存</span> をクリック</li>
-        <li>保存されたメモを開き、<span class="kbd">ソースに変換</span> をクリック</li>
+        <li>保存されたメモの<strong>右上にある</strong> <span class="kbd">︙</span>（縦三点メニュー）をクリックし、メニューから <span class="kbd">ソースに変換</span> を選択</li>
         <li><strong>最後に追加されたソース（変換したメモ）だけ</strong> にチェックを入れる<br><span style="font-size:13px; color:var(--accent-warn);">⚠️ 元のひな形情報・動画・既存マニュアルのチェックは<strong>外す</strong></span></li>
         <li>「スライド資料」ボタン右側の <span class="kbd">カスタマイズ</span> マークをクリック</li>
         <li><strong>下記4種類のデザインから1つ選んでプロンプトを貼り付け</strong>、生成</li>
       </ol>
-      <div class="op-shots">
-  <div class="op-shots__heading">操作シーン — STEP 04</div>
-<figure class="op-shot">
-    <div class="op-shot__num">04-A</div>
-    <div class="op-shot__body">
-      <div class="op-shot__label"><span class="target">メモが Studio パネルに保存された</span></div>
-      <div class="op-shot__hint">Studio パネルの一番下に「保存したメモ」が新しく出現。ここをクリックして開くと、次のステップ（ソースに変換）に進めます。</div>
-      <div class="op-frame">
-        <div class="op-frame__chrome">
-          <span></span><span></span><span></span>
-          <span class="url">notebooklm.google.com</span>
-        </div>
-        <div class="op-frame__img-wrap">
-          <img src="./image/step04_memo_saved.png" alt="STEP 04-A：メモ保存完了、Studio パネルにメモが出現" loading="lazy">
-          <div class="op-highlight" style="--x:71.0%; --y:57.0%; --w:28.5%; --h:9.0%;"></div>
-        <div class="op-pin" style="--px:62.0%; --py:49.5%; --arrow-x:180px;">✓ 保存完了 — クリックして開く</div>
-        <div class="op-cursor" style="--start-x:45.0%; --start-y:35.0%; --end-x:87.0%; --end-y:62.5%;"><svg viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.3 L10 13 L16 13 Z" fill="#1f1f1f" stroke="white" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        <div class="op-click" style="--end-x:87.0%; --end-y:62.5%;"></div>
-        </div>
-      </div>
-    </div>
-  </figure>
-<figure class="op-shot">
-    <div class="op-shot__num">04-B</div>
-    <div class="op-shot__body">
-      <div class="op-shot__label"><span class="target">変換したメモだけ</span>にチェック／他はチェックを外す</div>
-      <div class="op-shot__hint">元の「貼り付けたテキスト」のチェックは必ず外す。チェック対象を間違えると別物が生成されます。</div>
-      <div class="op-frame">
-        <div class="op-frame__chrome">
-          <span></span><span></span><span></span>
-          <span class="url">notebooklm.google.com</span>
-        </div>
-        <div class="op-frame__img-wrap">
-          <img src="./image/step04_checkbox_toggled.png" alt="STEP 04-B：変換したメモだけにチェックを入れる" loading="lazy">
-          <div class="op-highlight" style="--x:0.5%; --y:36.5%; --w:27.0%; --h:14.0%;"></div>
-        <div class="op-pin below" style="--px:1.5%; --py:52.0%; --arrow-x:16px;">✓ メモのみ ON</div>
-        </div>
-      </div>
-    </div>
-  </figure>
-<figure class="op-shot">
-    <div class="op-shot__num">04-C</div>
-    <div class="op-shot__body">
-      <div class="op-shot__label">デザインプロンプトを貼り付けて<span class="target">生成</span></div>
-      <div class="op-shot__hint">「スライド資料」横のカスタマイズマークから、4種類のデザインから1つ選び、プロンプトをそのまま貼って実行。</div>
-      <div class="op-frame">
-        <div class="op-frame__chrome">
-          <span></span><span></span><span></span>
-          <span class="url">notebooklm.google.com</span>
-        </div>
-        <div class="op-frame__img-wrap">
-          <img src="./image/step04_design_prompt.png" alt="STEP 04-C：デザインプロンプトを入力して生成" loading="lazy">
-          <div class="op-highlight" style="--x:67.5%; --y:81.5%; --w:12.0%; --h:9.0%;"></div>
-        <div class="op-pin" style="--px:69.5%; --py:74.0%; --arrow-x:22px;">クリック</div>
-        <div class="op-cursor" style="--start-x:45.0%; --start-y:55.0%; --end-x:73.5%; --end-y:86.0%;"><svg viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.3 L10 13 L16 13 Z" fill="#1f1f1f" stroke="white" stroke-width="1" stroke-linejoin="round"/></svg></div>
-        <div class="op-click" style="--end-x:73.5%; --end-y:86.0%;"></div>
-        </div>
-      </div>
-    </div>
-  </figure>
-<figure class="op-shot">
-    <div class="op-shot__num">04-D</div>
-    <div class="op-shot__body">
-      <div class="op-shot__label">スライド資料の生成が開始される</div>
-      <div class="op-shot__hint">右側Studioパネルに「スライド資料を生成しています…」と表示。完了したらクリックしてPDFダウンロード。</div>
-      <div class="op-frame">
-        <div class="op-frame__chrome">
-          <span></span><span></span><span></span>
-          <span class="url">notebooklm.google.com</span>
-        </div>
-        <div class="op-frame__img-wrap">
-          <img src="./image/step04_generation_started.png" alt="STEP 04-D：スライド資料の生成中" loading="lazy">
-          <div class="op-highlight" style="--x:72.0%; --y:57.0%; --w:27.0%; --h:9.0%;"></div>
-        <div class="op-pin" style="--px:72.0%; --py:49.5%; --arrow-x:96px;">⏳ 生成中（数十秒）</div>
-        </div>
-      </div>
-    </div>
-  </figure>
-</div>
-
-    <div class="callout callout-warn">
+      <div class="callout callout-warn">
         <span class="callout-label">⚠ 重要</span>
         <strong>チェック対象を間違えると別物が生成されます。</strong><br>
         「変換したメモ」だけにチェック → 他のソースのチェックは外す、を必ず確認してください。
@@ -1564,7 +1105,7 @@ flowchart LR
       </ol>
       <div class="callout callout-tip" style="margin-top:20px;">
         <span class="callout-label">💡 TIP</span>
-        ひな形全体の５％しかマニュアルはついておりません。１ひな形１マニュアルの世界を作り即戦力ワーカーを届けましょう！
+        PDF化することで、ワーカーがスマホで見ても崩れず、印刷時の精度も安定します。
       </div>
     </div>
 
@@ -1951,6 +1492,10 @@ flowchart LR
       <div class="faq-a">撮影ができない場合、作業内容をヒヤリングしDocとしてNotebookLMのソースに読み込めばマニュアルは作成可能です。撮影した実写真もデザインプロンプトをイラスト指示にすれば実写真はイラスト化されます。作業ヒヤリングがわからない時は <a href="https://gemini.google.com/gem/1zANA5Nj5PzS1LHEFQ4_OzSkviVgxya8i?usp=sharing" target="_blank">作業マニュアルGem</a>（<a href="#" class="tab-cta is-tab3" data-switch-tab="tab3" style="font-size:11px; padding:4px 10px;">タブ③</a>）を活用してください。</div>
     </div>
     <div class="faq-item">
+      <div class="faq-q">作業マニュアルGemを開くとログイン画面が出る</div>
+      <div class="faq-a"><strong>⚠️ 一度だけGoogleアカウントでのログインが必要</strong>です。初回アクセス時にTimeeの業務用Googleアカウントでログインしてください。一度認証すれば、以降は自動的にGemが開きます。</div>
+    </div>
+    <div class="faq-item">
       <div class="faq-q">デザインバリエーション、どれを選べばいい？</div>
       <div class="faq-a">用途で先に絞る：<strong>印刷が必要なら白背景（B / D）、Web中心なら黄色（A / C）</strong>。さらに迷ったら <strong>C（黄色背景×実写）</strong> が標準。介護・医療など落ち着いた印象が必要なら D（白背景×実写）。初心者ワーカーが多い飲食・小売は A（黄色×イラスト）が好相性。</div>
     </div>
@@ -2135,31 +1680,6 @@ mermaid.initialize({
       }
     });
   });
-})();
-</script>
-
-
-<script>
-(function(){
-  var frames = document.querySelectorAll('.op-frame');
-  if (!frames.length) return;
-  if (!('IntersectionObserver' in window)) {
-    frames.forEach(function(f){ f.classList.add('run'); });
-    return;
-  }
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      var el = entry.target;
-      if (entry.isIntersecting) {
-        el.classList.remove('run');
-        void el.offsetWidth; // restart animations
-        el.classList.add('run');
-      } else {
-        el.classList.remove('run');
-      }
-    });
-  }, { threshold: 0.4 });
-  frames.forEach(function(f){ io.observe(f); });
 })();
 </script>
 
